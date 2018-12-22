@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration 
+PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<generatorConfiguration>
+
+	<classPathEntry location="D:\open source\mysql-connector-java-5.1.24\mysql-connector-java-5.1.24-bin.jar" />
+	
+	<context id="MySqlTables" targetRuntime="MyBatis3">
+	
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" /> 
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		
+		<!-- 关闭注解信息 -->
+		<commentGenerator>  
+        	<property name="suppressAllComments" value="true" />  
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://172.17.22.96:3306/htmis_dev" userId="root"
+			password="111111">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- model的配置 -->
+		<javaModelGenerator targetPackage="com.git.db.beans"
+			targetProject="htmis_hs0805/src">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- mybatis的xml的配置 -->
+		<sqlMapGenerator targetPackage="com.git.db.mapper"
+			targetProject="htmis_hs0805/src">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		
+		<!-- mapper的配置 -->
+		<javaClientGenerator type="XMLMAPPER"
+		 targetPackage="com.git.db.mapper" targetProject="htmis_hs0805/src">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<!--
+		<table tableName="tbl_case" domainObjectName="CaseInfoImpl"></table>
+		<table tableName="tbl_case_bill_detail" domainObjectName="CaseBillDetailImpl"></table>
+		<table tableName="Tbl_Case_Handle" domainObjectName="CaseHandleImpl"></table>
+		<table tableName="Tbl_Case_Claim" domainObjectName="CaseClaimImpl"></table>
+		<table tableName="Tbl_Consignor_Pay" domainObjectName="ConsignorPayImpl"></table>
+		<table tableName="tbl_bill_check_records" domainObjectName="BillCheckRecordsImpl"></table>
+		<table tableName="Tbl_Bill_Check" domainObjectName="BillCheckImpl"></table>
+		<table tableName="tbl_case_bill" domainObjectName="CaseBillImpl"></table> 
+		<table tableName="Tbl_Bill_Income" domainObjectName="BillIncomeImpl"></table>
+		<table tableName="Tbl_Claim_Income" domainObjectName="ClaimIncomeImpl"></table>
+		<table tableName="tbl_claim_ratesub" domainObjectName="ClaimRateSubImpl"></table>
+		<table tableName="Tbl_Case_Claim" domainObjectName="CaseClaimImpl"></table>
+		<table tableName="tbl_claim_income_detail" domainObjectName="ClaimInComeDetailImpl"></table>
+		<table tableName="tbl_case_supervise" domainObjectName="CaseSuperviseImpl"></table>
+		<table tableName="security_log_entity" domainObjectName="LogEntity"></table>-->
+		<table tableName="tbl_bill_hang" domainObjectName="BillHangImpl"></table>
+	</context>
+</generatorConfiguration> 
