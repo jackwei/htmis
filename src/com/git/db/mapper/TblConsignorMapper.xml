@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblConsignorMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblConsignor" >
+    <id column="oid" property="oid" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="names" property="names" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="CreateOperatorId" property="createoperatorid" jdbcType="BIGINT" />
+    <result column="ModifyOperatorId" property="modifyoperatorid" jdbcType="BIGINT" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="accountcode" property="accountcode" jdbcType="VARCHAR" />
+    <result column="currentcourse" property="currentcourse" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oid, name, names, address, sort, country, area, CreateOperatorId, ModifyOperatorId, 
+    CreateTime, ModifyTime, accountcode, currentcourse
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblConsignorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_consignor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_consignor
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_consignor
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblConsignorExample" >
+    delete from tbl_consignor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblConsignor" >
+    insert into tbl_consignor (oid, name, names, 
+      address, sort, country, 
+      area, CreateOperatorId, ModifyOperatorId, 
+      CreateTime, ModifyTime, accountcode, 
+      currentcourse)
+    values (#{oid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{names,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{createoperatorid,jdbcType=BIGINT}, #{modifyoperatorid,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, #{accountcode,jdbcType=VARCHAR}, 
+      #{currentcourse,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblConsignor" >
+    insert into tbl_consignor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="names != null" >
+        names,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId,
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+      <if test="accountcode != null" >
+        accountcode,
+      </if>
+      <if test="currentcourse != null" >
+        currentcourse,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="names != null" >
+        #{names,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountcode != null" >
+        #{accountcode,jdbcType=VARCHAR},
+      </if>
+      <if test="currentcourse != null" >
+        #{currentcourse,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblConsignorExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_consignor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_consignor
+    <set >
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.names != null" >
+        names = #{record.names,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        sort = #{record.sort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createoperatorid != null" >
+        CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyoperatorid != null" >
+        ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifytime != null" >
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accountcode != null" >
+        accountcode = #{record.accountcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentcourse != null" >
+        currentcourse = #{record.currentcourse,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_consignor
+    set oid = #{record.oid,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      names = #{record.names,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      accountcode = #{record.accountcode,jdbcType=VARCHAR},
+      currentcourse = #{record.currentcourse,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblConsignor" >
+    update tbl_consignor
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="names != null" >
+        names = #{names,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountcode != null" >
+        accountcode = #{accountcode,jdbcType=VARCHAR},
+      </if>
+      <if test="currentcourse != null" >
+        currentcourse = #{currentcourse,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblConsignor" >
+    update tbl_consignor
+    set name = #{name,jdbcType=VARCHAR},
+      names = #{names,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      accountcode = #{accountcode,jdbcType=VARCHAR},
+      currentcourse = #{currentcourse,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.TblConsignorExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_consignor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

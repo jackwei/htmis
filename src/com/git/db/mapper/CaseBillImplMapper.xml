@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.CaseBillImplMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.CaseBillImpl" >
+    <id column="Bill_Id" property="billId" jdbcType="BIGINT" />
+    <result column="feenumber" property="feenumber" jdbcType="VARCHAR" />
+    <result column="Case_Id" property="caseId" jdbcType="BIGINT" />
+    <result column="casenumber" property="casenumber" jdbcType="VARCHAR" />
+    <result column="servicefee" property="servicefee" jdbcType="REAL" />
+    <result column="assurefee" property="assurefee" jdbcType="REAL" />
+    <result column="thirdpart" property="thirdpart" jdbcType="REAL" />
+    <result column="compensationsub" property="compensationsub" jdbcType="REAL" />
+    <result column="replaceamount" property="replaceamount" jdbcType="REAL" />
+    <result column="otherfee" property="otherfee" jdbcType="REAL" />
+    <result column="advancefee" property="advancefee" jdbcType="REAL" />
+    <result column="feeamount" property="feeamount" jdbcType="REAL" />
+    <result column="expendses" property="expendses" jdbcType="REAL" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="arrdate" property="arrdate" jdbcType="TIMESTAMP" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="servicedes" property="servicedes" jdbcType="VARCHAR" />
+    <result column="payer" property="payer" jdbcType="VARCHAR" />
+    <result column="coname" property="coname" jdbcType="VARCHAR" />
+    <result column="accdate" property="accdate" jdbcType="TIMESTAMP" />
+    <result column="feestatuse" property="feestatuse" jdbcType="VARCHAR" />
+    <result column="feetype" property="feetype" jdbcType="VARCHAR" />
+    <result column="orgcode" property="orgcode" jdbcType="VARCHAR" />
+    <result column="orgname" property="orgname" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="Operator_Id" property="operatorId" jdbcType="BIGINT" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Bill_Id, feenumber, Case_Id, casenumber, servicefee, assurefee, thirdpart, compensationsub, 
+    replaceamount, otherfee, advancefee, feeamount, expendses, currency, arrdate, address, 
+    servicedes, payer, coname, accdate, feestatuse, feetype, orgcode, orgname, remark, 
+    Operator_Id, Create_Time, Modify_Time, Modify_Operator_Id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.CaseBillImplExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_case_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_case_bill
+    where Bill_Id = #{billId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_case_bill
+    where Bill_Id = #{billId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.CaseBillImplExample" >
+    delete from tbl_case_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.CaseBillImpl" >
+    insert into tbl_case_bill (Bill_Id, feenumber, Case_Id, 
+      casenumber, servicefee, assurefee, 
+      thirdpart, compensationsub, replaceamount, 
+      otherfee, advancefee, feeamount, 
+      expendses, currency, arrdate, 
+      address, servicedes, payer, 
+      coname, accdate, feestatuse, 
+      feetype, orgcode, orgname, 
+      remark, Operator_Id, Create_Time, 
+      Modify_Time, Modify_Operator_Id)
+    values (#{billId,jdbcType=BIGINT}, #{feenumber,jdbcType=VARCHAR}, #{caseId,jdbcType=BIGINT}, 
+      #{casenumber,jdbcType=VARCHAR}, #{servicefee,jdbcType=REAL}, #{assurefee,jdbcType=REAL}, 
+      #{thirdpart,jdbcType=REAL}, #{compensationsub,jdbcType=REAL}, #{replaceamount,jdbcType=REAL}, 
+      #{otherfee,jdbcType=REAL}, #{advancefee,jdbcType=REAL}, #{feeamount,jdbcType=REAL}, 
+      #{expendses,jdbcType=REAL}, #{currency,jdbcType=VARCHAR}, #{arrdate,jdbcType=TIMESTAMP}, 
+      #{address,jdbcType=VARCHAR}, #{servicedes,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, 
+      #{coname,jdbcType=VARCHAR}, #{accdate,jdbcType=TIMESTAMP}, #{feestatuse,jdbcType=VARCHAR}, 
+      #{feetype,jdbcType=VARCHAR}, #{orgcode,jdbcType=VARCHAR}, #{orgname,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{operatorId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyOperatorId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.CaseBillImpl" >
+    insert into tbl_case_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="billId != null" >
+        Bill_Id,
+      </if>
+      <if test="feenumber != null" >
+        feenumber,
+      </if>
+      <if test="caseId != null" >
+        Case_Id,
+      </if>
+      <if test="casenumber != null" >
+        casenumber,
+      </if>
+      <if test="servicefee != null" >
+        servicefee,
+      </if>
+      <if test="assurefee != null" >
+        assurefee,
+      </if>
+      <if test="thirdpart != null" >
+        thirdpart,
+      </if>
+      <if test="compensationsub != null" >
+        compensationsub,
+      </if>
+      <if test="replaceamount != null" >
+        replaceamount,
+      </if>
+      <if test="otherfee != null" >
+        otherfee,
+      </if>
+      <if test="advancefee != null" >
+        advancefee,
+      </if>
+      <if test="feeamount != null" >
+        feeamount,
+      </if>
+      <if test="expendses != null" >
+        expendses,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="arrdate != null" >
+        arrdate,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="servicedes != null" >
+        servicedes,
+      </if>
+      <if test="payer != null" >
+        payer,
+      </if>
+      <if test="coname != null" >
+        coname,
+      </if>
+      <if test="accdate != null" >
+        accdate,
+      </if>
+      <if test="feestatuse != null" >
+        feestatuse,
+      </if>
+      <if test="feetype != null" >
+        feetype,
+      </if>
+      <if test="orgcode != null" >
+        orgcode,
+      </if>
+      <if test="orgname != null" >
+        orgname,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="operatorId != null" >
+        Operator_Id,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="billId != null" >
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="feenumber != null" >
+        #{feenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="servicefee != null" >
+        #{servicefee,jdbcType=REAL},
+      </if>
+      <if test="assurefee != null" >
+        #{assurefee,jdbcType=REAL},
+      </if>
+      <if test="thirdpart != null" >
+        #{thirdpart,jdbcType=REAL},
+      </if>
+      <if test="compensationsub != null" >
+        #{compensationsub,jdbcType=REAL},
+      </if>
+      <if test="replaceamount != null" >
+        #{replaceamount,jdbcType=REAL},
+      </if>
+      <if test="otherfee != null" >
+        #{otherfee,jdbcType=REAL},
+      </if>
+      <if test="advancefee != null" >
+        #{advancefee,jdbcType=REAL},
+      </if>
+      <if test="feeamount != null" >
+        #{feeamount,jdbcType=REAL},
+      </if>
+      <if test="expendses != null" >
+        #{expendses,jdbcType=REAL},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="arrdate != null" >
+        #{arrdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="servicedes != null" >
+        #{servicedes,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="coname != null" >
+        #{coname,jdbcType=VARCHAR},
+      </if>
+      <if test="accdate != null" >
+        #{accdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feestatuse != null" >
+        #{feestatuse,jdbcType=VARCHAR},
+      </if>
+      <if test="feetype != null" >
+        #{feetype,jdbcType=VARCHAR},
+      </if>
+      <if test="orgcode != null" >
+        #{orgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        #{orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.CaseBillImplExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_case_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_case_bill
+    <set >
+      <if test="record.billId != null" >
+        Bill_Id = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.feenumber != null" >
+        feenumber = #{record.feenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseId != null" >
+        Case_Id = #{record.caseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.casenumber != null" >
+        casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servicefee != null" >
+        servicefee = #{record.servicefee,jdbcType=REAL},
+      </if>
+      <if test="record.assurefee != null" >
+        assurefee = #{record.assurefee,jdbcType=REAL},
+      </if>
+      <if test="record.thirdpart != null" >
+        thirdpart = #{record.thirdpart,jdbcType=REAL},
+      </if>
+      <if test="record.compensationsub != null" >
+        compensationsub = #{record.compensationsub,jdbcType=REAL},
+      </if>
+      <if test="record.replaceamount != null" >
+        replaceamount = #{record.replaceamount,jdbcType=REAL},
+      </if>
+      <if test="record.otherfee != null" >
+        otherfee = #{record.otherfee,jdbcType=REAL},
+      </if>
+      <if test="record.advancefee != null" >
+        advancefee = #{record.advancefee,jdbcType=REAL},
+      </if>
+      <if test="record.feeamount != null" >
+        feeamount = #{record.feeamount,jdbcType=REAL},
+      </if>
+      <if test="record.expendses != null" >
+        expendses = #{record.expendses,jdbcType=REAL},
+      </if>
+      <if test="record.currency != null" >
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrdate != null" >
+        arrdate = #{record.arrdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servicedes != null" >
+        servicedes = #{record.servicedes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payer != null" >
+        payer = #{record.payer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coname != null" >
+        coname = #{record.coname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accdate != null" >
+        accdate = #{record.accdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.feestatuse != null" >
+        feestatuse = #{record.feestatuse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feetype != null" >
+        feetype = #{record.feetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgcode != null" >
+        orgcode = #{record.orgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgname != null" >
+        orgname = #{record.orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorId != null" >
+        Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_case_bill
+    set Bill_Id = #{record.billId,jdbcType=BIGINT},
+      feenumber = #{record.feenumber,jdbcType=VARCHAR},
+      Case_Id = #{record.caseId,jdbcType=BIGINT},
+      casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      servicefee = #{record.servicefee,jdbcType=REAL},
+      assurefee = #{record.assurefee,jdbcType=REAL},
+      thirdpart = #{record.thirdpart,jdbcType=REAL},
+      compensationsub = #{record.compensationsub,jdbcType=REAL},
+      replaceamount = #{record.replaceamount,jdbcType=REAL},
+      otherfee = #{record.otherfee,jdbcType=REAL},
+      advancefee = #{record.advancefee,jdbcType=REAL},
+      feeamount = #{record.feeamount,jdbcType=REAL},
+      expendses = #{record.expendses,jdbcType=REAL},
+      currency = #{record.currency,jdbcType=VARCHAR},
+      arrdate = #{record.arrdate,jdbcType=TIMESTAMP},
+      address = #{record.address,jdbcType=VARCHAR},
+      servicedes = #{record.servicedes,jdbcType=VARCHAR},
+      payer = #{record.payer,jdbcType=VARCHAR},
+      coname = #{record.coname,jdbcType=VARCHAR},
+      accdate = #{record.accdate,jdbcType=TIMESTAMP},
+      feestatuse = #{record.feestatuse,jdbcType=VARCHAR},
+      feetype = #{record.feetype,jdbcType=VARCHAR},
+      orgcode = #{record.orgcode,jdbcType=VARCHAR},
+      orgname = #{record.orgname,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.CaseBillImpl" >
+    update tbl_case_bill
+    <set >
+      <if test="feenumber != null" >
+        feenumber = #{feenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="caseId != null" >
+        Case_Id = #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        casenumber = #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="servicefee != null" >
+        servicefee = #{servicefee,jdbcType=REAL},
+      </if>
+      <if test="assurefee != null" >
+        assurefee = #{assurefee,jdbcType=REAL},
+      </if>
+      <if test="thirdpart != null" >
+        thirdpart = #{thirdpart,jdbcType=REAL},
+      </if>
+      <if test="compensationsub != null" >
+        compensationsub = #{compensationsub,jdbcType=REAL},
+      </if>
+      <if test="replaceamount != null" >
+        replaceamount = #{replaceamount,jdbcType=REAL},
+      </if>
+      <if test="otherfee != null" >
+        otherfee = #{otherfee,jdbcType=REAL},
+      </if>
+      <if test="advancefee != null" >
+        advancefee = #{advancefee,jdbcType=REAL},
+      </if>
+      <if test="feeamount != null" >
+        feeamount = #{feeamount,jdbcType=REAL},
+      </if>
+      <if test="expendses != null" >
+        expendses = #{expendses,jdbcType=REAL},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="arrdate != null" >
+        arrdate = #{arrdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="servicedes != null" >
+        servicedes = #{servicedes,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        payer = #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="coname != null" >
+        coname = #{coname,jdbcType=VARCHAR},
+      </if>
+      <if test="accdate != null" >
+        accdate = #{accdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feestatuse != null" >
+        feestatuse = #{feestatuse,jdbcType=VARCHAR},
+      </if>
+      <if test="feetype != null" >
+        feetype = #{feetype,jdbcType=VARCHAR},
+      </if>
+      <if test="orgcode != null" >
+        orgcode = #{orgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        orgname = #{orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        Operator_Id = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Bill_Id = #{billId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.CaseBillImpl" >
+    update tbl_case_bill
+    set feenumber = #{feenumber,jdbcType=VARCHAR},
+      Case_Id = #{caseId,jdbcType=BIGINT},
+      casenumber = #{casenumber,jdbcType=VARCHAR},
+      servicefee = #{servicefee,jdbcType=REAL},
+      assurefee = #{assurefee,jdbcType=REAL},
+      thirdpart = #{thirdpart,jdbcType=REAL},
+      compensationsub = #{compensationsub,jdbcType=REAL},
+      replaceamount = #{replaceamount,jdbcType=REAL},
+      otherfee = #{otherfee,jdbcType=REAL},
+      advancefee = #{advancefee,jdbcType=REAL},
+      feeamount = #{feeamount,jdbcType=REAL},
+      expendses = #{expendses,jdbcType=REAL},
+      currency = #{currency,jdbcType=VARCHAR},
+      arrdate = #{arrdate,jdbcType=TIMESTAMP},
+      address = #{address,jdbcType=VARCHAR},
+      servicedes = #{servicedes,jdbcType=VARCHAR},
+      payer = #{payer,jdbcType=VARCHAR},
+      coname = #{coname,jdbcType=VARCHAR},
+      accdate = #{accdate,jdbcType=TIMESTAMP},
+      feestatuse = #{feestatuse,jdbcType=VARCHAR},
+      feetype = #{feetype,jdbcType=VARCHAR},
+      orgcode = #{orgcode,jdbcType=VARCHAR},
+      orgname = #{orgname,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      Operator_Id = #{operatorId,jdbcType=BIGINT},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT}
+    where Bill_Id = #{billId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.CaseBillImplExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_case_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.CaseSuperviseImplMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.CaseSuperviseImpl" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="caseId" property="caseid" jdbcType="BIGINT" />
+    <result column="casenumber" property="casenumber" jdbcType="VARCHAR" />
+    <result column="Content" property="content" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Operator_Id" property="operatorId" jdbcType="BIGINT" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, caseId, casenumber, Content, Name, Create_Time, Operator_Id, Modify_Time, Modify_Operator_Id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.CaseSuperviseImplExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_case_supervise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_case_supervise
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_case_supervise
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.CaseSuperviseImplExample" >
+    delete from tbl_case_supervise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.CaseSuperviseImpl" >
+    insert into tbl_case_supervise (id, caseId, casenumber, 
+      Content, Name, Create_Time, 
+      Operator_Id, Modify_Time, Modify_Operator_Id
+      )
+    values (#{id,jdbcType=BIGINT}, #{caseid,jdbcType=BIGINT}, #{casenumber,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{operatorId,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyOperatorId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.CaseSuperviseImpl" >
+    insert into tbl_case_supervise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="caseid != null" >
+        caseId,
+      </if>
+      <if test="casenumber != null" >
+        casenumber,
+      </if>
+      <if test="content != null" >
+        Content,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="operatorId != null" >
+        Operator_Id,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="caseid != null" >
+        #{caseid,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.CaseSuperviseImplExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_case_supervise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_case_supervise
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.caseid != null" >
+        caseId = #{record.caseid,jdbcType=BIGINT},
+      </if>
+      <if test="record.casenumber != null" >
+        casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        Content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatorId != null" >
+        Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_case_supervise
+    set id = #{record.id,jdbcType=BIGINT},
+      caseId = #{record.caseid,jdbcType=BIGINT},
+      casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      Content = #{record.content,jdbcType=VARCHAR},
+      Name = #{record.name,jdbcType=VARCHAR},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.CaseSuperviseImpl" >
+    update tbl_case_supervise
+    <set >
+      <if test="caseid != null" >
+        caseId = #{caseid,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        casenumber = #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        Content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        Operator_Id = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.CaseSuperviseImpl" >
+    update tbl_case_supervise
+    set caseId = #{caseid,jdbcType=BIGINT},
+      casenumber = #{casenumber,jdbcType=VARCHAR},
+      Content = #{content,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Operator_Id = #{operatorId,jdbcType=BIGINT},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.CaseSuperviseImplExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_case_supervise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

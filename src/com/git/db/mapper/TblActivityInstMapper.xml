@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblActivityInstMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblActivityInst" >
+    <id column="Activity_Inst_ID" property="activityInstId" jdbcType="BIGINT" />
+    <result column="Process_Inst_ID" property="processInstId" jdbcType="BIGINT" />
+    <result column="Activity_Def_Id" property="activityDefId" jdbcType="BIGINT" />
+    <result column="Current_State" property="currentState" jdbcType="CHAR" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Final_Time" property="finalTime" jdbcType="TIMESTAMP" />
+    <result column="Aduit_Result" property="aduitResult" jdbcType="CHAR" />
+    <result column="Aduit" property="aduit" jdbcType="VARCHAR" />
+    <result column="checkdate" property="checkdate" jdbcType="TIMESTAMP" />
+    <result column="checkdes" property="checkdes" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Activity_Inst_ID, Process_Inst_ID, Activity_Def_Id, Current_State, Create_Time, Final_Time, 
+    Aduit_Result, Aduit, checkdate, checkdes, remark, remark1
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblActivityInstExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_activity_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_activity_inst
+    where Activity_Inst_ID = #{activityInstId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_activity_inst
+    where Activity_Inst_ID = #{activityInstId,jdbcType=BIGINT}
+  </delete>
+  
+   <delete id="deleteByProcessInstId" parameterType="java.lang.Long" >
+    delete from tbl_activity_inst
+    where Process_Inst_ID =#{processInstId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblActivityInstExample" >
+    delete from tbl_activity_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblActivityInst"  useGeneratedKeys="true" keyProperty="activityInstId">
+    insert into tbl_activity_inst (Activity_Inst_ID, Process_Inst_ID, Activity_Def_Id, 
+      Current_State, Create_Time, Final_Time, 
+      Aduit_Result, Aduit, checkdate, 
+      checkdes, remark, remark1
+      )
+    values (#{activityInstId,jdbcType=BIGINT}, #{processInstId,jdbcType=BIGINT}, #{activityDefId,jdbcType=BIGINT}, 
+      #{currentState,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{finalTime,jdbcType=TIMESTAMP}, 
+      #{aduitResult,jdbcType=CHAR}, #{aduit,jdbcType=VARCHAR}, #{checkdate,jdbcType=TIMESTAMP}, 
+      #{checkdes,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblActivityInst" >
+    insert into tbl_activity_inst
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityInstId != null" >
+        Activity_Inst_ID,
+      </if>
+      <if test="processInstId != null" >
+        Process_Inst_ID,
+      </if>
+      <if test="activityDefId != null" >
+        Activity_Def_Id,
+      </if>
+      <if test="currentState != null" >
+        Current_State,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="finalTime != null" >
+        Final_Time,
+      </if>
+      <if test="aduitResult != null" >
+        Aduit_Result,
+      </if>
+      <if test="aduit != null" >
+        Aduit,
+      </if>
+      <if test="checkdate != null" >
+        checkdate,
+      </if>
+      <if test="checkdes != null" >
+        checkdes,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityInstId != null" >
+        #{activityInstId,jdbcType=BIGINT},
+      </if>
+      <if test="processInstId != null" >
+        #{processInstId,jdbcType=BIGINT},
+      </if>
+      <if test="activityDefId != null" >
+        #{activityDefId,jdbcType=BIGINT},
+      </if>
+      <if test="currentState != null" >
+        #{currentState,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finalTime != null" >
+        #{finalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aduitResult != null" >
+        #{aduitResult,jdbcType=CHAR},
+      </if>
+      <if test="aduit != null" >
+        #{aduit,jdbcType=VARCHAR},
+      </if>
+      <if test="checkdate != null" >
+        #{checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkdes != null" >
+        #{checkdes,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblActivityInstExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_activity_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_activity_inst
+    <set >
+      <if test="record.activityInstId != null" >
+        Activity_Inst_ID = #{record.activityInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.processInstId != null" >
+        Process_Inst_ID = #{record.processInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.activityDefId != null" >
+        Activity_Def_Id = #{record.activityDefId,jdbcType=BIGINT},
+      </if>
+      <if test="record.currentState != null" >
+        Current_State = #{record.currentState,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finalTime != null" >
+        Final_Time = #{record.finalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aduitResult != null" >
+        Aduit_Result = #{record.aduitResult,jdbcType=CHAR},
+      </if>
+      <if test="record.aduit != null" >
+        Aduit = #{record.aduit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkdate != null" >
+        checkdate = #{record.checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkdes != null" >
+        checkdes = #{record.checkdes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark1 != null" >
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_activity_inst
+    set Activity_Inst_ID = #{record.activityInstId,jdbcType=BIGINT},
+      Process_Inst_ID = #{record.processInstId,jdbcType=BIGINT},
+      Activity_Def_Id = #{record.activityDefId,jdbcType=BIGINT},
+      Current_State = #{record.currentState,jdbcType=CHAR},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      Final_Time = #{record.finalTime,jdbcType=TIMESTAMP},
+      Aduit_Result = #{record.aduitResult,jdbcType=CHAR},
+      Aduit = #{record.aduit,jdbcType=VARCHAR},
+      checkdate = #{record.checkdate,jdbcType=TIMESTAMP},
+      checkdes = #{record.checkdes,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      remark1 = #{record.remark1,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblActivityInst" >
+    update tbl_activity_inst
+    <set >
+      <if test="processInstId != null" >
+        Process_Inst_ID = #{processInstId,jdbcType=BIGINT},
+      </if>
+      <if test="activityDefId != null" >
+        Activity_Def_Id = #{activityDefId,jdbcType=BIGINT},
+      </if>
+      <if test="currentState != null" >
+        Current_State = #{currentState,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finalTime != null" >
+        Final_Time = #{finalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aduitResult != null" >
+        Aduit_Result = #{aduitResult,jdbcType=CHAR},
+      </if>
+      <if test="aduit != null" >
+        Aduit = #{aduit,jdbcType=VARCHAR},
+      </if>
+      <if test="checkdate != null" >
+        checkdate = #{checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkdes != null" >
+        checkdes = #{checkdes,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Activity_Inst_ID = #{activityInstId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblActivityInst" >
+    update tbl_activity_inst
+    set Process_Inst_ID = #{processInstId,jdbcType=BIGINT},
+      Activity_Def_Id = #{activityDefId,jdbcType=BIGINT},
+      Current_State = #{currentState,jdbcType=CHAR},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Final_Time = #{finalTime,jdbcType=TIMESTAMP},
+      Aduit_Result = #{aduitResult,jdbcType=CHAR},
+      Aduit = #{aduit,jdbcType=VARCHAR},
+      checkdate = #{checkdate,jdbcType=TIMESTAMP},
+      checkdes = #{checkdes,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR}
+    where Activity_Inst_ID = #{activityInstId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.TblActivityInstExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_activity_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

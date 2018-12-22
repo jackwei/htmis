@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.SysDictTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.SysDictType" >
+    <id column="DictTypeId" property="dicttypeid" jdbcType="VARCHAR" />
+    <result column="DictTypeName" property="dicttypename" jdbcType="VARCHAR" />
+    <result column="ParentDictTypeId" property="parentdicttypeid" jdbcType="VARCHAR" />
+    <result column="SortNo" property="sortno" jdbcType="INTEGER" />
+    <result column="BackUp1" property="backup1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DictTypeId, DictTypeName, ParentDictTypeId, SortNo, BackUp1
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.SysDictTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_dict_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_dict_type
+    where DictTypeId = #{dicttypeid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_dict_type
+    where DictTypeId = #{dicttypeid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.SysDictTypeExample" >
+    delete from sys_dict_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.SysDictType" >
+    insert into sys_dict_type (DictTypeId, DictTypeName, ParentDictTypeId, 
+      SortNo, BackUp1)
+    values (#{dicttypeid,jdbcType=VARCHAR}, #{dicttypename,jdbcType=VARCHAR}, #{parentdicttypeid,jdbcType=VARCHAR}, 
+      #{sortno,jdbcType=INTEGER}, #{backup1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.SysDictType" >
+    insert into sys_dict_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dicttypeid != null" >
+        DictTypeId,
+      </if>
+      <if test="dicttypename != null" >
+        DictTypeName,
+      </if>
+      <if test="parentdicttypeid != null" >
+        ParentDictTypeId,
+      </if>
+      <if test="sortno != null" >
+        SortNo,
+      </if>
+      <if test="backup1 != null" >
+        BackUp1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dicttypeid != null" >
+        #{dicttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="dicttypename != null" >
+        #{dicttypename,jdbcType=VARCHAR},
+      </if>
+      <if test="parentdicttypeid != null" >
+        #{parentdicttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="sortno != null" >
+        #{sortno,jdbcType=INTEGER},
+      </if>
+      <if test="backup1 != null" >
+        #{backup1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.SysDictTypeExample" resultType="java.lang.Integer" >
+    select count(*) from sys_dict_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_dict_type
+    <set >
+      <if test="record.dicttypeid != null" >
+        DictTypeId = #{record.dicttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dicttypename != null" >
+        DictTypeName = #{record.dicttypename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentdicttypeid != null" >
+        ParentDictTypeId = #{record.parentdicttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortno != null" >
+        SortNo = #{record.sortno,jdbcType=INTEGER},
+      </if>
+      <if test="record.backup1 != null" >
+        BackUp1 = #{record.backup1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_dict_type
+    set DictTypeId = #{record.dicttypeid,jdbcType=VARCHAR},
+      DictTypeName = #{record.dicttypename,jdbcType=VARCHAR},
+      ParentDictTypeId = #{record.parentdicttypeid,jdbcType=VARCHAR},
+      SortNo = #{record.sortno,jdbcType=INTEGER},
+      BackUp1 = #{record.backup1,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.SysDictType" >
+    update sys_dict_type
+    <set >
+      <if test="dicttypename != null" >
+        DictTypeName = #{dicttypename,jdbcType=VARCHAR},
+      </if>
+      <if test="parentdicttypeid != null" >
+        ParentDictTypeId = #{parentdicttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="sortno != null" >
+        SortNo = #{sortno,jdbcType=INTEGER},
+      </if>
+      <if test="backup1 != null" >
+        BackUp1 = #{backup1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DictTypeId = #{dicttypeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.SysDictType" >
+    update sys_dict_type
+    set DictTypeName = #{dicttypename,jdbcType=VARCHAR},
+      ParentDictTypeId = #{parentdicttypeid,jdbcType=VARCHAR},
+      SortNo = #{sortno,jdbcType=INTEGER},
+      BackUp1 = #{backup1,jdbcType=VARCHAR}
+    where DictTypeId = #{dicttypeid,jdbcType=VARCHAR}
+  </update>
+</mapper>

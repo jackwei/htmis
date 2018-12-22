@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblDocInfosMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblDocInfos" >
+    <id column="oid" property="oid" jdbcType="BIGINT" />
+    <result column="applyid" property="applyid" jdbcType="BIGINT" />
+    <result column="doctype" property="doctype" jdbcType="VARCHAR" />
+    <result column="docname" property="docname" jdbcType="VARCHAR" />
+    <result column="docdes" property="docdes" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="filename" property="filename" jdbcType="VARCHAR" />
+    <result column="filelocation" property="filelocation" jdbcType="VARCHAR" />
+    <result column="secretflag" property="secretflag" jdbcType="VARCHAR" />
+    <result column="contenttype" property="contenttype" jdbcType="VARCHAR" />
+    <result column="parent2id" property="parent2id" jdbcType="VARCHAR" />
+    <result column="parent2name" property="parent2name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oid, applyid, doctype, docname, docdes, userid, username, createdate, filename, filelocation, 
+    secretflag, contenttype, parent2id, parent2name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblDocInfosExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_docinfos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+   <select id="selectByApplyId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_docinfos where applyid=#{applyid,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_docinfos
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_docinfos
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblDocInfosExample" >
+    delete from tbl_docinfos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblDocInfos" >
+    insert into tbl_docinfos (oid, applyid, doctype, 
+      docname, docdes, userid, 
+      username, createdate, filename, 
+      filelocation, secretflag, contenttype, 
+      parent2id, parent2name)
+    values (#{oid,jdbcType=BIGINT}, #{applyid,jdbcType=BIGINT}, #{doctype,jdbcType=VARCHAR}, 
+      #{docname,jdbcType=VARCHAR}, #{docdes,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{filename,jdbcType=VARCHAR}, 
+      #{filelocation,jdbcType=VARCHAR}, #{secretflag,jdbcType=VARCHAR}, #{contenttype,jdbcType=VARCHAR}, 
+      #{parent2id,jdbcType=VARCHAR}, #{parent2name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblDocInfos" >
+    insert into tbl_docinfos
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="applyid != null" >
+        applyid,
+      </if>
+      <if test="doctype != null" >
+        doctype,
+      </if>
+      <if test="docname != null" >
+        docname,
+      </if>
+      <if test="docdes != null" >
+        docdes,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="filename != null" >
+        filename,
+      </if>
+      <if test="filelocation != null" >
+        filelocation,
+      </if>
+      <if test="secretflag != null" >
+        secretflag,
+      </if>
+      <if test="contenttype != null" >
+        contenttype,
+      </if>
+      <if test="parent2id != null" >
+        parent2id,
+      </if>
+      <if test="parent2name != null" >
+        parent2name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="applyid != null" >
+        #{applyid,jdbcType=BIGINT},
+      </if>
+      <if test="doctype != null" >
+        #{doctype,jdbcType=VARCHAR},
+      </if>
+      <if test="docname != null" >
+        #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="docdes != null" >
+        #{docdes,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filelocation != null" >
+        #{filelocation,jdbcType=VARCHAR},
+      </if>
+      <if test="secretflag != null" >
+        #{secretflag,jdbcType=VARCHAR},
+      </if>
+      <if test="contenttype != null" >
+        #{contenttype,jdbcType=VARCHAR},
+      </if>
+      <if test="parent2id != null" >
+        #{parent2id,jdbcType=VARCHAR},
+      </if>
+      <if test="parent2name != null" >
+        #{parent2name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblDocInfosExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_docinfos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_docinfos
+    <set >
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=BIGINT},
+      </if>
+      <if test="record.applyid != null" >
+        applyid = #{record.applyid,jdbcType=BIGINT},
+      </if>
+      <if test="record.doctype != null" >
+        doctype = #{record.doctype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docname != null" >
+        docname = #{record.docname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docdes != null" >
+        docdes = #{record.docdes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.filename != null" >
+        filename = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filelocation != null" >
+        filelocation = #{record.filelocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secretflag != null" >
+        secretflag = #{record.secretflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contenttype != null" >
+        contenttype = #{record.contenttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parent2id != null" >
+        parent2id = #{record.parent2id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parent2name != null" >
+        parent2name = #{record.parent2name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_docinfos
+    set oid = #{record.oid,jdbcType=BIGINT},
+      applyid = #{record.applyid,jdbcType=BIGINT},
+      doctype = #{record.doctype,jdbcType=VARCHAR},
+      docname = #{record.docname,jdbcType=VARCHAR},
+      docdes = #{record.docdes,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP},
+      filename = #{record.filename,jdbcType=VARCHAR},
+      filelocation = #{record.filelocation,jdbcType=VARCHAR},
+      secretflag = #{record.secretflag,jdbcType=VARCHAR},
+      contenttype = #{record.contenttype,jdbcType=VARCHAR},
+      parent2id = #{record.parent2id,jdbcType=VARCHAR},
+      parent2name = #{record.parent2name,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblDocInfos" >
+    update tbl_docinfos
+    <set >
+      <if test="applyid != null" >
+        applyid = #{applyid,jdbcType=BIGINT},
+      </if>
+      <if test="doctype != null" >
+        doctype = #{doctype,jdbcType=VARCHAR},
+      </if>
+      <if test="docname != null" >
+        docname = #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="docdes != null" >
+        docdes = #{docdes,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filename != null" >
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filelocation != null" >
+        filelocation = #{filelocation,jdbcType=VARCHAR},
+      </if>
+      <if test="secretflag != null" >
+        secretflag = #{secretflag,jdbcType=VARCHAR},
+      </if>
+      <if test="contenttype != null" >
+        contenttype = #{contenttype,jdbcType=VARCHAR},
+      </if>
+      <if test="parent2id != null" >
+        parent2id = #{parent2id,jdbcType=VARCHAR},
+      </if>
+      <if test="parent2name != null" >
+        parent2name = #{parent2name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblDocInfos" >
+    update tbl_docinfos
+    set applyid = #{applyid,jdbcType=BIGINT},
+      doctype = #{doctype,jdbcType=VARCHAR},
+      docname = #{docname,jdbcType=VARCHAR},
+      docdes = #{docdes,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      filename = #{filename,jdbcType=VARCHAR},
+      filelocation = #{filelocation,jdbcType=VARCHAR},
+      secretflag = #{secretflag,jdbcType=VARCHAR},
+      contenttype = #{contenttype,jdbcType=VARCHAR},
+      parent2id = #{parent2id,jdbcType=VARCHAR},
+      parent2name = #{parent2name,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

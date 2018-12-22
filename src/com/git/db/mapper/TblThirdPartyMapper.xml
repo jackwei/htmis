@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblThirdPartyMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblThirdParty" >
+    <id column="oid" property="oid" jdbcType="BIGINT" />
+    <result column="nameen" property="nameen" jdbcType="VARCHAR" />
+    <result column="namecn" property="namecn" jdbcType="VARCHAR" />
+    <result column="nameens" property="nameens" jdbcType="VARCHAR" />
+    <result column="namecns" property="namecns" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="property" property="property" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="accountname" property="accountname" jdbcType="VARCHAR" />
+    <result column="accountnum" property="accountnum" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="VARCHAR" />
+    <result column="sortname" property="sortname" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="CreateOperatorId" property="createoperatorid" jdbcType="BIGINT" />
+    <result column="ModifyOperatorId" property="modifyoperatorid" jdbcType="BIGINT" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="accountcode" property="accountcode" jdbcType="VARCHAR" />
+    <result column="currentcourse" property="currentcourse" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oid, nameen, namecn, nameens, namecns, type, property, telephone, address, accountname, 
+    accountnum, sort, sortname, deleted, country, CreateOperatorId, ModifyOperatorId, 
+    CreateTime, ModifyTime, accountcode, currentcourse
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblThirdPartyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_thirdparty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_thirdparty
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_thirdparty
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblThirdPartyExample" >
+    delete from tbl_thirdparty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblThirdParty" >
+    insert into tbl_thirdparty (oid, nameen, namecn, 
+      nameens, namecns, type, 
+      property, telephone, address, 
+      accountname, accountnum, sort, 
+      sortname, deleted, country, 
+      CreateOperatorId, ModifyOperatorId, CreateTime, 
+      ModifyTime, accountcode, currentcourse
+      )
+    values (#{oid,jdbcType=BIGINT}, #{nameen,jdbcType=VARCHAR}, #{namecn,jdbcType=VARCHAR}, 
+      #{nameens,jdbcType=VARCHAR}, #{namecns,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{property,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{accountname,jdbcType=VARCHAR}, #{accountnum,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, 
+      #{sortname,jdbcType=VARCHAR}, #{deleted,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{createoperatorid,jdbcType=BIGINT}, #{modifyoperatorid,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifytime,jdbcType=TIMESTAMP}, #{accountcode,jdbcType=VARCHAR}, #{currentcourse,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblThirdParty" >
+    insert into tbl_thirdparty
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="nameen != null" >
+        nameen,
+      </if>
+      <if test="namecn != null" >
+        namecn,
+      </if>
+      <if test="nameens != null" >
+        nameens,
+      </if>
+      <if test="namecns != null" >
+        namecns,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="property != null" >
+        property,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="accountname != null" >
+        accountname,
+      </if>
+      <if test="accountnum != null" >
+        accountnum,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="sortname != null" >
+        sortname,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId,
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+      <if test="accountcode != null" >
+        accountcode,
+      </if>
+      <if test="currentcourse != null" >
+        currentcourse,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="nameen != null" >
+        #{nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="namecn != null" >
+        #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameens != null" >
+        #{nameens,jdbcType=VARCHAR},
+      </if>
+      <if test="namecns != null" >
+        #{namecns,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="property != null" >
+        #{property,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="accountname != null" >
+        #{accountname,jdbcType=VARCHAR},
+      </if>
+      <if test="accountnum != null" >
+        #{accountnum,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="sortname != null" >
+        #{sortname,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountcode != null" >
+        #{accountcode,jdbcType=VARCHAR},
+      </if>
+      <if test="currentcourse != null" >
+        #{currentcourse,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblThirdPartyExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_thirdparty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_thirdparty
+    <set >
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=BIGINT},
+      </if>
+      <if test="record.nameen != null" >
+        nameen = #{record.nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namecn != null" >
+        namecn = #{record.namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameens != null" >
+        nameens = #{record.nameens,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namecns != null" >
+        namecns = #{record.namecns,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.property != null" >
+        property = #{record.property,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountname != null" >
+        accountname = #{record.accountname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountnum != null" >
+        accountnum = #{record.accountnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        sort = #{record.sort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortname != null" >
+        sortname = #{record.sortname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null" >
+        deleted = #{record.deleted,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createoperatorid != null" >
+        CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyoperatorid != null" >
+        ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifytime != null" >
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accountcode != null" >
+        accountcode = #{record.accountcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentcourse != null" >
+        currentcourse = #{record.currentcourse,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_thirdparty
+    set oid = #{record.oid,jdbcType=BIGINT},
+      nameen = #{record.nameen,jdbcType=VARCHAR},
+      namecn = #{record.namecn,jdbcType=VARCHAR},
+      nameens = #{record.nameens,jdbcType=VARCHAR},
+      namecns = #{record.namecns,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      property = #{record.property,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      accountname = #{record.accountname,jdbcType=VARCHAR},
+      accountnum = #{record.accountnum,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=VARCHAR},
+      sortname = #{record.sortname,jdbcType=VARCHAR},
+      deleted = #{record.deleted,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      accountcode = #{record.accountcode,jdbcType=VARCHAR},
+      currentcourse = #{record.currentcourse,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblThirdParty" >
+    update tbl_thirdparty
+    <set >
+      <if test="nameen != null" >
+        nameen = #{nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="namecn != null" >
+        namecn = #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameens != null" >
+        nameens = #{nameens,jdbcType=VARCHAR},
+      </if>
+      <if test="namecns != null" >
+        namecns = #{namecns,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="property != null" >
+        property = #{property,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="accountname != null" >
+        accountname = #{accountname,jdbcType=VARCHAR},
+      </if>
+      <if test="accountnum != null" >
+        accountnum = #{accountnum,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="sortname != null" >
+        sortname = #{sortname,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountcode != null" >
+        accountcode = #{accountcode,jdbcType=VARCHAR},
+      </if>
+      <if test="currentcourse != null" >
+        currentcourse = #{currentcourse,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblThirdParty" >
+    update tbl_thirdparty
+    set nameen = #{nameen,jdbcType=VARCHAR},
+      namecn = #{namecn,jdbcType=VARCHAR},
+      nameens = #{nameens,jdbcType=VARCHAR},
+      namecns = #{namecns,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      property = #{property,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      accountname = #{accountname,jdbcType=VARCHAR},
+      accountnum = #{accountnum,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR},
+      sortname = #{sortname,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      accountcode = #{accountcode,jdbcType=VARCHAR},
+      currentcourse = #{currentcourse,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.TblThirdPartyExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_thirdparty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="map" >
+    select    
+   		<include refid="Base_Column_List" />
+    from tbl_thirdparty c
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keywords != null">
+				AND (
+					c.nameen LIKE "%"#{keywords}"%"
+					or c.namecn LIKE "%"#{keywords}"%"
+				)
+      		</if>
+      	</trim>
+      	order by c.oid ASC 
+  </select>
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="map" >
+    select count(0) as a from tbl_thirdparty c
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keywords != null">
+				AND (
+					c.nameen LIKE "%"#{keywords}"%"
+					or c.namecn LIKE "%"#{keywords}"%"
+				)
+      		</if>
+      	</trim>
+  </select>
+</mapper>

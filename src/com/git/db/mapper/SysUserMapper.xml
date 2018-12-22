@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.git.db.mapper.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.git.db.beans.SysUser">
+    <id column="User_Id" jdbcType="BIGINT" property="userId" />
+    <result column="User_No" jdbcType="VARCHAR" property="userNo" />
+    <result column="User_Code" jdbcType="VARCHAR" property="userCode" />
+    <result column="User_Pwd" jdbcType="VARCHAR" property="userPwd" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="Gender" jdbcType="CHAR" property="gender" />
+    <result column="Email" jdbcType="VARCHAR" property="email" />
+    <result column="Phone" jdbcType="VARCHAR" property="phone" />
+    <result column="Org_Id" jdbcType="BIGINT" property="orgId" />
+    <result column="Order_By" jdbcType="INTEGER" property="orderBy" />
+    <result column="User_Status" jdbcType="CHAR" property="userStatus" />
+    <result column="Create_Time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="Modify_Operator_Id" jdbcType="BIGINT" property="modifyOperatorId" />
+    <result column="Modify_Time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="Operator_Id" jdbcType="BIGINT" property="operatorId" />
+    <result column="Extend1" jdbcType="VARCHAR" property="extend1" />
+    <result column="Extend2" jdbcType="VARCHAR" property="extend2" />
+    <result column="Extend3" jdbcType="VARCHAR" property="extend3" />
+    <result column="Org_Name" jdbcType="VARCHAR" property="orgName" />
+    <result column="S_Name" jdbcType="VARCHAR" property="sName" />
+    <result column="En_Name" jdbcType="VARCHAR" property="enName" />
+    <result column="Org_Code" jdbcType="VARCHAR" property="orgCode" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    User_Id, User_No, User_Code, User_Pwd, Name, Gender, Email, Phone, Org_Id, Order_By, 
+    User_Status, Create_Time, Modify_Operator_Id, Modify_Time, Operator_Id, Extend1, 
+    Extend2, Extend3, Org_Name, S_Name, En_Name, Org_Code
+  </sql>
+  <select id="selectByExample" parameterType="com.git.db.beans.SysUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where User_Id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_user
+    where User_Id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.SysUserExample">
+    delete from sys_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.SysUser">
+    insert into sys_user (User_Id, User_No, User_Code, 
+      User_Pwd, Name, Gender, 
+      Email, Phone, Org_Id, 
+      Order_By, User_Status, Create_Time, 
+      Modify_Operator_Id, Modify_Time, Operator_Id, 
+      Extend1, Extend2, Extend3, 
+      Org_Name, S_Name, En_Name, 
+      Org_Code)
+    values (#{userId,jdbcType=BIGINT}, #{userNo,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
+      #{userPwd,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, 
+      #{orderBy,jdbcType=INTEGER}, #{userStatus,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyOperatorId,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=BIGINT}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, 
+      #{orgName,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, #{enName,jdbcType=VARCHAR}, 
+      #{orgCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.SysUser">
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        User_Id,
+      </if>
+      <if test="userNo != null">
+        User_No,
+      </if>
+      <if test="userCode != null">
+        User_Code,
+      </if>
+      <if test="userPwd != null">
+        User_Pwd,
+      </if>
+      <if test="name != null">
+        Name,
+      </if>
+      <if test="gender != null">
+        Gender,
+      </if>
+      <if test="email != null">
+        Email,
+      </if>
+      <if test="phone != null">
+        Phone,
+      </if>
+      <if test="orgId != null">
+        Org_Id,
+      </if>
+      <if test="orderBy != null">
+        Order_By,
+      </if>
+      <if test="userStatus != null">
+        User_Status,
+      </if>
+      <if test="createTime != null">
+        Create_Time,
+      </if>
+      <if test="modifyOperatorId != null">
+        Modify_Operator_Id,
+      </if>
+      <if test="modifyTime != null">
+        Modify_Time,
+      </if>
+      <if test="operatorId != null">
+        Operator_Id,
+      </if>
+      <if test="extend1 != null">
+        Extend1,
+      </if>
+      <if test="extend2 != null">
+        Extend2,
+      </if>
+      <if test="extend3 != null">
+        Extend3,
+      </if>
+      <if test="orgName != null">
+        Org_Name,
+      </if>
+      <if test="sName != null">
+        S_Name,
+      </if>
+      <if test="enName != null">
+        En_Name,
+      </if>
+      <if test="orgCode != null">
+        Org_Code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userNo != null">
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null">
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orderBy != null">
+        #{orderBy,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null">
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null">
+        #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="extend1 != null">
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null">
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null">
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null">
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+        #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.SysUserExample" resultType="java.lang.Integer">
+    select count(*) from sys_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_user
+    <set>
+      <if test="record.userId != null">
+        User_Id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userNo != null">
+        User_No = #{record.userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCode != null">
+        User_Code = #{record.userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPwd != null">
+        User_Pwd = #{record.userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        Gender = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.email != null">
+        Email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        Phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgId != null">
+        Org_Id = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderBy != null">
+        Order_By = #{record.orderBy,jdbcType=INTEGER},
+      </if>
+      <if test="record.userStatus != null">
+        User_Status = #{record.userStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null">
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyOperatorId != null">
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null">
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatorId != null">
+        Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.extend1 != null">
+        Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend2 != null">
+        Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend3 != null">
+        Extend3 = #{record.extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null">
+        Org_Name = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sName != null">
+        S_Name = #{record.sName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enName != null">
+        En_Name = #{record.enName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null">
+        Org_Code = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_user
+    set User_Id = #{record.userId,jdbcType=BIGINT},
+      User_No = #{record.userNo,jdbcType=VARCHAR},
+      User_Code = #{record.userCode,jdbcType=VARCHAR},
+      User_Pwd = #{record.userPwd,jdbcType=VARCHAR},
+      Name = #{record.name,jdbcType=VARCHAR},
+      Gender = #{record.gender,jdbcType=CHAR},
+      Email = #{record.email,jdbcType=VARCHAR},
+      Phone = #{record.phone,jdbcType=VARCHAR},
+      Org_Id = #{record.orgId,jdbcType=BIGINT},
+      Order_By = #{record.orderBy,jdbcType=INTEGER},
+      User_Status = #{record.userStatus,jdbcType=CHAR},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      Extend3 = #{record.extend3,jdbcType=VARCHAR},
+      Org_Name = #{record.orgName,jdbcType=VARCHAR},
+      S_Name = #{record.sName,jdbcType=VARCHAR},
+      En_Name = #{record.enName,jdbcType=VARCHAR},
+      Org_Code = #{record.orgCode,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.SysUser">
+    update sys_user
+    <set>
+      <if test="userNo != null">
+        User_No = #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        User_Code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null">
+        User_Pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        Gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        Org_Id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orderBy != null">
+        Order_By = #{orderBy,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null">
+        User_Status = #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null">
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null">
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null">
+        Operator_Id = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="extend1 != null">
+        Extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null">
+        Extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null">
+        Extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        Org_Name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null">
+        S_Name = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+        En_Name = #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        Org_Code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where User_Id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.SysUser">
+    update sys_user
+    set User_No = #{userNo,jdbcType=VARCHAR},
+      User_Code = #{userCode,jdbcType=VARCHAR},
+      User_Pwd = #{userPwd,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      Gender = #{gender,jdbcType=CHAR},
+      Email = #{email,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      Org_Id = #{orgId,jdbcType=BIGINT},
+      Order_By = #{orderBy,jdbcType=INTEGER},
+      User_Status = #{userStatus,jdbcType=CHAR},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      Operator_Id = #{operatorId,jdbcType=BIGINT},
+      Extend1 = #{extend1,jdbcType=VARCHAR},
+      Extend2 = #{extend2,jdbcType=VARCHAR},
+      Extend3 = #{extend3,jdbcType=VARCHAR},
+      Org_Name = #{orgName,jdbcType=VARCHAR},
+      S_Name = #{sName,jdbcType=VARCHAR},
+      En_Name = #{enName,jdbcType=VARCHAR},
+      Org_Code = #{orgCode,jdbcType=VARCHAR}
+    where User_Id = #{userId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.git.db.beans.SysUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>    
+  <select id="isUniqueUserCode" parameterType="map" resultType="java.lang.Long">
+		select count(0) as c
+		from sys_user where 1=1 
+		<if test="id != null &amp;&amp; id > 0 " >
+			and user_id != #{id} 
+		</if>
+		and User_Code = #{usercode} 
+  </select>
+  <select id="findByUserCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select 
+		<include refid="Base_Column_List" />
+	from sys_user where User_Code = #{usercode} and User_Status='1' 
+  </select>
+  <select id="selectAllUser" resultMap="BaseResultMap" parameterType="com.git.db.beans.SysUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_user
+  </select>
+  
+  <select id="selectByUserCondition" resultMap="BaseResultMap" parameterType="com.git.db.beans.SysUser" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+    where 1=1 
+    <if test="name != null &amp;&amp; name != ''" >
+       AND (
+				Name LIKE CONCAT('%','${name}','%' )
+				or S_Name LIKE CONCAT('%','${name}','%' )
+				or en_Name LIKE CONCAT('%','${name}','%' )
+				or User_Code LIKE CONCAT('%','${name}','%' )
+			)
+    </if>
+    <if test="orgCode != null &amp;&amp; orgCode != ''" >
+      and Org_Code =#{orgCode,jdbcType=VARCHAR}
+    </if>
+    <if test="userStatus != null &amp;&amp; userStatus != ''" >
+      and User_Status= #{userStatus,jdbcType=CHAR}
+    </if>
+    order by User_Status,User_Id
+  </select>
+  
+  <select id="countByUserCondition" parameterType="com.git.db.beans.SysUser" resultType="java.lang.Integer" >
+    select count(0) from sys_user
+     where 1=1
+    <if test="name != null &amp;&amp; name != ''" >
+       AND (
+				Name LIKE CONCAT('%','${name}','%' )
+				or s_Name LIKE CONCAT('%','${name}','%' )
+				or en_Name LIKE CONCAT('%','${name}','%' )
+			)
+    </if>
+    <if test="orgCode != null &amp;&amp; orgCode != ''" >
+      and Org_Code =#{orgCode,jdbcType=VARCHAR}
+    </if>
+    <if test="userStatus != null &amp;&amp; userStatus != ''" >
+      and User_Status= #{userStatus,jdbcType=CHAR}
+    </if>
+  </select>
+  
+  <update id="changeUserStatus" parameterType="com.git.db.beans.SysUser">
+    update sys_user
+    set User_Status = #{userStatus,jdbcType=CHAR} 
+    where User_Id = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updatePassword" parameterType="com.git.db.beans.SysUser">
+    update sys_user
+    set User_Pwd = #{userPwd,jdbcType=VARCHAR} 
+    where User_Id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.FinDataResultMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.FinDataResult" >
+    <id column="Seq_Id" property="seqId" jdbcType="BIGINT" />
+    <result column="Batch_No" property="batchNo" jdbcType="VARCHAR" />
+    <result column="Buss_Id" property="bussId" jdbcType="VARCHAR" />
+    <result column="Buss_Key_No" property="bussKeyNo" jdbcType="VARCHAR" />
+    <result column="Item_Id" property="itemId" jdbcType="VARCHAR" />
+    <result column="Item_Name" property="itemName" jdbcType="VARCHAR" />
+    <result column="Item_Type" property="itemType" jdbcType="CHAR" />
+    <result column="Money" property="money" jdbcType="REAL" />
+    <result column="Currency" property="currency" jdbcType="VARCHAR" />
+    <result column="Fin_Date" property="finDate" jdbcType="DATE" />
+    <result column="Org_Code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="Com_Code" property="comCode" jdbcType="VARCHAR" />
+    <result column="Dept_Code" property="deptCode" jdbcType="VARCHAR" />
+    <result column="Bank_Code" property="bankCode" jdbcType="VARCHAR" />
+    <result column="Buss_Code" property="bussCode" jdbcType="VARCHAR" />
+    <result column="Product_Code" property="productCode" jdbcType="VARCHAR" />
+    <result column="Trans_Code" property="transCode" jdbcType="VARCHAR" />
+    <result column="Backup_Code" property="backupCode" jdbcType="VARCHAR" />
+    <result column="Extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="Extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="Extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="Make_Time" property="makeTime" jdbcType="TIMESTAMP" />
+    <result column="Deal_Flag" property="dealFlag" jdbcType="CHAR" />
+    <result column="StandByNum1" property="standbynum1" jdbcType="REAL" />
+    <result column="StandByNum2" property="standbynum2" jdbcType="REAL" />
+    <result column="StandByDate1" property="standbydate1" jdbcType="DATE" />
+    <result column="StandByDate2" property="standbydate2" jdbcType="DATE" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="document_id" property="documentId" jdbcType="VARCHAR" />
+    <result column="document_date" property="documentDate" jdbcType="TIMESTAMP" />
+    <result column="exchange_rate1" property="exchangeRate1" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="REAL" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Seq_Id, Batch_No, Buss_Id, Buss_Key_No, Item_Id, Item_Name, Item_Type, Money, Currency, 
+    Fin_Date, Org_Code, Com_Code, Dept_Code, Bank_Code, Buss_Code, Product_Code, Trans_Code, 
+    Backup_Code, Extend1, Extend2, Extend3, Make_Time, Deal_Flag, StandByNum1, StandByNum2, 
+    StandByDate1, StandByDate2, summary, document_id, document_date, exchange_rate1, 
+    amount, operator
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.FinDataResultExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_fin_data_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_fin_data_result
+    where Seq_Id = #{seqId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_fin_data_result
+    where Seq_Id = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.FinDataResultExample" >
+    delete from t_fin_data_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.FinDataResult" >
+    insert into t_fin_data_result (Seq_Id, Batch_No, Buss_Id, 
+      Buss_Key_No, Item_Id, Item_Name, 
+      Item_Type, Money, Currency, 
+      Fin_Date, Org_Code, Com_Code, 
+      Dept_Code, Bank_Code, Buss_Code, 
+      Product_Code, Trans_Code, Backup_Code, 
+      Extend1, Extend2, Extend3, 
+      Make_Time, Deal_Flag, StandByNum1, 
+      StandByNum2, StandByDate1, StandByDate2, 
+      summary, document_id, document_date, 
+      exchange_rate1, amount, operator
+      )
+    values (#{seqId,jdbcType=BIGINT}, #{batchNo,jdbcType=VARCHAR}, #{bussId,jdbcType=VARCHAR}, 
+      #{bussKeyNo,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, 
+      #{itemType,jdbcType=CHAR}, #{money,jdbcType=REAL}, #{currency,jdbcType=VARCHAR}, 
+      #{finDate,jdbcType=DATE}, #{orgCode,jdbcType=VARCHAR}, #{comCode,jdbcType=VARCHAR}, 
+      #{deptCode,jdbcType=VARCHAR}, #{bankCode,jdbcType=VARCHAR}, #{bussCode,jdbcType=VARCHAR}, 
+      #{productCode,jdbcType=VARCHAR}, #{transCode,jdbcType=VARCHAR}, #{backupCode,jdbcType=VARCHAR}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, 
+      #{makeTime,jdbcType=TIMESTAMP}, #{dealFlag,jdbcType=CHAR}, #{standbynum1,jdbcType=REAL}, 
+      #{standbynum2,jdbcType=REAL}, #{standbydate1,jdbcType=DATE}, #{standbydate2,jdbcType=DATE}, 
+      #{summary,jdbcType=VARCHAR}, #{documentId,jdbcType=VARCHAR}, #{documentDate,jdbcType=TIMESTAMP}, 
+      #{exchangeRate1,jdbcType=VARCHAR}, #{amount,jdbcType=REAL}, #{operator,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.FinDataResult" >
+    insert into t_fin_data_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seqId != null" >
+        Seq_Id,
+      </if>
+      <if test="batchNo != null" >
+        Batch_No,
+      </if>
+      <if test="bussId != null" >
+        Buss_Id,
+      </if>
+      <if test="bussKeyNo != null" >
+        Buss_Key_No,
+      </if>
+      <if test="itemId != null" >
+        Item_Id,
+      </if>
+      <if test="itemName != null" >
+        Item_Name,
+      </if>
+      <if test="itemType != null" >
+        Item_Type,
+      </if>
+      <if test="money != null" >
+        Money,
+      </if>
+      <if test="currency != null" >
+        Currency,
+      </if>
+      <if test="finDate != null" >
+        Fin_Date,
+      </if>
+      <if test="orgCode != null" >
+        Org_Code,
+      </if>
+      <if test="comCode != null" >
+        Com_Code,
+      </if>
+      <if test="deptCode != null" >
+        Dept_Code,
+      </if>
+      <if test="bankCode != null" >
+        Bank_Code,
+      </if>
+      <if test="bussCode != null" >
+        Buss_Code,
+      </if>
+      <if test="productCode != null" >
+        Product_Code,
+      </if>
+      <if test="transCode != null" >
+        Trans_Code,
+      </if>
+      <if test="backupCode != null" >
+        Backup_Code,
+      </if>
+      <if test="extend1 != null" >
+        Extend1,
+      </if>
+      <if test="extend2 != null" >
+        Extend2,
+      </if>
+      <if test="extend3 != null" >
+        Extend3,
+      </if>
+      <if test="makeTime != null" >
+        Make_Time,
+      </if>
+      <if test="dealFlag != null" >
+        Deal_Flag,
+      </if>
+      <if test="standbynum1 != null" >
+        StandByNum1,
+      </if>
+      <if test="standbynum2 != null" >
+        StandByNum2,
+      </if>
+      <if test="standbydate1 != null" >
+        StandByDate1,
+      </if>
+      <if test="standbydate2 != null" >
+        StandByDate2,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="documentId != null" >
+        document_id,
+      </if>
+      <if test="documentDate != null" >
+        document_date,
+      </if>
+      <if test="exchangeRate1 != null" >
+        exchange_rate1,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seqId != null" >
+        #{seqId,jdbcType=BIGINT},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bussId != null" >
+        #{bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="bussKeyNo != null" >
+        #{bussKeyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        #{itemType,jdbcType=CHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="finDate != null" >
+        #{finDate,jdbcType=DATE},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="comCode != null" >
+        #{comCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptCode != null" >
+        #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bussCode != null" >
+        #{bussCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="transCode != null" >
+        #{transCode,jdbcType=VARCHAR},
+      </if>
+      <if test="backupCode != null" >
+        #{backupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="makeTime != null" >
+        #{makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealFlag != null" >
+        #{dealFlag,jdbcType=CHAR},
+      </if>
+      <if test="standbynum1 != null" >
+        #{standbynum1,jdbcType=REAL},
+      </if>
+      <if test="standbynum2 != null" >
+        #{standbynum2,jdbcType=REAL},
+      </if>
+      <if test="standbydate1 != null" >
+        #{standbydate1,jdbcType=DATE},
+      </if>
+      <if test="standbydate2 != null" >
+        #{standbydate2,jdbcType=DATE},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="documentId != null" >
+        #{documentId,jdbcType=VARCHAR},
+      </if>
+      <if test="documentDate != null" >
+        #{documentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exchangeRate1 != null" >
+        #{exchangeRate1,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=REAL},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.FinDataResultExample" resultType="java.lang.Integer" >
+    select count(*) from t_fin_data_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_fin_data_result
+    <set >
+      <if test="record.seqId != null" >
+        Seq_Id = #{record.seqId,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchNo != null" >
+        Batch_No = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussId != null" >
+        Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussKeyNo != null" >
+        Buss_Key_No = #{record.bussKeyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemId != null" >
+        Item_Id = #{record.itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemName != null" >
+        Item_Name = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemType != null" >
+        Item_Type = #{record.itemType,jdbcType=CHAR},
+      </if>
+      <if test="record.money != null" >
+        Money = #{record.money,jdbcType=REAL},
+      </if>
+      <if test="record.currency != null" >
+        Currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.finDate != null" >
+        Fin_Date = #{record.finDate,jdbcType=DATE},
+      </if>
+      <if test="record.orgCode != null" >
+        Org_Code = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comCode != null" >
+        Com_Code = #{record.comCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptCode != null" >
+        Dept_Code = #{record.deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankCode != null" >
+        Bank_Code = #{record.bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussCode != null" >
+        Buss_Code = #{record.bussCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCode != null" >
+        Product_Code = #{record.productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transCode != null" >
+        Trans_Code = #{record.transCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backupCode != null" >
+        Backup_Code = #{record.backupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend1 != null" >
+        Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend2 != null" >
+        Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend3 != null" >
+        Extend3 = #{record.extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.makeTime != null" >
+        Make_Time = #{record.makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dealFlag != null" >
+        Deal_Flag = #{record.dealFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.standbynum1 != null" >
+        StandByNum1 = #{record.standbynum1,jdbcType=REAL},
+      </if>
+      <if test="record.standbynum2 != null" >
+        StandByNum2 = #{record.standbynum2,jdbcType=REAL},
+      </if>
+      <if test="record.standbydate1 != null" >
+        StandByDate1 = #{record.standbydate1,jdbcType=DATE},
+      </if>
+      <if test="record.standbydate2 != null" >
+        StandByDate2 = #{record.standbydate2,jdbcType=DATE},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.documentId != null" >
+        document_id = #{record.documentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.documentDate != null" >
+        document_date = #{record.documentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.exchangeRate1 != null" >
+        exchange_rate1 = #{record.exchangeRate1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=REAL},
+      </if>
+      <if test="record.operator != null" >
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_fin_data_result
+    set Seq_Id = #{record.seqId,jdbcType=BIGINT},
+      Batch_No = #{record.batchNo,jdbcType=VARCHAR},
+      Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      Buss_Key_No = #{record.bussKeyNo,jdbcType=VARCHAR},
+      Item_Id = #{record.itemId,jdbcType=VARCHAR},
+      Item_Name = #{record.itemName,jdbcType=VARCHAR},
+      Item_Type = #{record.itemType,jdbcType=CHAR},
+      Money = #{record.money,jdbcType=REAL},
+      Currency = #{record.currency,jdbcType=VARCHAR},
+      Fin_Date = #{record.finDate,jdbcType=DATE},
+      Org_Code = #{record.orgCode,jdbcType=VARCHAR},
+      Com_Code = #{record.comCode,jdbcType=VARCHAR},
+      Dept_Code = #{record.deptCode,jdbcType=VARCHAR},
+      Bank_Code = #{record.bankCode,jdbcType=VARCHAR},
+      Buss_Code = #{record.bussCode,jdbcType=VARCHAR},
+      Product_Code = #{record.productCode,jdbcType=VARCHAR},
+      Trans_Code = #{record.transCode,jdbcType=VARCHAR},
+      Backup_Code = #{record.backupCode,jdbcType=VARCHAR},
+      Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      Extend3 = #{record.extend3,jdbcType=VARCHAR},
+      Make_Time = #{record.makeTime,jdbcType=TIMESTAMP},
+      Deal_Flag = #{record.dealFlag,jdbcType=CHAR},
+      StandByNum1 = #{record.standbynum1,jdbcType=REAL},
+      StandByNum2 = #{record.standbynum2,jdbcType=REAL},
+      StandByDate1 = #{record.standbydate1,jdbcType=DATE},
+      StandByDate2 = #{record.standbydate2,jdbcType=DATE},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      document_id = #{record.documentId,jdbcType=VARCHAR},
+      document_date = #{record.documentDate,jdbcType=TIMESTAMP},
+      exchange_rate1 = #{record.exchangeRate1,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=REAL},
+      operator = #{record.operator,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.FinDataResult" >
+    update t_fin_data_result
+    <set >
+      <if test="batchNo != null" >
+        Batch_No = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bussId != null" >
+        Buss_Id = #{bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="bussKeyNo != null" >
+        Buss_Key_No = #{bussKeyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        Item_Id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        Item_Name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        Item_Type = #{itemType,jdbcType=CHAR},
+      </if>
+      <if test="money != null" >
+        Money = #{money,jdbcType=REAL},
+      </if>
+      <if test="currency != null" >
+        Currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="finDate != null" >
+        Fin_Date = #{finDate,jdbcType=DATE},
+      </if>
+      <if test="orgCode != null" >
+        Org_Code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="comCode != null" >
+        Com_Code = #{comCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptCode != null" >
+        Dept_Code = #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        Bank_Code = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bussCode != null" >
+        Buss_Code = #{bussCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        Product_Code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="transCode != null" >
+        Trans_Code = #{transCode,jdbcType=VARCHAR},
+      </if>
+      <if test="backupCode != null" >
+        Backup_Code = #{backupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        Extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        Extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        Extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="makeTime != null" >
+        Make_Time = #{makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealFlag != null" >
+        Deal_Flag = #{dealFlag,jdbcType=CHAR},
+      </if>
+      <if test="standbynum1 != null" >
+        StandByNum1 = #{standbynum1,jdbcType=REAL},
+      </if>
+      <if test="standbynum2 != null" >
+        StandByNum2 = #{standbynum2,jdbcType=REAL},
+      </if>
+      <if test="standbydate1 != null" >
+        StandByDate1 = #{standbydate1,jdbcType=DATE},
+      </if>
+      <if test="standbydate2 != null" >
+        StandByDate2 = #{standbydate2,jdbcType=DATE},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="documentId != null" >
+        document_id = #{documentId,jdbcType=VARCHAR},
+      </if>
+      <if test="documentDate != null" >
+        document_date = #{documentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exchangeRate1 != null" >
+        exchange_rate1 = #{exchangeRate1,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=REAL},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Seq_Id = #{seqId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.FinDataResult" >
+    update t_fin_data_result
+    set Batch_No = #{batchNo,jdbcType=VARCHAR},
+      Buss_Id = #{bussId,jdbcType=VARCHAR},
+      Buss_Key_No = #{bussKeyNo,jdbcType=VARCHAR},
+      Item_Id = #{itemId,jdbcType=VARCHAR},
+      Item_Name = #{itemName,jdbcType=VARCHAR},
+      Item_Type = #{itemType,jdbcType=CHAR},
+      Money = #{money,jdbcType=REAL},
+      Currency = #{currency,jdbcType=VARCHAR},
+      Fin_Date = #{finDate,jdbcType=DATE},
+      Org_Code = #{orgCode,jdbcType=VARCHAR},
+      Com_Code = #{comCode,jdbcType=VARCHAR},
+      Dept_Code = #{deptCode,jdbcType=VARCHAR},
+      Bank_Code = #{bankCode,jdbcType=VARCHAR},
+      Buss_Code = #{bussCode,jdbcType=VARCHAR},
+      Product_Code = #{productCode,jdbcType=VARCHAR},
+      Trans_Code = #{transCode,jdbcType=VARCHAR},
+      Backup_Code = #{backupCode,jdbcType=VARCHAR},
+      Extend1 = #{extend1,jdbcType=VARCHAR},
+      Extend2 = #{extend2,jdbcType=VARCHAR},
+      Extend3 = #{extend3,jdbcType=VARCHAR},
+      Make_Time = #{makeTime,jdbcType=TIMESTAMP},
+      Deal_Flag = #{dealFlag,jdbcType=CHAR},
+      StandByNum1 = #{standbynum1,jdbcType=REAL},
+      StandByNum2 = #{standbynum2,jdbcType=REAL},
+      StandByDate1 = #{standbydate1,jdbcType=DATE},
+      StandByDate2 = #{standbydate2,jdbcType=DATE},
+      summary = #{summary,jdbcType=VARCHAR},
+      document_id = #{documentId,jdbcType=VARCHAR},
+      document_date = #{documentDate,jdbcType=TIMESTAMP},
+      exchange_rate1 = #{exchangeRate1,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=REAL},
+      operator = #{operator,jdbcType=VARCHAR}
+    where Seq_Id = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.FinDataResultExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_fin_data_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

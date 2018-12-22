@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.BillHangImplMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.BillHangImpl" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="RemittanceDate" property="remittancedate" jdbcType="TIMESTAMP" />
+    <result column="Remitter" property="remitter" jdbcType="VARCHAR" />
+    <result column="RemittanceCustomers" property="remittancecustomers" jdbcType="VARCHAR" />
+    <result column="remitMoney" property="remitmoney" jdbcType="REAL" />
+    <result column="bankInfo" property="bankinfo" jdbcType="VARCHAR" />
+    <result column="bankCode" property="bankcode" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="entrypeople" property="entrypeople" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="Operator_Id" property="operatorId" jdbcType="BIGINT" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, RemittanceDate, Remitter, RemittanceCustomers, remitMoney, bankInfo, bankCode, 
+    currency, status, entrypeople, remark, Create_Time, Modify_Time, Operator_Id, Modify_Operator_Id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.BillHangImplExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_bill_hang
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bill_hang
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_bill_hang
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.BillHangImplExample" >
+    delete from tbl_bill_hang
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.BillHangImpl" >
+    insert into tbl_bill_hang (id, RemittanceDate, Remitter, 
+      RemittanceCustomers, remitMoney, bankInfo, 
+      bankCode, currency, status, 
+      entrypeople, remark, Create_Time, 
+      Modify_Time, Operator_Id, Modify_Operator_Id
+      )
+    values (#{id,jdbcType=BIGINT}, #{remittancedate,jdbcType=TIMESTAMP}, #{remitter,jdbcType=VARCHAR}, 
+      #{remittancecustomers,jdbcType=VARCHAR}, #{remitmoney,jdbcType=REAL}, #{bankinfo,jdbcType=VARCHAR}, 
+      #{bankcode,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{entrypeople,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=BIGINT}, #{modifyOperatorId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.BillHangImpl" >
+    insert into tbl_bill_hang
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="remittancedate != null" >
+        RemittanceDate,
+      </if>
+      <if test="remitter != null" >
+        Remitter,
+      </if>
+      <if test="remittancecustomers != null" >
+        RemittanceCustomers,
+      </if>
+      <if test="remitmoney != null" >
+        remitMoney,
+      </if>
+      <if test="bankinfo != null" >
+        bankInfo,
+      </if>
+      <if test="bankcode != null" >
+        bankCode,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="entrypeople != null" >
+        entrypeople,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+      <if test="operatorId != null" >
+        Operator_Id,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="remittancedate != null" >
+        #{remittancedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remitter != null" >
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="remittancecustomers != null" >
+        #{remittancecustomers,jdbcType=VARCHAR},
+      </if>
+      <if test="remitmoney != null" >
+        #{remitmoney,jdbcType=REAL},
+      </if>
+      <if test="bankinfo != null" >
+        #{bankinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcode != null" >
+        #{bankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="entrypeople != null" >
+        #{entrypeople,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.BillHangImplExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_bill_hang
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_bill_hang
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.remittancedate != null" >
+        RemittanceDate = #{record.remittancedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remitter != null" >
+        Remitter = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remittancecustomers != null" >
+        RemittanceCustomers = #{record.remittancecustomers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remitmoney != null" >
+        remitMoney = #{record.remitmoney,jdbcType=REAL},
+      </if>
+      <if test="record.bankinfo != null" >
+        bankInfo = #{record.bankinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankcode != null" >
+        bankCode = #{record.bankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null" >
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entrypeople != null" >
+        entrypeople = #{record.entrypeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatorId != null" >
+        Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_bill_hang
+    set id = #{record.id,jdbcType=BIGINT},
+      RemittanceDate = #{record.remittancedate,jdbcType=TIMESTAMP},
+      Remitter = #{record.remitter,jdbcType=VARCHAR},
+      RemittanceCustomers = #{record.remittancecustomers,jdbcType=VARCHAR},
+      remitMoney = #{record.remitmoney,jdbcType=REAL},
+      bankInfo = #{record.bankinfo,jdbcType=VARCHAR},
+      bankCode = #{record.bankcode,jdbcType=VARCHAR},
+      currency = #{record.currency,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      entrypeople = #{record.entrypeople,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.BillHangImpl" >
+    update tbl_bill_hang
+    <set >
+      <if test="remittancedate != null" >
+        RemittanceDate = #{remittancedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remitter != null" >
+        Remitter = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="remittancecustomers != null" >
+        RemittanceCustomers = #{remittancecustomers,jdbcType=VARCHAR},
+      </if>
+      <if test="remitmoney != null" >
+        remitMoney = #{remitmoney,jdbcType=REAL},
+      </if>
+      <if test="bankinfo != null" >
+        bankInfo = #{bankinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcode != null" >
+        bankCode = #{bankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="entrypeople != null" >
+        entrypeople = #{entrypeople,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        Operator_Id = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.BillHangImpl" >
+    update tbl_bill_hang
+    set RemittanceDate = #{remittancedate,jdbcType=TIMESTAMP},
+      Remitter = #{remitter,jdbcType=VARCHAR},
+      RemittanceCustomers = #{remittancecustomers,jdbcType=VARCHAR},
+      remitMoney = #{remitmoney,jdbcType=REAL},
+      bankInfo = #{bankinfo,jdbcType=VARCHAR},
+      bankCode = #{bankcode,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      entrypeople = #{entrypeople,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      Operator_Id = #{operatorId,jdbcType=BIGINT},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.BillHangImplExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_bill_hang
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

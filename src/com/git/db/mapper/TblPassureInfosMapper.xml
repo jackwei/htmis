@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblPassureInfosMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblPassureInfos" >
+    <id column="passureid" property="passureid" jdbcType="BIGINT" />
+    <result column="assurenum" property="assurenum" jdbcType="VARCHAR" />
+    <result column="caseid" property="caseid" jdbcType="BIGINT" />
+    <result column="feeid" property="feeid" jdbcType="BIGINT" />
+    <result column="rewarranterid" property="rewarranterid" jdbcType="BIGINT" />
+    <result column="rewarrantersn" property="rewarrantersn" jdbcType="VARCHAR" />
+    <result column="rewarranter" property="rewarranter" jdbcType="VARCHAR" />
+    <result column="rewarranttypeid" property="rewarranttypeid" jdbcType="BIGINT" />
+    <result column="rewarranttype" property="rewarranttype" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="rmbfee" property="rmbfee" jdbcType="DECIMAL" />
+    <result column="usdfee" property="usdfee" jdbcType="DECIMAL" />
+    <result column="assurefee" property="assurefee" jdbcType="DECIMAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="guaranteeExpressNumber" property="guaranteeexpressnumber" jdbcType="VARCHAR" />
+    <result column="cancelTheGuarantee" property="canceltheguarantee" jdbcType="VARCHAR" />
+    <result column="guaranteeSender" property="guaranteesender" jdbcType="VARCHAR" />
+    <result column="guaranteeReturnDate" property="guaranteereturndate" jdbcType="DATE" />
+    <result column="trackingNumber" property="trackingnumber" jdbcType="VARCHAR" />
+    <result column="securityDate" property="securitydate" jdbcType="DATE" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="zbsendTime" property="zbsendtime" jdbcType="DATE" />
+    <result column="recognizorName" property="recognizorname" jdbcType="VARCHAR" />
+    <result column="zbgatherDate" property="zbgatherdate" jdbcType="DATE" />
+    <result column="paymentid" property="paymentid" jdbcType="BIGINT" />
+    <result column="replaceid" property="replaceid" jdbcType="BIGINT" />
+    <result column="replacedid" property="replacedid" jdbcType="BIGINT" />
+    <result column="ordernum" property="ordernum" jdbcType="VARCHAR" />
+    <result column="replacednum" property="replacednum" jdbcType="VARCHAR" />
+    <result column="alertdate" property="alertdate" jdbcType="TIMESTAMP" />
+    <result column="reportflag" property="reportflag" jdbcType="VARCHAR" />
+    <result column="servicefee" property="servicefee" jdbcType="DECIMAL" />
+    <result column="receiveflag" property="receiveflag" jdbcType="VARCHAR" />
+    <result column="assureder" property="assureder" jdbcType="VARCHAR" />
+    <result column="backdate" property="backdate" jdbcType="DATE" />
+    <result column="issuedate" property="issuedate" jdbcType="DATE" />
+    <result column="replacenum" property="replacenum" jdbcType="VARCHAR" />
+    <result column="accrate" property="accrate" jdbcType="DECIMAL" />
+    <result column="acccurrency" property="acccurrency" jdbcType="VARCHAR" />
+    <result column="accamount" property="accamount" jdbcType="DECIMAL" />
+    <result column="accdate" property="accdate" jdbcType="TIMESTAMP" />
+    <result column="arrdate" property="arrdate" jdbcType="TIMESTAMP" />
+    <result column="paydate" property="paydate" jdbcType="TIMESTAMP" />
+    <result column="CreateOperatorId" property="createoperatorid" jdbcType="BIGINT" />
+    <result column="ModifyOperatorId" property="modifyoperatorid" jdbcType="BIGINT" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="billId" property="billid" jdbcType="BIGINT" />
+    <result column="feestatuse" property="feestatuse" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    passureid, assurenum, caseid, feeid, rewarranterid, rewarrantersn, rewarranter, rewarranttypeid, 
+    rewarranttype, currency, rmbfee, usdfee, assurefee, remark, guaranteeExpressNumber, 
+    cancelTheGuarantee, guaranteeSender, guaranteeReturnDate, trackingNumber, securityDate, 
+    receiver, zbsendTime, recognizorName, zbgatherDate, paymentid, replaceid, replacedid, 
+    ordernum, replacednum, alertdate, reportflag, servicefee, receiveflag, assureder, 
+    backdate, issuedate, replacenum, accrate, acccurrency, accamount, accdate, arrdate, 
+    paydate, CreateOperatorId, ModifyOperatorId, CreateTime, ModifyTime, billId, feestatuse
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblPassureInfosExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_passureinfos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_passureinfos
+    where passureid = #{passureid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_passureinfos
+    where passureid = #{passureid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblPassureInfosExample" >
+    delete from tbl_passureinfos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblPassureInfos" >
+    insert into tbl_passureinfos (passureid, assurenum, caseid, 
+      feeid, rewarranterid, rewarrantersn, 
+      rewarranter, rewarranttypeid, rewarranttype, 
+      currency, rmbfee, usdfee, 
+      assurefee, remark, guaranteeExpressNumber, 
+      cancelTheGuarantee, guaranteeSender, guaranteeReturnDate, 
+      trackingNumber, securityDate, receiver, 
+      zbsendTime, recognizorName, zbgatherDate, 
+      paymentid, replaceid, replacedid, 
+      ordernum, replacednum, alertdate, 
+      reportflag, servicefee, receiveflag, 
+      assureder, backdate, issuedate, 
+      replacenum, accrate, acccurrency, 
+      accamount, accdate, arrdate, 
+      paydate, CreateOperatorId, ModifyOperatorId, 
+      CreateTime, ModifyTime, billId, 
+      feestatuse)
+    values (#{passureid,jdbcType=BIGINT}, #{assurenum,jdbcType=VARCHAR}, #{caseid,jdbcType=BIGINT}, 
+      #{feeid,jdbcType=BIGINT}, #{rewarranterid,jdbcType=BIGINT}, #{rewarrantersn,jdbcType=VARCHAR}, 
+      #{rewarranter,jdbcType=VARCHAR}, #{rewarranttypeid,jdbcType=BIGINT}, #{rewarranttype,jdbcType=VARCHAR}, 
+      #{currency,jdbcType=VARCHAR}, #{rmbfee,jdbcType=DECIMAL}, #{usdfee,jdbcType=DECIMAL}, 
+      #{assurefee,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{guaranteeexpressnumber,jdbcType=VARCHAR}, 
+      #{canceltheguarantee,jdbcType=VARCHAR}, #{guaranteesender,jdbcType=VARCHAR}, #{guaranteereturndate,jdbcType=DATE}, 
+      #{trackingnumber,jdbcType=VARCHAR}, #{securitydate,jdbcType=DATE}, #{receiver,jdbcType=VARCHAR}, 
+      #{zbsendtime,jdbcType=DATE}, #{recognizorname,jdbcType=VARCHAR}, #{zbgatherdate,jdbcType=DATE}, 
+      #{paymentid,jdbcType=BIGINT}, #{replaceid,jdbcType=BIGINT}, #{replacedid,jdbcType=BIGINT}, 
+      #{ordernum,jdbcType=VARCHAR}, #{replacednum,jdbcType=VARCHAR}, #{alertdate,jdbcType=TIMESTAMP}, 
+      #{reportflag,jdbcType=VARCHAR}, #{servicefee,jdbcType=DECIMAL}, #{receiveflag,jdbcType=VARCHAR}, 
+      #{assureder,jdbcType=VARCHAR}, #{backdate,jdbcType=DATE}, #{issuedate,jdbcType=DATE}, 
+      #{replacenum,jdbcType=VARCHAR}, #{accrate,jdbcType=DECIMAL}, #{acccurrency,jdbcType=VARCHAR}, 
+      #{accamount,jdbcType=DECIMAL}, #{accdate,jdbcType=TIMESTAMP}, #{arrdate,jdbcType=TIMESTAMP}, 
+      #{paydate,jdbcType=TIMESTAMP}, #{createoperatorid,jdbcType=BIGINT}, #{modifyoperatorid,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, #{billid,jdbcType=BIGINT}, 
+      #{feestatuse,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblPassureInfos" >
+    insert into tbl_passureinfos
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="passureid != null" >
+        passureid,
+      </if>
+      <if test="assurenum != null" >
+        assurenum,
+      </if>
+      <if test="caseid != null" >
+        caseid,
+      </if>
+      <if test="feeid != null" >
+        feeid,
+      </if>
+      <if test="rewarranterid != null" >
+        rewarranterid,
+      </if>
+      <if test="rewarrantersn != null" >
+        rewarrantersn,
+      </if>
+      <if test="rewarranter != null" >
+        rewarranter,
+      </if>
+      <if test="rewarranttypeid != null" >
+        rewarranttypeid,
+      </if>
+      <if test="rewarranttype != null" >
+        rewarranttype,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="rmbfee != null" >
+        rmbfee,
+      </if>
+      <if test="usdfee != null" >
+        usdfee,
+      </if>
+      <if test="assurefee != null" >
+        assurefee,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="guaranteeexpressnumber != null" >
+        guaranteeExpressNumber,
+      </if>
+      <if test="canceltheguarantee != null" >
+        cancelTheGuarantee,
+      </if>
+      <if test="guaranteesender != null" >
+        guaranteeSender,
+      </if>
+      <if test="guaranteereturndate != null" >
+        guaranteeReturnDate,
+      </if>
+      <if test="trackingnumber != null" >
+        trackingNumber,
+      </if>
+      <if test="securitydate != null" >
+        securityDate,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="zbsendtime != null" >
+        zbsendTime,
+      </if>
+      <if test="recognizorname != null" >
+        recognizorName,
+      </if>
+      <if test="zbgatherdate != null" >
+        zbgatherDate,
+      </if>
+      <if test="paymentid != null" >
+        paymentid,
+      </if>
+      <if test="replaceid != null" >
+        replaceid,
+      </if>
+      <if test="replacedid != null" >
+        replacedid,
+      </if>
+      <if test="ordernum != null" >
+        ordernum,
+      </if>
+      <if test="replacednum != null" >
+        replacednum,
+      </if>
+      <if test="alertdate != null" >
+        alertdate,
+      </if>
+      <if test="reportflag != null" >
+        reportflag,
+      </if>
+      <if test="servicefee != null" >
+        servicefee,
+      </if>
+      <if test="receiveflag != null" >
+        receiveflag,
+      </if>
+      <if test="assureder != null" >
+        assureder,
+      </if>
+      <if test="backdate != null" >
+        backdate,
+      </if>
+      <if test="issuedate != null" >
+        issuedate,
+      </if>
+      <if test="replacenum != null" >
+        replacenum,
+      </if>
+      <if test="accrate != null" >
+        accrate,
+      </if>
+      <if test="acccurrency != null" >
+        acccurrency,
+      </if>
+      <if test="accamount != null" >
+        accamount,
+      </if>
+      <if test="accdate != null" >
+        accdate,
+      </if>
+      <if test="arrdate != null" >
+        arrdate,
+      </if>
+      <if test="paydate != null" >
+        paydate,
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId,
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+      <if test="billid != null" >
+        billId,
+      </if>
+      <if test="feestatuse != null" >
+        feestatuse,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="passureid != null" >
+        #{passureid,jdbcType=BIGINT},
+      </if>
+      <if test="assurenum != null" >
+        #{assurenum,jdbcType=VARCHAR},
+      </if>
+      <if test="caseid != null" >
+        #{caseid,jdbcType=BIGINT},
+      </if>
+      <if test="feeid != null" >
+        #{feeid,jdbcType=BIGINT},
+      </if>
+      <if test="rewarranterid != null" >
+        #{rewarranterid,jdbcType=BIGINT},
+      </if>
+      <if test="rewarrantersn != null" >
+        #{rewarrantersn,jdbcType=VARCHAR},
+      </if>
+      <if test="rewarranter != null" >
+        #{rewarranter,jdbcType=VARCHAR},
+      </if>
+      <if test="rewarranttypeid != null" >
+        #{rewarranttypeid,jdbcType=BIGINT},
+      </if>
+      <if test="rewarranttype != null" >
+        #{rewarranttype,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="rmbfee != null" >
+        #{rmbfee,jdbcType=DECIMAL},
+      </if>
+      <if test="usdfee != null" >
+        #{usdfee,jdbcType=DECIMAL},
+      </if>
+      <if test="assurefee != null" >
+        #{assurefee,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeexpressnumber != null" >
+        #{guaranteeexpressnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="canceltheguarantee != null" >
+        #{canceltheguarantee,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteesender != null" >
+        #{guaranteesender,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteereturndate != null" >
+        #{guaranteereturndate,jdbcType=DATE},
+      </if>
+      <if test="trackingnumber != null" >
+        #{trackingnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="securitydate != null" >
+        #{securitydate,jdbcType=DATE},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="zbsendtime != null" >
+        #{zbsendtime,jdbcType=DATE},
+      </if>
+      <if test="recognizorname != null" >
+        #{recognizorname,jdbcType=VARCHAR},
+      </if>
+      <if test="zbgatherdate != null" >
+        #{zbgatherdate,jdbcType=DATE},
+      </if>
+      <if test="paymentid != null" >
+        #{paymentid,jdbcType=BIGINT},
+      </if>
+      <if test="replaceid != null" >
+        #{replaceid,jdbcType=BIGINT},
+      </if>
+      <if test="replacedid != null" >
+        #{replacedid,jdbcType=BIGINT},
+      </if>
+      <if test="ordernum != null" >
+        #{ordernum,jdbcType=VARCHAR},
+      </if>
+      <if test="replacednum != null" >
+        #{replacednum,jdbcType=VARCHAR},
+      </if>
+      <if test="alertdate != null" >
+        #{alertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportflag != null" >
+        #{reportflag,jdbcType=VARCHAR},
+      </if>
+      <if test="servicefee != null" >
+        #{servicefee,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveflag != null" >
+        #{receiveflag,jdbcType=VARCHAR},
+      </if>
+      <if test="assureder != null" >
+        #{assureder,jdbcType=VARCHAR},
+      </if>
+      <if test="backdate != null" >
+        #{backdate,jdbcType=DATE},
+      </if>
+      <if test="issuedate != null" >
+        #{issuedate,jdbcType=DATE},
+      </if>
+      <if test="replacenum != null" >
+        #{replacenum,jdbcType=VARCHAR},
+      </if>
+      <if test="accrate != null" >
+        #{accrate,jdbcType=DECIMAL},
+      </if>
+      <if test="acccurrency != null" >
+        #{acccurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="accamount != null" >
+        #{accamount,jdbcType=DECIMAL},
+      </if>
+      <if test="accdate != null" >
+        #{accdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arrdate != null" >
+        #{arrdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paydate != null" >
+        #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createoperatorid != null" >
+        #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billid != null" >
+        #{billid,jdbcType=BIGINT},
+      </if>
+      <if test="feestatuse != null" >
+        #{feestatuse,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblPassureInfosExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_passureinfos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_passureinfos
+    <set >
+      <if test="record.passureid != null" >
+        passureid = #{record.passureid,jdbcType=BIGINT},
+      </if>
+      <if test="record.assurenum != null" >
+        assurenum = #{record.assurenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseid != null" >
+        caseid = #{record.caseid,jdbcType=BIGINT},
+      </if>
+      <if test="record.feeid != null" >
+        feeid = #{record.feeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.rewarranterid != null" >
+        rewarranterid = #{record.rewarranterid,jdbcType=BIGINT},
+      </if>
+      <if test="record.rewarrantersn != null" >
+        rewarrantersn = #{record.rewarrantersn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rewarranter != null" >
+        rewarranter = #{record.rewarranter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rewarranttypeid != null" >
+        rewarranttypeid = #{record.rewarranttypeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.rewarranttype != null" >
+        rewarranttype = #{record.rewarranttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null" >
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rmbfee != null" >
+        rmbfee = #{record.rmbfee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.usdfee != null" >
+        usdfee = #{record.usdfee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.assurefee != null" >
+        assurefee = #{record.assurefee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeexpressnumber != null" >
+        guaranteeExpressNumber = #{record.guaranteeexpressnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.canceltheguarantee != null" >
+        cancelTheGuarantee = #{record.canceltheguarantee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteesender != null" >
+        guaranteeSender = #{record.guaranteesender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteereturndate != null" >
+        guaranteeReturnDate = #{record.guaranteereturndate,jdbcType=DATE},
+      </if>
+      <if test="record.trackingnumber != null" >
+        trackingNumber = #{record.trackingnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.securitydate != null" >
+        securityDate = #{record.securitydate,jdbcType=DATE},
+      </if>
+      <if test="record.receiver != null" >
+        receiver = #{record.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zbsendtime != null" >
+        zbsendTime = #{record.zbsendtime,jdbcType=DATE},
+      </if>
+      <if test="record.recognizorname != null" >
+        recognizorName = #{record.recognizorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zbgatherdate != null" >
+        zbgatherDate = #{record.zbgatherdate,jdbcType=DATE},
+      </if>
+      <if test="record.paymentid != null" >
+        paymentid = #{record.paymentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.replaceid != null" >
+        replaceid = #{record.replaceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.replacedid != null" >
+        replacedid = #{record.replacedid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordernum != null" >
+        ordernum = #{record.ordernum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replacednum != null" >
+        replacednum = #{record.replacednum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alertdate != null" >
+        alertdate = #{record.alertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reportflag != null" >
+        reportflag = #{record.reportflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servicefee != null" >
+        servicefee = #{record.servicefee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.receiveflag != null" >
+        receiveflag = #{record.receiveflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assureder != null" >
+        assureder = #{record.assureder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backdate != null" >
+        backdate = #{record.backdate,jdbcType=DATE},
+      </if>
+      <if test="record.issuedate != null" >
+        issuedate = #{record.issuedate,jdbcType=DATE},
+      </if>
+      <if test="record.replacenum != null" >
+        replacenum = #{record.replacenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accrate != null" >
+        accrate = #{record.accrate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.acccurrency != null" >
+        acccurrency = #{record.acccurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accamount != null" >
+        accamount = #{record.accamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.accdate != null" >
+        accdate = #{record.accdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.arrdate != null" >
+        arrdate = #{record.arrdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paydate != null" >
+        paydate = #{record.paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createoperatorid != null" >
+        CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyoperatorid != null" >
+        ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifytime != null" >
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.billid != null" >
+        billId = #{record.billid,jdbcType=BIGINT},
+      </if>
+      <if test="record.feestatuse != null" >
+        feestatuse = #{record.feestatuse,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_passureinfos
+    set passureid = #{record.passureid,jdbcType=BIGINT},
+      assurenum = #{record.assurenum,jdbcType=VARCHAR},
+      caseid = #{record.caseid,jdbcType=BIGINT},
+      feeid = #{record.feeid,jdbcType=BIGINT},
+      rewarranterid = #{record.rewarranterid,jdbcType=BIGINT},
+      rewarrantersn = #{record.rewarrantersn,jdbcType=VARCHAR},
+      rewarranter = #{record.rewarranter,jdbcType=VARCHAR},
+      rewarranttypeid = #{record.rewarranttypeid,jdbcType=BIGINT},
+      rewarranttype = #{record.rewarranttype,jdbcType=VARCHAR},
+      currency = #{record.currency,jdbcType=VARCHAR},
+      rmbfee = #{record.rmbfee,jdbcType=DECIMAL},
+      usdfee = #{record.usdfee,jdbcType=DECIMAL},
+      assurefee = #{record.assurefee,jdbcType=DECIMAL},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      guaranteeExpressNumber = #{record.guaranteeexpressnumber,jdbcType=VARCHAR},
+      cancelTheGuarantee = #{record.canceltheguarantee,jdbcType=VARCHAR},
+      guaranteeSender = #{record.guaranteesender,jdbcType=VARCHAR},
+      guaranteeReturnDate = #{record.guaranteereturndate,jdbcType=DATE},
+      trackingNumber = #{record.trackingnumber,jdbcType=VARCHAR},
+      securityDate = #{record.securitydate,jdbcType=DATE},
+      receiver = #{record.receiver,jdbcType=VARCHAR},
+      zbsendTime = #{record.zbsendtime,jdbcType=DATE},
+      recognizorName = #{record.recognizorname,jdbcType=VARCHAR},
+      zbgatherDate = #{record.zbgatherdate,jdbcType=DATE},
+      paymentid = #{record.paymentid,jdbcType=BIGINT},
+      replaceid = #{record.replaceid,jdbcType=BIGINT},
+      replacedid = #{record.replacedid,jdbcType=BIGINT},
+      ordernum = #{record.ordernum,jdbcType=VARCHAR},
+      replacednum = #{record.replacednum,jdbcType=VARCHAR},
+      alertdate = #{record.alertdate,jdbcType=TIMESTAMP},
+      reportflag = #{record.reportflag,jdbcType=VARCHAR},
+      servicefee = #{record.servicefee,jdbcType=DECIMAL},
+      receiveflag = #{record.receiveflag,jdbcType=VARCHAR},
+      assureder = #{record.assureder,jdbcType=VARCHAR},
+      backdate = #{record.backdate,jdbcType=DATE},
+      issuedate = #{record.issuedate,jdbcType=DATE},
+      replacenum = #{record.replacenum,jdbcType=VARCHAR},
+      accrate = #{record.accrate,jdbcType=DECIMAL},
+      acccurrency = #{record.acccurrency,jdbcType=VARCHAR},
+      accamount = #{record.accamount,jdbcType=DECIMAL},
+      accdate = #{record.accdate,jdbcType=TIMESTAMP},
+      arrdate = #{record.arrdate,jdbcType=TIMESTAMP},
+      paydate = #{record.paydate,jdbcType=TIMESTAMP},
+      CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      billId = #{record.billid,jdbcType=BIGINT},
+      feestatuse = #{record.feestatuse,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblPassureInfos" >
+    update tbl_passureinfos
+    <set >
+      <if test="assurenum != null" >
+        assurenum = #{assurenum,jdbcType=VARCHAR},
+      </if>
+      <if test="caseid != null" >
+        caseid = #{caseid,jdbcType=BIGINT},
+      </if>
+      <if test="feeid != null" >
+        feeid = #{feeid,jdbcType=BIGINT},
+      </if>
+      <if test="rewarranterid != null" >
+        rewarranterid = #{rewarranterid,jdbcType=BIGINT},
+      </if>
+      <if test="rewarrantersn != null" >
+        rewarrantersn = #{rewarrantersn,jdbcType=VARCHAR},
+      </if>
+      <if test="rewarranter != null" >
+        rewarranter = #{rewarranter,jdbcType=VARCHAR},
+      </if>
+      <if test="rewarranttypeid != null" >
+        rewarranttypeid = #{rewarranttypeid,jdbcType=BIGINT},
+      </if>
+      <if test="rewarranttype != null" >
+        rewarranttype = #{rewarranttype,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="rmbfee != null" >
+        rmbfee = #{rmbfee,jdbcType=DECIMAL},
+      </if>
+      <if test="usdfee != null" >
+        usdfee = #{usdfee,jdbcType=DECIMAL},
+      </if>
+      <if test="assurefee != null" >
+        assurefee = #{assurefee,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeexpressnumber != null" >
+        guaranteeExpressNumber = #{guaranteeexpressnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="canceltheguarantee != null" >
+        cancelTheGuarantee = #{canceltheguarantee,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteesender != null" >
+        guaranteeSender = #{guaranteesender,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteereturndate != null" >
+        guaranteeReturnDate = #{guaranteereturndate,jdbcType=DATE},
+      </if>
+      <if test="trackingnumber != null" >
+        trackingNumber = #{trackingnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="securitydate != null" >
+        securityDate = #{securitydate,jdbcType=DATE},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="zbsendtime != null" >
+        zbsendTime = #{zbsendtime,jdbcType=DATE},
+      </if>
+      <if test="recognizorname != null" >
+        recognizorName = #{recognizorname,jdbcType=VARCHAR},
+      </if>
+      <if test="zbgatherdate != null" >
+        zbgatherDate = #{zbgatherdate,jdbcType=DATE},
+      </if>
+      <if test="paymentid != null" >
+        paymentid = #{paymentid,jdbcType=BIGINT},
+      </if>
+      <if test="replaceid != null" >
+        replaceid = #{replaceid,jdbcType=BIGINT},
+      </if>
+      <if test="replacedid != null" >
+        replacedid = #{replacedid,jdbcType=BIGINT},
+      </if>
+      <if test="ordernum != null" >
+        ordernum = #{ordernum,jdbcType=VARCHAR},
+      </if>
+      <if test="replacednum != null" >
+        replacednum = #{replacednum,jdbcType=VARCHAR},
+      </if>
+      <if test="alertdate != null" >
+        alertdate = #{alertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportflag != null" >
+        reportflag = #{reportflag,jdbcType=VARCHAR},
+      </if>
+      <if test="servicefee != null" >
+        servicefee = #{servicefee,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveflag != null" >
+        receiveflag = #{receiveflag,jdbcType=VARCHAR},
+      </if>
+      <if test="assureder != null" >
+        assureder = #{assureder,jdbcType=VARCHAR},
+      </if>
+      <if test="backdate != null" >
+        backdate = #{backdate,jdbcType=DATE},
+      </if>
+      <if test="issuedate != null" >
+        issuedate = #{issuedate,jdbcType=DATE},
+      </if>
+      <if test="replacenum != null" >
+        replacenum = #{replacenum,jdbcType=VARCHAR},
+      </if>
+      <if test="accrate != null" >
+        accrate = #{accrate,jdbcType=DECIMAL},
+      </if>
+      <if test="acccurrency != null" >
+        acccurrency = #{acccurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="accamount != null" >
+        accamount = #{accamount,jdbcType=DECIMAL},
+      </if>
+      <if test="accdate != null" >
+        accdate = #{accdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arrdate != null" >
+        arrdate = #{arrdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paydate != null" >
+        paydate = #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billid != null" >
+        billId = #{billid,jdbcType=BIGINT},
+      </if>
+      <if test="feestatuse != null" >
+        feestatuse = #{feestatuse,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where passureid = #{passureid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblPassureInfos" >
+    update tbl_passureinfos
+    set assurenum = #{assurenum,jdbcType=VARCHAR},
+      caseid = #{caseid,jdbcType=BIGINT},
+      feeid = #{feeid,jdbcType=BIGINT},
+      rewarranterid = #{rewarranterid,jdbcType=BIGINT},
+      rewarrantersn = #{rewarrantersn,jdbcType=VARCHAR},
+      rewarranter = #{rewarranter,jdbcType=VARCHAR},
+      rewarranttypeid = #{rewarranttypeid,jdbcType=BIGINT},
+      rewarranttype = #{rewarranttype,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      rmbfee = #{rmbfee,jdbcType=DECIMAL},
+      usdfee = #{usdfee,jdbcType=DECIMAL},
+      assurefee = #{assurefee,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      guaranteeExpressNumber = #{guaranteeexpressnumber,jdbcType=VARCHAR},
+      cancelTheGuarantee = #{canceltheguarantee,jdbcType=VARCHAR},
+      guaranteeSender = #{guaranteesender,jdbcType=VARCHAR},
+      guaranteeReturnDate = #{guaranteereturndate,jdbcType=DATE},
+      trackingNumber = #{trackingnumber,jdbcType=VARCHAR},
+      securityDate = #{securitydate,jdbcType=DATE},
+      receiver = #{receiver,jdbcType=VARCHAR},
+      zbsendTime = #{zbsendtime,jdbcType=DATE},
+      recognizorName = #{recognizorname,jdbcType=VARCHAR},
+      zbgatherDate = #{zbgatherdate,jdbcType=DATE},
+      paymentid = #{paymentid,jdbcType=BIGINT},
+      replaceid = #{replaceid,jdbcType=BIGINT},
+      replacedid = #{replacedid,jdbcType=BIGINT},
+      ordernum = #{ordernum,jdbcType=VARCHAR},
+      replacednum = #{replacednum,jdbcType=VARCHAR},
+      alertdate = #{alertdate,jdbcType=TIMESTAMP},
+      reportflag = #{reportflag,jdbcType=VARCHAR},
+      servicefee = #{servicefee,jdbcType=DECIMAL},
+      receiveflag = #{receiveflag,jdbcType=VARCHAR},
+      assureder = #{assureder,jdbcType=VARCHAR},
+      backdate = #{backdate,jdbcType=DATE},
+      issuedate = #{issuedate,jdbcType=DATE},
+      replacenum = #{replacenum,jdbcType=VARCHAR},
+      accrate = #{accrate,jdbcType=DECIMAL},
+      acccurrency = #{acccurrency,jdbcType=VARCHAR},
+      accamount = #{accamount,jdbcType=DECIMAL},
+      accdate = #{accdate,jdbcType=TIMESTAMP},
+      arrdate = #{arrdate,jdbcType=TIMESTAMP},
+      paydate = #{paydate,jdbcType=TIMESTAMP},
+      CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      billId = #{billid,jdbcType=BIGINT},
+      feestatuse = #{feestatuse,jdbcType=VARCHAR}
+    where passureid = #{passureid,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.TblPassureInfosExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_passureinfos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

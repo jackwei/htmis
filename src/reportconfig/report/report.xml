@@ -1,0 +1,2914 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<applications xmlns="http://www.wabacus.com"
+			   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			   xsi:schemaLocation="http://www.wabacus.com ../xsd/wabacus.applications.xsd">
+
+	<page id="listpage1" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="员工基本信息列表" pagesize="20" scrollstyle="image" rowselect="checkbox" cellresize="2"  dataexport="richexcel">
+			<display>
+			    <col column="{col-rowselect}" label="选择" width="50" valuestyleproperty=""/>
+				<col column="{sequence:1}" label="序号"/>
+				<col column="no" label="工号" clickorderby="true" valuestyleproperty="style='mso-number-format:\@'"/>
+				<col column="name" label="姓名" clickorderby="true"/>
+				<group label="基本信息">
+					<col column="sex" label="性别"/>
+					<col column="age" label="年龄" clickorderby="true" filter="true" filterwidth="120px"/>
+					<col column="birthday" label="出生日期" clickorderby="true"/>
+				</group>
+				<col column="deptname" label="所属部门" filter="true" filterwidth="120px"/>
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="详细信息"/>
+			</display>
+			<sql>
+				<value>
+					<![CDATA[SELECT no,name,sex,age,birthday,deptname FROM tbl_baseinfo A left join tbl_department B on A.deptno=B.deptno where {#condition#} order by no]]>
+				</value>
+				<condition name="txtno" label="工号">
+					<value>
+						<![CDATA[(no like  '%#data#%' )]]>
+					</value>
+				</condition>
+				<condition name="txtname" label="姓名">
+					<value>
+						<![CDATA[(name like  '%#data#%' )]]>
+					</value>
+				</condition>
+				<condition name="txtsex" label="性别">
+					<value>
+						<![CDATA[(sex =#data#)]]>
+					</value>
+					<inputbox type="selectbox">
+						<option value="" label="性别"/>
+						<option value="1" label="男"/> 
+						<option value="0" label="女" />
+					</inputbox>
+				</condition>
+				<condition name="defaultSex" defaultvalue="url{sex}" label="默认性别" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(sex =#data#)]]>
+						</value>
+					</condition>
+			</sql>
+			<format>
+			  <value>
+			         <![CDATA[
+					sex=sex==null?"1":sex.trim();
+					if(sex.equals("0")) sex="女";
+					else sex="男";
+					birthday=birthday==null?"":birthday.trim();
+					int idx=birthday.indexOf(" ");//判断是否有时间，有的话就去掉时间，只显示日期
+					if(idx>0) birthday=birthday.substring(0,idx);
+					
+					detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('/htmis_hs/ShowReport.wx?PAGEID=test1'+'&c=1',{title: "+birthday+",initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					
+					]]>
+					
+			  </value>
+			</format>
+		</report>
+	</page>
+	
+	<page id="test1">
+		<report id="report1" title="" pagesize="20" scrollstyle="image" cellresize="2"  dataexport="richexcel">
+<!-- 			 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String flag = rrequest.getStringAttribute("flag","");
+  String condition = "";
+  if(flag.equals("1")){
+     condition = " and b.issuedate is not null ";
+  }else if(flag.equals("2")){
+     condition = " and b.issuedate is not null and b.backdate is null ";
+  }else if(flag.equals("3")){
+     condition = " and b.backdate is not null ";
+  }
+  rrequest.getRequest().setAttribute("condition",condition);
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata> 
+   </interceptor> -->
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="ah" label="案号" clickorderby="true" />
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="consignorsn" label="委托人" clickorderby="true" />
+				<col column="rewarrantersn" label="反担保人" clickorderby="true" />
+				<col column="issuedate" label="出具日期" clickorderby="true" />
+				<col column="currency" label="币种" clickorderby="true" />
+				<col column="assurefee" label="担保金额" clickorderby="true" />
+				<col column="usdfee" label="USD金额" clickorderby="true" />
+			</display>
+						<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(usdfee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="8" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+
+			<sql>
+				<value>
+					<![CDATA[SELECT 
+  CONCAT(a.casenumber, a.`excasenumber`) AS ah,
+  a.shipname ,
+  a.consignorsn,
+  b.rewarrantersn,
+  b.currency ,
+  b.assurefee ,
+  b.rmbfee ,
+  b.usdfee,
+  b.issuedate  
+FROM
+  tbl_case a,
+  tbl_passureinfos b 
+WHERE a.case_id = b.caseid
+  AND b.usdfee > 0 
+  AND {#condition#}
+ORDER BY b.usdfee ]]>
+				</value>
+				<condition name="flag1" defaultvalue="url{flag1}" label="出具担保" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate is not null)]]>
+						</value>
+					</condition>
+					
+					<condition name="flag2" defaultvalue="url{flag2}" label="有效担保" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate is not null and b.backdate is null)]]>
+						</value>
+					</condition>
+				
+				<condition name="flag3" defaultvalue="url{flag3}" label="撤销担保" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.backdate is not null)]]>
+						</value>
+					</condition>
+				
+				
+				<condition name="a" defaultvalue="url{a}" label="1-130万(含)" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.usdfee >=1 AND b.usdfee <=1300000)]]>
+						</value>
+					</condition>
+					
+					<condition name="b" defaultvalue="url{b}" label="130万-300万(含)" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.usdfee > 1300000 and b.usdfee <=3000000)]]>
+						</value>
+					</condition>
+				
+				<condition name="c" defaultvalue="url{c}" label="300万以上" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.usdfee > 3000000)]]>
+						</value>
+					</condition>
+				
+				<condition name="isstart" defaultvalue="url{istart}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="isend" defaultvalue="url{iend}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				
+				<condition name="cxstart" defaultvalue="url{cstart}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.backdate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="cxend" defaultvalue="url{cend}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.backdate <= #data# and b.issuedate is not null)]]>
+						</value>
+				</condition>
+				
+				<condition name="yxstart" defaultvalue="url{ystart}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yxend" defaultvalue="url{yend}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data# and b.backdate is null)]]>
+						</value>
+				</condition>
+					
+				<condition name="testorg" defaultvalue="url{orgcode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="testuser" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>	
+			</sql>
+			
+		</report>
+	</page>
+	
+	<page id="test2">
+		<report id="report1" title="" pagesize="20" scrollstyle="image" cellresize="2"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="ah" label="案号" clickorderby="true" />
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="accidentport" label="事发口岸" clickorderby="true" />
+				<col column="consignorsn" label="委托人" clickorderby="true" />
+				<col column="feenumber" label="账单编号" clickorderby="true" />
+				<col column="sr" label="收入" clickorderby="true" />
+				<col column="feeamount" label="发账金额" clickorderby="true" />
+			</display>
+			<sql>
+				<value>
+					<![CDATA[SELECT 
+  CONCAT(a.casenumber,a.excasenumber) AS ah,
+  a.shipname ,
+  a.accidentport ,
+  a.consignorsn ,
+  b.feenumber ,
+  b.servicefee + b.expendses AS sr,
+  b.feeamount
+FROM
+  tbl_case a,
+  tbl_case_bill b 
+WHERE a.case_id= b.case_id 
+ AND b.feetype IS NULL
+  AND {#condition#}  ]]>
+				</value>
+				
+				<condition name="a" defaultvalue="url{a}" label="1~800(含)" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[((b.expendses + b.servicefee) >=1 AND (b.expendses + b.servicefee) <=800 and b.currency = 'USD')]]>
+						</value>
+					</condition>
+					
+					<condition name="b" defaultvalue="url{b}" label="800~3000(含)" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[((b.expendses + b.servicefee) >800 AND (b.expendses + b.servicefee) <=3000 and b.currency = 'USD')]]>
+						</value>
+					</condition>
+				
+				<condition name="c" defaultvalue="url{c}" label="3000~10000(含)" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[((b.expendses + b.servicefee) >3000 AND (b.expendses + b.servicefee) <=10000 and b.currency = 'USD')]]>
+						</value>
+					</condition>
+					
+				<condition name="d" defaultvalue="url{d}" label="10000以上" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[((b.expendses + b.servicefee) >=10000 and b.currency = 'USD')]]>
+						</value>
+					</condition>
+					
+				<condition name="e" defaultvalue="url{e}" label="其他" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.currency <> 'USD')]]>
+						</value>
+					</condition>
+					<condition name="bz" defaultvalue="url{bz}" label="其他" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.currency = #data#)]]>
+						</value>
+					</condition>
+						
+				
+				<condition name="acctart" defaultvalue="url{accstart}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.accdate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="accend" defaultvalue="url{accend}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.accdate <= #data#)]]>
+						</value>
+				</condition>
+				
+				<condition name="arrstart" defaultvalue="url{arrtart}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.arrdate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="arrend" defaultvalue="url{arrend}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.arrdate <= #data# )]]>
+						</value>
+				</condition>
+					
+				<condition name="torg" defaultvalue="url{orgcode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="tuser" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>	
+			</sql>
+			
+		</report>
+	</page>
+	
+	
+	<page id="bz01">
+		<report id="report1" title="委托人案件数同期比较" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+			<display>
+				<col column="consignortypename" label="委托人分类" clickorderby="true" rowgroup="true" />
+				<col column="consignorsn" label="委托人名称" clickorderby="true"/>
+				<col column="bq" label="本期" clickorderby="true"/>
+				<col column="sq" label="上期" clickorderby="true"/>
+				<col column="zb" label="占比" clickorderby="true"/>
+			</display>
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(bq)" datatype="int"></statitem>
+					     <statitem property="item2" value="sum(sq)" datatype="int"></statitem>
+					     <statitem property="item3" value="sum(bq)/sum(sq)" datatype="float"></statitem>
+				    </statitems>
+				    <rowgroup-subrow column="consignortypename"><!-- 针对“委托人分类”分组的统计 -->
+					     <subcol property="provProp1" colspan="1" valuestyleproperty="align='center' bgcolor='#eeeeee'"></subcol>
+					     <subcol property="provProp2" colspan="1" valuestyleproperty="align='center' bgcolor='#eeeeee'"></subcol>
+					     <subcol property="provProp3" colspan="1" valuestyleproperty="align='center' bgcolor='#eeeeee'"></subcol>
+					     <subcol property="provProp4" colspan="1" valuestyleproperty="align='center' bgcolor='#eeeeee'"></subcol>
+				    </rowgroup-subrow>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop3" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop4" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[
+						if(item1==null) item1=new Integer(0);//此统计项声明成int型，所以生成的成员变量为Integer类型，如果没有，则置成0，以免显示成null
+						if(item2==null) item2=new Integer(0);
+						if(type.equals("consignortypename"))
+						{//当前正在统计“委托人分类”分组数据
+							provProp1="小计";
+							provProp2=Tools.formatDouble(String.valueOf(item1),"#,###");
+							provProp3=Tools.formatDouble(String.valueOf(item2),"#,###");//对浮点数进行格式化显示
+							provProp4=Tools.formatDouble(String.valueOf(item3),"#,###0.00%");
+						}else
+						{//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###");
+							sprop3=Tools.formatDouble(String.valueOf(item2),"#,###");
+							sprop4=Tools.formatDouble(String.valueOf(item3),"#,###0.00%");
+						}
+						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay> 
+				    
+			<sql>
+				<value>
+					<![CDATA[SELECT case when b.consignortypename is not null 
+					                     then b.consignortypename 
+					                     else a.consignortypename
+					                      end consignortypename,
+					                case when b.consignorsn is not null
+					                     then b.consignorsn
+					                     else a.consignorsn
+					                      end consignorsn,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  consignortypename,
+  consignorsn,
+  COUNT(DISTINCT casenumber) AS bq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart# }
+  AND { setdate <= #stend# }
+  AND { accidentdate >= #afstart# }
+  AND { accidentdate <= #afend# }
+  AND {#condition#}
+GROUP BY  consignortypename,consignorsn) a left join
+(SELECT 
+  consignortypename,
+  consignorsn,
+  COUNT(DISTINCT casenumber) AS sq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart1# }
+  AND { setdate <= #stend1# }
+  AND { accidentdate >= #afstart1# }
+  AND { accidentdate <= #afend1# }
+  AND {#condition#}
+GROUP BY  consignortypename,consignorsn) b
+  on a.consignortypename = b.consignortypename
+  AND a.consignorsn = b.consignorsn
+  
+  union
+  
+  SELECT case when b.consignortypename is not null 
+					                     then b.consignortypename 
+					                     else a.consignortypename
+					                      end consignortypename,
+					                case when b.consignorsn is not null
+					                     then b.consignorsn
+					                     else a.consignorsn
+					                      end consignorsn,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  consignortypename,
+  consignorsn,
+  COUNT(DISTINCT casenumber) AS bq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart# }
+  AND { setdate <= #stend# }
+  AND { accidentdate >= #afstart# }
+  AND { accidentdate <= #afend# }
+  AND {#condition#}
+GROUP BY  consignortypename,consignorsn) a right join
+(SELECT 
+  consignortypename,
+  consignorsn,
+  COUNT(DISTINCT casenumber) AS sq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart1# }
+  AND { setdate <= #stend1# }
+  AND { accidentdate >= #afstart1# }
+  AND { accidentdate <= #afend1# }
+  AND {#condition#}
+GROUP BY  consignortypename,consignorsn) b
+  on a.consignortypename = b.consignortypename
+  AND a.consignorsn = b.consignorsn 
+  ]]>
+				</value>
+				   <condition name="ststart" defaultvalue="url{setstartdate}" label="立案开始" hidden="true" left="30"></condition>
+				   <condition name="stend" defaultvalue="url{setenddate}" label="立案结束" hidden="true" left="30"></condition>			
+			       <condition name="afstart" defaultvalue="url{afstartdate}" label="案发开始" hidden="true" left="30"></condition>
+				   <condition name="afend" defaultvalue="url{afenddate}" label="案发结束" hidden="true" left="30"></condition>
+				   
+				   <condition name="ststart1" defaultvalue="url{setstartdate1}" label="立案开始1" hidden="true" left="30"></condition>
+				   <condition name="stend1" defaultvalue="url{setenddate1}" label="立案结束1" hidden="true" left="30"></condition>			
+			       <condition name="afstart1" defaultvalue="url{afstartdate1}" label="案发开始1" hidden="true" left="30"></condition>
+				   <condition name="afend1" defaultvalue="url{afenddate1}" label="案发结束1" hidden="true" left="30"></condition>
+				   
+			       <condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(orgcode = #data#)]]>
+						</value>
+				   </condition>
+				   <condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				   </condition>
+			</sql>
+			
+			<format>
+			 <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+			  <value>
+					zb=zb==null?"":zb.trim();
+					zb = Tools.formatDouble(String.valueOf(zb),"#,###0.00%");
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+	<page id="bz02">
+		<report id="report1" title="委托人收入同期比较" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="consignortypename" label="委托人分类" clickorderby="true" rowgroup="true" />
+				<col column="currency" label="币种" rowgroup="true" clickorderby="true"/>
+				<col column="consignorsn" label="委托人名称" clickorderby="true"/>
+				<col column="bq" label="本期" clickorderby="true"/>
+				<col column="sq" label="上期" clickorderby="true"/>
+				<col column="zb" label="占比" clickorderby="true" />
+			</display>
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(bq)" datatype="int"></statitem>
+					     <statitem property="item2" value="sum(sq)" datatype="int"></statitem>
+					     <statitem property="item3" value="sum(bq)/sum(sq)" datatype="float"></statitem>
+				    </statitems>
+				    <rowgroup-subrow column="currency"><!-- 针对“币种”分组的统计 -->
+					     <subcol property="provProp1" colspan="1" valuestyleproperty="align='center' bgcolor='#eeeeee'"></subcol>
+					     <subcol property="provProp2" colspan="1" valuestyleproperty="align='center' bgcolor='#eeeeee'"></subcol>
+					     <subcol property="provProp3" colspan="1" valuestyleproperty="align='center' bgcolor='#eeeeee'"></subcol>
+					     <subcol property="provProp4" colspan="1" valuestyleproperty="align='center' bgcolor='#eeeeee'"></subcol>
+				    </rowgroup-subrow>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="3" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop3" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop4" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[
+						if(type.equals("currency"))
+						{//当前正在统计“币种”分组数据
+							provProp1="小计";
+							provProp2=Tools.formatDouble(String.valueOf(item1),"#,###");
+							provProp3=Tools.formatDouble(String.valueOf(item2),"#,###");//对浮点数进行格式化显示
+							provProp4=Tools.formatDouble(String.valueOf(item3),"#,###0.00%");
+						}else{
+						    sprop1="总计";
+						    sprop2=Tools.formatDouble(String.valueOf(item1),"#,###");
+							sprop3=Tools.formatDouble(String.valueOf(item2),"#,###");//对浮点数进行格式化显示
+							sprop4=Tools.formatDouble(String.valueOf(item3),"#,###0.00%");
+						
+						}
+						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay> 
+				    
+			<sql>
+				<value>
+					<![CDATA[SELECT case when b.consignortypename is not null 
+					                     then b.consignortypename 
+					                     else a.consignortypename
+					                      end consignortypename,
+					                case when b.consignorsn is not null
+					                     then b.consignorsn
+					                     else a.consignorsn
+					                      end consignorsn,
+					                case when b.currency is not null
+					                     then b.currency
+					                     else a.currency
+					                      end currency,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  t1.consignortypename,
+  t1.consignorsn,
+  t2.currency,
+  sum(t2.expendses+t2.servicefee) AS bq
+FROM
+  tbl_case t1, tbl_case_bill t2
+WHERE t1.case_id = t2.case_id
+  AND { t2.accdate >= #accstart# }
+  AND { t2.accdate <= #accend# }
+  AND { t2.arrdate >= #arrstart# }
+  AND { t2.arrdate <= #arrend# }
+  AND {#condition#}
+GROUP BY  consignortypename,consignorsn,currency) a left join
+(SELECT 
+  t1.consignortypename,
+  t1.consignorsn,
+  t3.currency,
+  sum(t3.expendses+t3.servicefee) AS sq
+FROM
+  tbl_case t1, tbl_case_bill t3
+WHERE t1.case_id = t3.case_id
+  AND { t3.accdate >= #accstart1# }
+  AND { t3.accdate <= #accend1# }
+  AND { t3.arrdate >= #arrstart1# }
+  AND { t3.arrdate <= #arrend1# }
+  AND {#condition#}
+GROUP BY  consignortypename,consignorsn,currency) b
+  on a.consignortypename = b.consignortypename
+  AND a.consignorsn = b.consignorsn
+  AND a.currency = b.currency
+  
+  union
+  
+  SELECT case when b.consignortypename is not null 
+					                     then b.consignortypename 
+					                     else a.consignortypename
+					                      end consignortypename,
+					                case when b.consignorsn is not null
+					                     then b.consignorsn
+					                     else a.consignorsn
+					                      end consignorsn,
+					                case when b.currency is not null
+					                     then b.currency
+					                     else a.currency
+					                      end currency,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  t1.consignortypename,
+  t1.consignorsn,
+  t2.currency,
+  sum(t2.expendses+t2.servicefee) AS bq
+FROM
+  tbl_case t1, tbl_case_bill t2
+WHERE t1.case_id = t2.case_id
+  AND { t2.accdate >= #accstart# }
+  AND { t2.accdate <= #accend# }
+  AND { t2.arrdate >= #arrstart# }
+  AND { t2.arrdate <= #arrend# }
+  AND {#condition#}
+GROUP BY  consignortypename,consignorsn,currency) a right join
+(SELECT 
+  t1.consignortypename,
+  t1.consignorsn,
+  t3.currency,
+  sum(t3.expendses+t3.servicefee) AS sq
+FROM
+  tbl_case t1, tbl_case_bill t3
+WHERE t1.case_id = t3.case_id
+  AND { t3.accdate >= #accstart1# }
+  AND { t3.accdate <= #accend1# }
+  AND { t3.arrdate >= #arrstart1# }
+  AND { t3.arrdate <= #arrend1# }
+  AND {#condition#}
+GROUP BY  consignortypename,consignorsn,currency) b
+  on a.consignortypename = b.consignortypename
+  AND a.consignorsn = b.consignorsn
+  AND a.currency = b.currency
+  
+   ]]>
+				</value>
+				<condition name="accstart" defaultvalue="url{accstartdate}" label="今年发账开始日期" hidden="true" labelstyle="2"></condition>
+				<condition name="accend" defaultvalue="url{accenddate}" label="今年发账结束日期" hidden="true" labelstyle="2"></condition>
+				<condition name="accstart1" defaultvalue="url{accstartdate1}" label="去年发账开始日期1" hidden="true" labelstyle="2"></condition>
+				<condition name="accend1" defaultvalue="url{accenddate1}" label="去年发账结束日期1" hidden="true" labelstyle="2"></condition>
+				
+				<condition name="arrstart" defaultvalue="url{arrstartdate}" label="今年到账开始日期" hidden="true" labelstyle="2"></condition>
+				<condition name="arrend" defaultvalue="url{arrenddate}" label="今年到账结束日期" hidden="true" labelstyle="2"></condition>
+				<condition name="arrstart1" defaultvalue="url{arrstartdate1}" label="去年到账开始日期1" hidden="true" labelstyle="2"></condition>
+				<condition name="arrend1" defaultvalue="url{arrenddate1}" label="去年到账结束日期1" hidden="true" labelstyle="2"></condition>
+				
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(t1.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(t1.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+			
+			<format>
+			 <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+			  <value>
+					zb=zb==null?"":zb.trim();
+					zb = Tools.formatDouble(String.valueOf(zb),"#,###0.00%");
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+	<page id="bz03">
+		<report id="report1" title="生成现有效担保" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="ah" label="案号" clickorderby="true"/>
+				<col column="rewarrantersn" label="反担保人" clickorderby="true"/>
+				<col column="consignorsn" label="委托人" clickorderby="true"/>
+				<col column="rewarranttype" label="评级" clickorderby="true" />
+				<col column="assurenum" label="编号" clickorderby="true"/>
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="casedes" label="事由" clickorderby="true"/>
+				<col column="issuedate" label="出具日期" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="assurefee" label="担保函金额" clickorderby="true"/>
+				<col column="usdfee" label="担保函金额USD" clickorderby="true"/>
+			</display>	   
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(usdfee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="13" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+			 
+			<sql>
+				<value>
+					<![CDATA[select CONCAT(a.casenumber, a.excasenumber) AS ah,b.rewarranttype,b.assurenum,a.shipname,b.assureder,b.recognizorName,a.casedes,b.issuedate,b.currency,b.assurefee,b.usdfee,b.accamount,b.rewarrantersn,a.consignorsn from tbl_case a,tbl_passureinfos b where 1=1 and a.Case_Id = b.caseid and b.issuedate is not null and b.backdate IS NULL and {#condition#} ]]>
+				</value>
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+
+		</report>
+	</page>
+	<page id="bz04">
+		<report id="report1" title="出具担保明细" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="ah" label="案号" clickorderby="true"/>
+			    <col column="rewarrantersn" label="反担保人" clickorderby="true"/> 
+				<col column="consignorsn" label="委托人" clickorderby="true"/>
+				<col column="rewarranttype" label="评级" clickorderby="true" />
+				<col column="assurenum" label="编号" clickorderby="true"/>
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="casedes" label="事由" clickorderby="true"/>
+				<col column="issuedate" label="出具日期" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="assurefee" label="担保函金额" clickorderby="true"/>
+				<col column="usdfee" label="担保函金额USD" clickorderby="true"/>
+			</display>
+						<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(usdfee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="13" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>	    
+			<sql>
+				<value>
+					<![CDATA[select CONCAT(a.casenumber, a.excasenumber) AS ah,b.rewarranttype,b.assurenum,a.shipname,b.assureder,b.recognizorName,a.casedes,b.issuedate,b.currency,b.assurefee,b.usdfee,b.accamount,b.rewarrantersn,a.consignorsn from tbl_case a,tbl_passureinfos b where 1=1 and a.Case_Id = b.caseid and b.issuedate is not null and {#condition#} ]]>
+				</value>
+				
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultuser" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+
+		</report>
+	</page>
+	
+	<page id="bz05">
+		<report id="report1" title="撤销担保明细" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="rewarrantersn" label="反担保人" clickorderby="true"/>
+				<col column="consignorsn" label="委托人" clickorderby="true"/>
+				<col column="rewarranttype" label="评级" clickorderby="true" />
+				<col column="assurenum" label="编号" clickorderby="true"/>
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="casedes" label="事由" clickorderby="true"/>
+				<col column="issuedate" label="出具日期" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="assurefee" label="担保函金额" clickorderby="true"/>
+				<col column="usdfee" label="担保函金额USD" clickorderby="true"/>
+			</display>
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(usdfee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="12" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+				    
+			<sql>
+				<value>
+					<![CDATA[select b.rewarranttype,b.assurenum,a.shipname,b.assureder,b.recognizorName,a.casedes,b.issuedate,b.currency,b.assurefee,b.usdfee,b.accamount,b.rewarrantersn,a.consignorsn from tbl_case a,tbl_passureinfos b where 1=1 and a.Case_Id = b.caseid and b.backdate is not null and {#condition#} ]]>
+				</value>
+				
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.backdate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.backdate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+
+		</report>
+	</page>
+	<page id="bz06">
+		<report id="report1" title="上报集团担保明细" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="rewarrantersn" label="反担保人" clickorderby="true"/>
+				<col column="consignorsn" label="委托人" clickorderby="true"/>
+				<col column="rewarranttype" label="评级" clickorderby="true" />
+				<col column="assurenum" label="编号" clickorderby="true"/>
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="casedes" label="事由" clickorderby="true"/>
+				<col column="issuedate" label="出具日期" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="assurefee" label="担保函金额" clickorderby="true"/>
+				<col column="usdfee" label="担保函金额USD" clickorderby="true"/>
+			</display>
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(usdfee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="12" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+				    
+			<sql>
+				<value>
+					<![CDATA[select b.rewarranttype,b.assurenum,a.shipname,b.assureder,b.recognizorName,a.casedes,b.issuedate,b.currency,b.assurefee,b.usdfee,b.accamount,b.rewarrantersn,a.consignorsn from tbl_case a,tbl_passureinfos b where 1=1 and a.Case_Id = b.caseid and b.issuedate is not null and b.reportflag = '1' and b.usdfee > 1500000 and {#condition#} ]]>
+				</value>
+				
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+
+		</report>
+	</page>
+	<page id="bz07">
+		<report id="report1" title="有效担保中金额居前五位" pagesize="20"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="rewarrantersn" label="反担保人" clickorderby="true"/>
+				<col column="consignorsn" label="委托人" clickorderby="true"/>
+				<col column="rewarranttype" label="评级" clickorderby="true" />
+				<col column="assurenum" label="编号" clickorderby="true"/>
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="casedes" label="事由" clickorderby="true"/>
+				<col column="issuedate" label="出具日期" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="assurefee" label="担保函金额" clickorderby="true"/>
+				<col column="usdfee" label="担保函金额USD" clickorderby="true"/>
+			</display>	  
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(usdfee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="12" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+			  
+			<sql>
+				<value>
+					<![CDATA[select * from (select b.rewarranttype,b.assurenum,a.shipname,b.assureder,b.recognizorName,a.casedes,b.issuedate,b.currency,b.assurefee,b.usdfee,b.accamount,b.rewarrantersn,a.consignorsn from tbl_case a,tbl_passureinfos b where 1=1 and a.Case_Id = b.caseid and b.issuedate is not null and b.backdate IS NULL and {#condition#} order by b.usdfee desc limit 5) c order by c.usdfee desc  ]]>
+				</value>
+				
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+
+		</report>
+	</page>
+
+	<page id="bz08">
+		<report id="report1" title="担保手续费到账统计" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="rewarrantersn" label="反担保人" clickorderby="true"/>
+				<col column="consignorsn" label="委托人" clickorderby="true"/>
+				<col column="rewarranttype" label="评级" clickorderby="true" />
+				<col column="assurenum" label="编号" clickorderby="true"/>
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="casedes" label="事由" clickorderby="true"/>
+				<col column="issuedate" label="出具日期" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="assurefee" label="担保函金额" clickorderby="true"/>
+				<col column="servicefee" label="担保手续费USD" clickorderby="true"/>
+			</display>	   
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(servicefee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="12" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+			 
+			<sql>
+				<value>
+					<![CDATA[select b.rewarranttype,b.assurenum,a.shipname,b.assureder,b.recognizorName,a.casedes,b.issuedate,b.currency,b.assurefee,b.usdfee,b.servicefee,b.accamount,b.rewarrantersn,a.consignorsn from tbl_case a,tbl_passureinfos b where 1=1 and a.Case_Id = b.caseid and b.issuedate is not null and b.arrdate is not null and {#condition#}  ]]>
+				</value>
+				
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+
+		</report>
+	</page>
+	
+	<page id="bz09">
+		<report id="report1" title="现有效担保中按评级分类汇总" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="rewarranttype" label="普尔评级" clickorderby="true" />
+				<col column="usd" label="担保函金额USD" clickorderby="true"/>
+				<col column="zb" label="比例" clickorderby="true"/>
+			</display>	
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(usd)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop3" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");
+							sprop3="100.00%";						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+			    
+			<sql>
+				<value>
+					<![CDATA[select b.rewarranttype,sum(b.usdfee)as usd, sum(b.usdfee)/(select sum(usdfee) from tbl_passureinfos) as zb from tbl_case a,tbl_passureinfos b where a.Case_Id = b.caseid and {#condition#} group by b.rewarranttype  ]]>
+				</value>
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+			
+			<format>
+			 <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+			  <value>
+					zb=zb==null?"":zb.trim();
+					zb = Tools.formatDouble(String.valueOf(zb),"#,###0.00%");
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+	<page id="bz10">
+		<report id="report1" title="机构案件数同期比较" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="oraname" label="部门名称" clickorderby="true"/>
+				<col column="bq" label="本期" clickorderby="true"/>
+				<col column="sq" label="上期" clickorderby="true"/>
+				<col column="zb" label="占比" clickorderby="true"/>
+			</display>
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(bq)" datatype="int"></statitem>
+					     <statitem property="item2" value="sum(sq)" datatype="int"></statitem>
+					     <statitem property="item3" value="sum(bq)/sum(sq)" datatype="float"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop3" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop4" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###");
+							sprop3=Tools.formatDouble(String.valueOf(item2),"#,###");
+							sprop4=Tools.formatDouble(String.valueOf(item3),"#,###0.00%");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+				    
+			<sql>
+				<value>
+					<![CDATA[SELECT case when b.oraname is not null 
+					                     then b.oraname 
+					                     else a.oraname
+					                      end oraname,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  oraname,
+  orgcode,
+  COUNT(DISTINCT casenumber) AS bq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart# }
+  AND { setdate <= #stend# }
+  AND { accidentdate >= #afstart# }
+  AND { accidentdate <= #afend# }
+  AND {#condition#}
+GROUP BY  oraname,orgcode) a left join
+(SELECT 
+  oraname,
+  orgcode,
+  COUNT(DISTINCT casenumber) AS sq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart1# }
+  AND { setdate <= #stend1# }
+  AND { accidentdate >= #afstart1# }
+  AND { accidentdate <= #afend1# }
+  AND {#condition#}
+GROUP BY  oraname,orgcode) b
+  on a.oraname = b.oraname
+  AND a.orgcode = b.orgcode
+  
+  union
+  
+  SELECT case when b.oraname is not null 
+			  then b.oraname 
+			  else a.oraname
+			   end oraname,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  oraname,
+  orgcode,
+  COUNT(DISTINCT casenumber) AS bq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart# }
+  AND { setdate <= #stend# }
+  AND { accidentdate >= #afstart# }
+  AND { accidentdate <= #afend# }
+  AND {#condition#}
+GROUP BY  oraname,orgcode) a right join
+(SELECT 
+  oraname,
+  orgcode,
+  COUNT(DISTINCT casenumber) AS sq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart1# }
+  AND { setdate <= #stend1# }
+  AND { accidentdate >= #afstart1# }
+  AND { accidentdate <= #afend1# }
+  AND {#condition#}
+GROUP BY  oraname,orgcode) b
+  on a.oraname = b.oraname
+  AND a.orgcode = b.orgcode 
+  ]]>
+				</value>
+				   <condition name="ststart" defaultvalue="url{setstartdate}" label="立案开始" hidden="true" left="30"></condition>
+				   <condition name="stend" defaultvalue="url{setenddate}" label="立案结束" hidden="true" left="30"></condition>			
+			       <condition name="afstart" defaultvalue="url{afstartdate}" label="案发开始" hidden="true" left="30"></condition>
+				   <condition name="afend" defaultvalue="url{afenddate}" label="案发结束" hidden="true" left="30"></condition>
+				   
+				   <condition name="ststart1" defaultvalue="url{setstartdate1}" label="立案开始1" hidden="true" left="30"></condition>
+				   <condition name="stend1" defaultvalue="url{setenddate1}" label="立案结束1" hidden="true" left="30"></condition>			
+			       <condition name="afstart1" defaultvalue="url{afstartdate1}" label="案发开始1" hidden="true" left="30"></condition>
+				   <condition name="afend1" defaultvalue="url{afenddate1}" label="案发结束1" hidden="true" left="30"></condition>
+				   
+			       <condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(orgcode = #data#)]]>
+						</value>
+				   </condition>
+				   <condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				   </condition>
+			</sql>
+			
+			<format>
+			 <imports>
+						 <import>com.wabacus.util.*</import>
+					     </imports>
+			  <value>
+					zb=zb==null?"":zb.trim();
+					zb = Tools.formatDouble(String.valueOf(zb),"#,###0.00%");
+			  </value>
+			</format>
+
+		</report>
+	</page>
+
+<page id="bz11">
+		<report id="report1" title="机构收入同期比较" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="oraname" label="机构名称" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>				
+				<col column="bq" label="本期" clickorderby="true"/>
+				<col column="sq" label="上期" clickorderby="true"/>
+				<col column="zb" label="占比" clickorderby="true"  />
+			</display>	
+			
+			
+			    
+			<sql>
+				<value>
+					<![CDATA[SELECT case when b.oraname is not null
+					                     then b.oraname
+					                     else a.oraname
+					                      end oraname,
+					                case when b.currency is not null
+					                     then b.currency
+					                     else a.currency
+					                      end currency,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  t1.oraname,
+  t1.orgcode,
+  t2.currency,
+  sum(t2.expendses+t2.servicefee) AS bq
+FROM
+  tbl_case t1, tbl_case_bill t2
+WHERE t1.case_id = t2.case_id
+  AND { t2.accdate >= #accstart# }
+  AND { t2.accdate <= #accend# }
+  AND { t2.arrdate >= #arrstart# }
+  AND { t2.arrdate <= #arrend# }
+  AND {#condition#}
+GROUP BY  oraname,orgcode,currency) a left join
+(SELECT 
+  t1.oraname,
+  t1.orgcode,
+  t3.currency,
+  sum(t3.expendses+t3.servicefee) AS sq
+FROM
+  tbl_case t1, tbl_case_bill t3
+WHERE t1.case_id = t3.case_id
+  AND { t3.accdate >= #accstart1# }
+  AND { t3.accdate <= #accend1# }
+  AND { t3.arrdate >= #arrstart1# }
+  AND { t3.arrdate <= #arrend1# }
+  AND {#condition#}
+GROUP BY  oraname,orgcode,currency) b
+  on a.oraname = b.oraname
+  AND a.orgcode = b.orgcode
+  AND a.currency = b.currency
+  
+  union
+  
+  SELECT case when b.oraname is not null 
+					                     then b.oraname 
+					                     else a.oraname
+					                      end oraname,
+					                case when b.currency is not null
+					                     then b.currency
+					                     else a.currency
+					                      end currency,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  t1.oraname,
+  t1.orgcode,
+  t2.currency,
+  sum(t2.expendses+t2.servicefee) AS bq
+FROM
+  tbl_case t1, tbl_case_bill t2
+WHERE t1.case_id = t2.case_id
+  AND { t2.accdate >= #accstart# }
+  AND { t2.accdate <= #accend# }
+  AND { t2.arrdate >= #arrstart# }
+  AND { t2.arrdate <= #arrend# }
+  AND {#condition#}
+GROUP BY  oraname,orgcode,currency) a right join
+(SELECT 
+  t1.oraname,
+  t1.orgcode,
+  t3.currency,
+  sum(t3.expendses+t3.servicefee) AS sq
+FROM
+  tbl_case t1, tbl_case_bill t3
+WHERE t1.case_id = t3.case_id
+  AND { t3.accdate >= #accstart1# }
+  AND { t3.accdate <= #accend1# }
+  AND { t3.arrdate >= #arrstart1# }
+  AND { t3.arrdate <= #arrend1# }
+  AND {#condition#}
+GROUP BY  oraname,orgcode,currency) b
+  on a.oraname = b.oraname
+  AND a.orgcode = b.orgcode
+  AND a.currency = b.currency
+  
+   ]]>
+				</value>
+				<condition name="accstart" defaultvalue="url{accstartdate}" label="今年发账开始日期" hidden="true" labelstyle="2"></condition>
+				<condition name="accend" defaultvalue="url{accenddate}" label="今年发账结束日期" hidden="true" labelstyle="2"></condition>
+				<condition name="accstart1" defaultvalue="url{accstartdate1}" label="去年发账开始日期1" hidden="true" labelstyle="2"></condition>
+				<condition name="accend1" defaultvalue="url{accenddate1}" label="去年发账结束日期1" hidden="true" labelstyle="2"></condition>
+				
+				<condition name="arrstart" defaultvalue="url{arrstartdate}" label="今年到账开始日期" hidden="true" labelstyle="2"></condition>
+				<condition name="arrend" defaultvalue="url{arrenddate}" label="今年到账结束日期" hidden="true" labelstyle="2"></condition>
+				<condition name="arrstart1" defaultvalue="url{arrstartdate1}" label="去年到账开始日期1" hidden="true" labelstyle="2"></condition>
+				<condition name="arrend1" defaultvalue="url{arrenddate1}" label="去年到账结束日期1" hidden="true" labelstyle="2"></condition>
+				
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(t1.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(t1.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+			
+			<format>
+			             <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+			  <value>
+					zb=zb==null?"":zb.trim();
+					zb = Tools.formatDouble(String.valueOf(zb),"#,###0.00%");
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+	<page id="bz12">
+		<report id="report1" title="出具担保评级汇总" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="rewarranttype" label="普尔评级" clickorderby="true" />
+				<col column="number" label="数量" clickorderby="true"/>
+				<col column="usdfee" label="USD金额" clickorderby="true"/>
+			</display>
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(number)" datatype="int"></statitem>
+					     <statitem property="item2" value="sum(usdfee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop3" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###");
+							sprop3=Tools.formatDouble(String.valueOf(item2),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+				    
+			<sql>
+				<value>
+					<![CDATA[SELECT b.rewarranttype, COUNT(*) AS number, SUM(b.usdfee)as usdfee FROM tbl_case a,tbl_passureinfos b WHERE a.case_id = b.caseid and {#condition#} group by b.rewarranttype  ]]>
+				</value>
+				<condition name="defaultdatetype" defaultvalue="url{bztimetype}" label="时间类型" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(1=1)]]>
+						</value>
+				</condition>
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+			
+
+		</report>
+	</page>
+	
+	<page id="bz13">
+		<report id="report1" title="撤销担保评级汇总" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="rewarranttype" label="普尔评级" clickorderby="true" />
+				<col column="number" label="数量" clickorderby="true"/>
+				<col column="usdfee" label="USD金额" clickorderby="true"/>
+			</display>
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(number)" datatype="int"></statitem>
+					     <statitem property="item2" value="sum(usdfee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop3" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###");
+							sprop3=Tools.formatDouble(String.valueOf(item2),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+			   	    
+			<sql>
+				<value>
+					<![CDATA[SELECT b.rewarranttype, COUNT(*) AS number, SUM(b.usdfee)as usdfee FROM tbl_case a,tbl_passureinfos b WHERE a.case_id = b.caseid and b.backdate is not null and {#condition#} group by b.rewarranttype  ]]>
+				</value>
+				<condition name="defaultdatetype" defaultvalue="url{bztimetype}" label="时间类型" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(1=1)]]>
+						</value>
+				</condition>
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.backdate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.backdate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+
+		</report>
+	</page>
+	<page id="bz14">
+		<report id="report1" title="有效担保评级汇总" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="rewarranttype" label="普尔评级" clickorderby="true" />
+				<col column="number" label="数量" clickorderby="true"/>
+				<col column="usdfee" label="USD金额" clickorderby="true"/>
+			</display>
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(number)" datatype="int"></statitem>
+					     <statitem property="item2" value="sum(usdfee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop3" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###");
+							sprop3=Tools.formatDouble(String.valueOf(item2),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+				    
+			<sql>
+				<value>
+					<![CDATA[SELECT b.rewarranttype, COUNT(*) AS number, SUM(b.usdfee)as usdfee FROM tbl_case a,tbl_passureinfos b WHERE a.case_id = b.caseid and b.backdate is null and {#condition#} group by b.rewarranttype  ]]>
+				</value>
+				<condition name="defaultdatetype" defaultvalue="url{bztimetype}" label="时间类型" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(1=1)]]>
+						</value>
+				</condition>
+				<condition name="defaultstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+
+		</report>
+	</page>
+
+	<page id="bz15">
+		<report id="report1" title="案件性质案件数同期比较" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="casetypename" label="案件性质" clickorderby="true"/>
+				<col column="bq" label="本期" clickorderby="true"/>
+				<col column="sq" label="上期" clickorderby="true"/>
+				<col column="zb" label="占比" clickorderby="true"/>
+			</display>
+			
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(bq)" datatype="int"></statitem>
+					     <statitem property="item2" value="sum(sq)" datatype="int"></statitem>
+					     <statitem property="item3" value="sum(bq)/sum(sq)" datatype="float"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop3" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop4" colspan="1" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###");
+							sprop3=Tools.formatDouble(String.valueOf(item2),"#,###");
+							sprop4=Tools.formatDouble(String.valueOf(item3),"#,###0.00%");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>
+			
+				    
+			<sql>
+				<value>
+					<![CDATA[SELECT case when b.casetypename is not null 
+					                     then b.casetypename 
+					                     else a.casetypename
+					                      end casetypename,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  casetypename,
+  COUNT(DISTINCT casenumber) AS bq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart# }
+  AND { setdate <= #stend# }
+  AND { accidentdate >= #afstart# }
+  AND { accidentdate <= #afend# }
+  AND {#condition#}
+GROUP BY  casetypename) a left join
+(SELECT 
+  casetypename,
+  COUNT(DISTINCT casenumber) AS sq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart1# }
+  AND { setdate <= #stend1# }
+  AND { accidentdate >= #afstart1# }
+  AND { accidentdate <= #afend1# }
+  AND {#condition#}
+GROUP BY  casetypename) b
+  on a.casetypename = b.casetypename
+  
+  union
+  
+  SELECT case when b.casetypename is not null 
+			  then b.casetypename 
+			  else a.casetypename
+			   end casetypename,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  casetypename,
+  COUNT(DISTINCT casenumber) AS bq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart# }
+  AND { setdate <= #stend# }
+  AND { accidentdate >= #afstart# }
+  AND { accidentdate <= #afend# }
+  AND {#condition#}
+GROUP BY  casetypename) a right join
+(SELECT 
+  casetypename,
+  COUNT(DISTINCT casenumber) AS sq
+FROM
+  tbl_case 
+WHERE 1 = 1
+  AND { setdate >= #ststart1# }
+  AND { setdate <= #stend1# }
+  AND { accidentdate >= #afstart1# }
+  AND { accidentdate <= #afend1# }
+  AND {#condition#}
+GROUP BY  casetypename) b
+  on a.casetypename = b.casetypename
+  ]]>
+				</value>
+				   <condition name="ststart" defaultvalue="url{setstartdate}" label="立案开始" hidden="true" left="30"></condition>
+				   <condition name="stend" defaultvalue="url{setenddate}" label="立案结束" hidden="true" left="30"></condition>			
+			       <condition name="afstart" defaultvalue="url{afstartdate}" label="案发开始" hidden="true" left="30"></condition>
+				   <condition name="afend" defaultvalue="url{afenddate}" label="案发结束" hidden="true" left="30"></condition>
+				   
+				   <condition name="ststart1" defaultvalue="url{setstartdate1}" label="立案开始1" hidden="true" left="30"></condition>
+				   <condition name="stend1" defaultvalue="url{setenddate1}" label="立案结束1" hidden="true" left="30"></condition>			
+			       <condition name="afstart1" defaultvalue="url{afstartdate1}" label="案发开始1" hidden="true" left="30"></condition>
+				   <condition name="afend1" defaultvalue="url{afenddate1}" label="案发结束1" hidden="true" left="30"></condition>
+				   
+			       <condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(orgcode = #data#)]]>
+						</value>
+				   </condition>
+				   <condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				   </condition>
+			</sql>
+			
+			<format>
+			 <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+			  <value>
+					zb=zb==null?"":zb.trim();
+					zb = Tools.formatDouble(String.valueOf(zb),"#,###0.00%");
+			  </value>
+			</format>
+
+		</report>
+	</page>
+
+<page id="bz16">
+		<report id="report1" title="案件性质收入同期比较" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="casetypename" label="案件性质" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="bq" label="本期" clickorderby="true"/>
+				<col column="sq" label="上期" clickorderby="true"/>
+				<col column="zb" label="占比" clickorderby="true"/>
+			</display>	    
+			<sql>
+				<value>
+					<![CDATA[SELECT case when b.casetypename is not null
+					                     then b.casetypename
+					                     else a.casetypename
+					                      end casetypename,
+					                case when b.currency is not null
+					                     then b.currency
+					                     else a.currency
+					                      end currency,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  t1.casetypename,
+  t2.currency,
+  sum(t2.expendses+t2.servicefee) AS bq
+FROM
+  tbl_case t1, tbl_case_bill t2
+WHERE t1.case_id = t2.case_id
+  AND { t2.accdate >= #accstart# }
+  AND { t2.accdate <= #accend# }
+  AND { t2.arrdate >= #arrstart# }
+  AND { t2.arrdate <= #arrend# }
+  AND {#condition#}
+GROUP BY  casetypename,currency) a left join
+(SELECT 
+  t1.casetypename,
+  t3.currency,
+  sum(t3.expendses+t3.servicefee) AS sq
+FROM
+  tbl_case t1, tbl_case_bill t3
+WHERE t1.case_id = t3.case_id
+  AND { t3.accdate >= #accstart1# }
+  AND { t3.accdate <= #accend1# }
+  AND { t3.arrdate >= #arrstart1# }
+  AND { t3.arrdate <= #arrend1# }
+  AND {#condition#}
+GROUP BY  casetypename,currency) b
+  on a.casetypename = b.casetypename
+  AND a.currency = b.currency
+  
+  union
+  
+  SELECT case when b.casetypename is not null 
+					                     then b.casetypename 
+					                     else a.casetypename
+					                      end casetypename,
+					                case when b.currency is not null
+					                     then b.currency
+					                     else a.currency
+					                      end currency,a.bq,b.sq,
+CASE WHEN a.bq=0 OR b.sq=0 OR a.bq=NULL OR b.sq=NULL 
+THEN NULL 
+ELSE a.bq/b.sq END zb FROM
+(SELECT 
+  t1.casetypename,
+  t2.currency,
+  sum(t2.expendses+t2.servicefee) AS bq
+FROM
+  tbl_case t1, tbl_case_bill t2
+WHERE t1.case_id = t2.case_id
+  AND { t2.accdate >= #accstart# }
+  AND { t2.accdate <= #accend# }
+  AND { t2.arrdate >= #arrstart# }
+  AND { t2.arrdate <= #arrend# }
+  AND {#condition#}
+GROUP BY  casetypename,currency) a right join
+(SELECT 
+  t1.casetypename,
+  t3.currency,
+  sum(t3.expendses+t3.servicefee) AS sq
+FROM
+  tbl_case t1, tbl_case_bill t3
+WHERE t1.case_id = t3.case_id
+  AND { t3.accdate >= #accstart1# }
+  AND { t3.accdate <= #accend1# }
+  AND { t3.arrdate >= #arrstart1# }
+  AND { t3.arrdate <= #arrend1# }
+  AND {#condition#}
+GROUP BY  casetypename,currency) b
+  on a.casetypename = b.casetypename
+  AND a.currency = b.currency
+  
+   ]]>
+				</value>
+				<condition name="accstart" defaultvalue="url{accstartdate}" label="今年发账开始日期" hidden="true" labelstyle="2"></condition>
+				<condition name="accend" defaultvalue="url{accenddate}" label="今年发账结束日期" hidden="true" labelstyle="2"></condition>
+				<condition name="accstart1" defaultvalue="url{accstartdate1}" label="去年发账开始日期1" hidden="true" labelstyle="2"></condition>
+				<condition name="accend1" defaultvalue="url{accenddate1}" label="去年发账结束日期1" hidden="true" labelstyle="2"></condition>
+				
+				<condition name="arrstart" defaultvalue="url{arrstartdate}" label="今年到账开始日期" hidden="true" labelstyle="2"></condition>
+				<condition name="arrend" defaultvalue="url{arrenddate}" label="今年到账结束日期" hidden="true" labelstyle="2"></condition>
+				<condition name="arrstart1" defaultvalue="url{arrstartdate1}" label="去年到账开始日期1" hidden="true" labelstyle="2"></condition>
+				<condition name="arrend1" defaultvalue="url{arrenddate1}" label="去年到账结束日期1" hidden="true" labelstyle="2"></condition>
+				
+				<condition name="defaultorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(t1.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="defaultorg" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(t1.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+			</sql>
+			
+			<format>
+			 <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+			  <value>
+					zb=zb==null?"":zb.trim();
+					zb = Tools.formatDouble(String.valueOf(zb),"#,###0.00%");
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+	<page id="bz17">
+		<report id="report1" title="服务费分段汇总" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="fd" label="分段" />
+				<col column="currency" label="币种" />
+				<col column="count" label="数量" clickorderby="true"/>
+				<col column="fee" label="金额" clickorderby="true"/>
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="详细信息"/>
+			</display>	    
+			<sql>
+				<value>
+					<![CDATA[SELECT
+  CASE WHEN (b.expendses + b.servicefee >=1 AND b.expendses + b.servicefee <=800 AND b.currency='USD') THEN '1~800(含)'
+       WHEN (b.expendses + b.servicefee >800 AND b.expendses + b.servicefee <=3000 AND b.currency='USD') THEN '800~3000(含)'
+       WHEN (b.expendses + b.servicefee >3000 AND b.expendses + b.servicefee <=10000 AND b.currency='USD') THEN '3000~10000(含)' 
+       WHEN (b.expendses + b.servicefee >10000 AND b.currency='USD') THEN '10000以上'
+       When  b.currency <> 'USD' THEN '其他币种'
+       END  fd,
+  CASE WHEN (b.expendses + b.servicefee >=1 AND b.expendses + b.servicefee <=800 AND b.currency='USD') THEN '1'
+       WHEN (b.expendses + b.servicefee >800 AND b.expendses + b.servicefee <=3000 AND b.currency='USD') THEN '2'
+       WHEN (b.expendses + b.servicefee >3000 AND b.expendses + b.servicefee <=10000 AND b.currency='USD') THEN '3' 
+       WHEN (b.expendses + b.servicefee >10000 AND b.currency='USD') THEN '4'
+       When  b.currency <> 'USD' THEN '其他币种'
+       END  xh,  
+  b.currency,
+  SUM(b.expendses + b.servicefee) AS fee,
+  COUNT(*) AS COUNT
+FROM
+  tbl_case a,
+  tbl_case_bill b 
+WHERE a.case_id = b.case_id
+  and (b.expendses + b.servicefee)>0
+  and {#condition#}
+GROUP BY fd,b.currency,xh
+order by xh  ]]>
+				</value>
+				<condition name="accstart" defaultvalue="url{accstartdate}" label="发账开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.accdate >= #data# )]]>
+						</value>
+				</condition>
+				<condition name="accend" defaultvalue="url{accenddate}" label="发账结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.accdate <= #data# )]]>
+						</value>
+				</condition>
+				<condition name="arrstart" defaultvalue="url{arrstartdate}" label="到账开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.arrdate >= #data# )]]>
+						</value>
+				</condition>
+				<condition name="arrend" defaultvalue="url{arrenddate}" label="到账结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.arrdate <= #data# )]]>
+						</value>
+				</condition>
+				<condition name="org" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="user" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+				
+				<condition name="path" defaultvalue="url{path}" label="路径" hidden="true" labelstyle="2" />
+				
+			</sql>
+			
+			<format>
+			  <value>
+			         <![CDATA[
+			         
+			         fd=fd==null?"":fd.trim();
+			         String word ="";
+			         if(fd.equals("1~800(含)")) word="a";
+			         else if(fd.equals("800~3000(含)")) word="b";
+			         else if(fd.equals("3000~10000(含)")) word="c";
+			         else if(fd.equals("10000以上")) word = "d";
+ 			         else word = "e";
+
+			         String accstart = rrequest.getStringAttribute("accstart","");
+			         String accend = rrequest.getStringAttribute("accend","");
+			         String arrstart = rrequest.getStringAttribute("arrstart","");
+			         String arrend = rrequest.getStringAttribute("arrend","");
+			         String org = rrequest.getStringAttribute("org","");
+			         String user = rrequest.getStringAttribute("user","");
+			         String path = rrequest.getStringAttribute("path","");
+			         
+					detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('"+ path +"/ShowReport.wx?PAGEID=test2&" + word + "=1&accstart=" + accstart + "&bz=" + currency + "&accend=" + accend + "&arrstart=" + arrstart + "&arrend=" + arrend + "&orgcode=" + org + "&usercode=" + user + "',{title:'" + fd + "(" + currency + ")" +  "',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					
+					]]>
+					
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+	<page id="bz18">
+		<report id="report1" title="出具担保金额分段汇总" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="fd" label="分段" clickorderby="true" />
+				<col column="number" label="数量" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="fee" label="金额" clickorderby="true"/>
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="详细信息"/>
+			</display>
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(fee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="4" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>	    
+			<sql>
+				<value>
+					<![CDATA[SELECT CASE WHEN (b.usdfee >=1 AND b.usdfee <=1300000) THEN '1~130万(含)'
+            WHEN (b.usdfee >1300000 AND b.usdfee <=3000000) THEN '130万~300万(含)'
+            WHEN  b.usdfee >3000000 THEN '300万以上'
+            END fd,
+            COUNT(*) AS number,
+            'USD' AS currency,
+            SUM(b.usdfee) AS fee
+FROM tbl_case a,tbl_passureinfos b
+WHERE a.case_id = b.caseid
+  AND b.usdfee>0
+  and {#condition#}
+  GROUP BY fd
+  order by fee	]]>
+				</value>
+				<condition name="istart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="iend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="iorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="iuser" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+				
+				<condition name="path" defaultvalue="url{path}" label="路径" hidden="true" labelstyle="2" />
+			</sql>
+			
+			<format>
+			  <value>
+			         <![CDATA[
+			         
+			         fd=fd==null?"":fd.trim();
+			         String word ="";
+			         if(fd.equals("1~130万(含)")) word="a";
+			         else if(fd.equals("130万~300万(含)")) word="b";
+			         else if(fd.equals("300万以上")) word="c";
+			         
+			         String idate1 = rrequest.getStringAttribute("istart","");
+			         String idate2 = rrequest.getStringAttribute("iend","");
+			         String org = rrequest.getStringAttribute("icorg","");
+			         String user = rrequest.getStringAttribute("icuser","");
+			         String path = rrequest.getStringAttribute("path","");
+			         
+					detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('" + path + "/ShowReport.wx?PAGEID=test1&" + word + "=1&flag1=1&istart=" + idate1 + "&iend" + idate2 + "&orgcode=" + org + "&usercode=" + user + "',{title:'" + fd +  "',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					
+					]]>
+					
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+		<page id="bz19">
+		<report id="report1" title="撤销担保金额分段汇总" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="fd" label="分段" clickorderby="true" />
+				<col column="number" label="数量" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="fee" label="金额" clickorderby="true"/>
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="详细信息"/>
+			</display>
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(fee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="4" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>	    
+			<sql>
+				<value>
+					<![CDATA[SELECT CASE WHEN (b.usdfee >=1 AND b.usdfee <=1300000) THEN '1~130万(含)'
+            WHEN (b.usdfee >1300000 AND b.usdfee <=3000000) THEN '130万~300万(含)'
+            WHEN  b.usdfee >3000000 THEN '300万以上'
+            END fd,
+            COUNT(*) AS number,
+            'USD' AS currency,
+            SUM(b.usdfee) AS fee
+FROM tbl_case a,tbl_passureinfos b
+WHERE a.case_id = b.caseid
+  AND b.usdfee>0
+  and b.issuedate is not null
+  AND b.backdate IS NOT NULL
+  and {#condition#}
+  GROUP BY fd
+  order by fee	]]>
+				</value>
+				<condition name="cstart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.backdate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="cend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.backdate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="corg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="cuser" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+				
+				<condition name="path" defaultvalue="url{path}" label="路径" hidden="true" labelstyle="2" />
+			</sql>
+			
+			<format>
+			  <value>
+			         <![CDATA[
+			         
+			         fd=fd==null?"":fd.trim();
+			         String word ="";
+			         if(fd.equals("1~130万(含)")) word="a";
+			         else if(fd.equals("130万~300万(含)")) word="b";
+			         else if(fd.equals("300万以上")) word="c";
+			         
+			         String cdate1 = rrequest.getStringAttribute("cstart","");
+			         String cdate2 = rrequest.getStringAttribute("cend","");
+			         String org = rrequest.getStringAttribute("corg","");
+			         String user = rrequest.getStringAttribute("cuser","");
+			         String path = rrequest.getStringAttribute("path","");
+			         
+					detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('" + path + "/ShowReport.wx?PAGEID=test1&" + word + "=1&flag3=1&cstart=" + cdate1 + "&cend" + cdate2 + "&orgcode=" + org + "&usercode=" + user + "',{title:'" + fd +  "',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					
+					]]>
+					
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+		<page id="bz20" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="有效担保金额分段汇总" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<display>
+				<col column="{sequence:1}" label="序号" width="50"/>
+				<col column="fd" label="分段" clickorderby="true" />
+				<col column="number" label="数量" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="fee" label="金额" clickorderby="true"/>
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="详细信息"/>
+			</display>
+			<subdisplay>
+				    <statitems>
+					     <statitem property="item1" value="sum(fee)" datatype="int"></statitem>
+				    </statitems>
+
+				<!-- 针对整个报表的统计 -->
+				    <subrow displaytype="page|report">
+					     <subcol property="sprop1" colspan="4" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+					     <subcol property="sprop2" colspan="2" valuestyleproperty="align='center' bgcolor='#CCFAFF'"></subcol>
+				    </subrow>
+				    <format>
+					     <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+					     <value>
+					<![CDATA[					
+						//当前正在统计针对整个报表的数据
+							sprop1="总计";
+							sprop2=Tools.formatDouble(String.valueOf(item1),"#,###0.00");						
+					]]>
+					</value>
+				    </format>
+			   </subdisplay>	    
+			<sql>
+				<value>
+					<![CDATA[SELECT CASE WHEN (b.usdfee >=1 AND b.usdfee <=1300000) THEN '1~130万(含)'
+            WHEN (b.usdfee >1300000 AND b.usdfee <=3000000) THEN '130万~300万(含)'
+            WHEN  b.usdfee >3000000 THEN '300万以上'
+            END fd,
+            COUNT(*) AS number,
+            'USD' AS currency,
+            SUM(b.usdfee) AS fee
+FROM tbl_case a,tbl_passureinfos b
+WHERE a.case_id = b.caseid
+  AND b.usdfee>0
+  and b.backdate is null
+  and {#condition#}
+  GROUP BY fd
+  order by fee	]]>
+				</value>
+				<condition name="ystart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yorg" defaultvalue="url{orgCode}" label="部门" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.orgcode = #data#)]]>
+						</value>
+				</condition>
+				<condition name="yuser" defaultvalue="url{usercode}" label="人员" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(a.userid = @{select User_Code from sys_user where user_id = #date# })]]>
+						</value>
+				</condition>
+				
+				<condition name="path" defaultvalue="url{path}" label="路径" hidden="true" labelstyle="2" />
+			</sql>
+			
+			<format>
+			  <value>
+			         <![CDATA[
+			         
+			         fd=fd==null?"":fd.trim();
+			         String word ="";
+			         if(fd.equals("1~130万(含)")) word="a";
+			         else if(fd.equals("130万~300万(含)")) word="b";
+			         else if(fd.equals("300万以上")) word="c";
+			         
+			         String ydate1 = rrequest.getStringAttribute("ystart","");
+			         String ydate2 = rrequest.getStringAttribute("yend","");
+			         String org = rrequest.getStringAttribute("yorg","");
+			         String user = rrequest.getStringAttribute("yuser","");
+			         String path = rrequest.getStringAttribute("path","");
+			         
+			         
+					detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('" + path + "/ShowReport.wx?PAGEID=test1&" + word + "=1&flag2=2&ystart=" + ydate1 + "&yend" + ydate2 + "&orgcode=" + org + "&usercode=" + user + "',{title:'" + fd +  "',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					
+					]]>
+					
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+	<page id="bzwgj01" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="1  境内银行新签约对外担保逐笔备案表（外币）" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<header><![CDATA[<font color='black'>填制单位：中国再保险集团股份有限公司 报告期：2012.12 单位： 万美元</font>]]></header>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50"/>
+				<col column="assurenum" label="编号" clickorderby="true" />
+				<col column="issuedate" label="签约时间(出具时间)" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="qxdqr" label="期限/到期日" clickorderby="true"/>
+				<group label="担保项下债务金额（原币种）">
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="asfee" label="金额" clickorderby="true" />
+				</group>
+				<col column="usd" label="担保项下债务金额（折美元）" clickorderby="true"/>
+				<col column="zj" label="担保项下债务资金用途" clickorderby="true"/>
+				<col column="a" label="被担保人是否与境内企业有股权关联（1）" clickorderby="true"/>
+				<col column="b" label="融资目的是否用于境外企业收购（2）" clickorderby="true"/>
+				<col column="c" label="被担保人是都为境外企业股权转让受让方（3）" clickorderby="true"/>
+				<col column="d" label="境外被收购企业的主要资产所在地（4）" clickorderby="true"/>
+				<col column="remark" label="备注" />
+
+			</display>
+			<subdisplay>
+					    <subrow displaytype="page|report" displayposition="bottom">
+						     <subcol property="sprop1" colspan="15" valuestyleproperty="bgcolor='#eeeeee' align='left'"></subcol>
+					    </subrow>
+					    <format>
+						     <imports>
+							      <import>com.wabacus.util.*</import>
+						     </imports>
+						     <value>
+						<![CDATA[
+							sprop1="制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5";
+						]]>
+						</value>
+					    </format>
+				   </subdisplay>
+			
+<!-- 			<footer><![CDATA[<font color='black'>制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5</font>]]></footer>	    
+ -->			<sql>
+				<value>
+					<![CDATA[select assurenum,issuedate,assureder,recognizorName,'截止到案件解决时为止' qxdqr,currency,assurefee/10000 asfee,usdfee/10000 usd,'海事担保' zj,'否' a, '否' b, '' c, '' d, '' remark from tbl_passureinfos where currency <> 'RMB' order by issuedate desc  	]]>
+				</value>
+				<condition name="ystart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				
+			</sql>
+			
+			<format>
+			 <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+			  <value>
+					asfee=asfee==null?"":asfee.trim();
+					asfee = Tools.formatDouble(String.valueOf(asfee),"###0.00");
+					usd=usd==null?"":usd.trim();
+					usd = Tools.formatDouble(String.valueOf(usd),"###0.00");
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+	<page id="bzwgj02" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="1  境内银行新签约对外担保逐笔备案表（人民币）" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<header><![CDATA[<font color='black'>填制单位：中国再保险集团股份有限公司 报告期：2012.12 单位： 万元</font>]]></header>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50"/>
+				<col column="assurenum" label="编号" clickorderby="true" />
+				<col column="issuedate" label="签约时间(出具时间)" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="qxdqr" label="期限/到期日" clickorderby="true"/>
+				<group label="担保项下债务金额（原币种）">
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="asfee" label="金额" clickorderby="true"/>
+				</group>
+				<col column="usd" label="担保项下债务金额（折美元）" clickorderby="true"/>
+				<col column="zj" label="担保项下债务资金用途" clickorderby="true"/>
+				<col column="a" label="被担保人是否与境内企业有股权关联（1）" clickorderby="true"/>
+				<col column="b" label="融资目的是否用于境外企业收购（2）" clickorderby="true"/>
+				<col column="c" label="被担保人是都为境外企业股权转让受让方（3）" clickorderby="true"/>
+				<col column="d" label="境外被收购企业的主要资产所在地（4）" clickorderby="true"/>
+				<col column="remark" label="备注" />
+
+			</display>
+			<subdisplay>
+					    <subrow displaytype="page|report" displayposition="bottom">
+						     <subcol property="sprop1" colspan="15" valuestyleproperty="bgcolor='#eeeeee' align='left'"></subcol>
+					    </subrow>
+					    <format>
+						     <imports>
+							      <import>com.wabacus.util.*</import>
+						     </imports>
+						     <value>
+						<![CDATA[
+							sprop1="制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5";
+						]]>
+						</value>
+					    </format>
+				   </subdisplay>
+<!-- 			<footer><![CDATA[<font color='black'>制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5</font>]]></footer>	    
+ -->			<sql>
+				<value>
+					<![CDATA[select assurenum,issuedate,assureder,recognizorName,'截止到案件解决时为止' qxdqr,currency,assurefee/10000 asfee ,usdfee/10000 usd,'海事担保' zj,'否' a, '否' b, '' c, '' d, '' remark from tbl_passureinfos where currency = 'RMB' order by issuedate desc  	]]>
+				</value>
+				<condition name="ystart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				
+			</sql>
+			
+			<format>
+			 <imports>
+						      <import>com.wabacus.util.*</import>
+					     </imports>
+			  <value>
+					asfee=asfee==null?"":asfee.trim();
+					asfee = Tools.formatDouble(String.valueOf(asfee),"###0.00");
+					usd=usd==null?"":usd.trim();
+					usd = Tools.formatDouble(String.valueOf(usd),"###0.00");
+			  </value>
+			</format>
+
+		</report>
+	</page>
+	
+	
+	<page id="bzwgj03" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="3  境内银行对外担保汇总备案表(外币)" pagesize="23" scrollstyle="image"  dataexport="richexcel">
+			<header><![CDATA[<font color='black'>填制单位：中国再保险集团股份有限公司 报告期：2012.12 单位： 万美元</font>]]></header>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50"/>
+				<col column="xm" label="项目名称" clickorderby="true" />
+				<group label="报告期发生额">
+				<col column="bs" label="笔数" clickorderby="true"/>
+				<col column="money" label="金额" clickorderby="true"/>
+				</group>
+				<col column="qc" label="期初余额" clickorderby="true"/>
+				<col column="qm" label="期末余额" clickorderby="true"/>
+				<col column="snm" label="上年末余额" clickorderby="true"/>
+			</display>
+			<subdisplay>
+					    <subrow displaytype="page|report" displayposition="bottom">
+						     <subcol property="sprop1" colspan="7" valuestyleproperty="bgcolor='#eeeeee' align='left'"></subcol>
+					    </subrow>
+					    <format>
+						     <imports>
+							      <import>com.wabacus.util.*</import>
+						     </imports>
+						     <value>
+						<![CDATA[
+							sprop1="制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5";
+						]]>
+						</value>
+					    </format>
+				   </subdisplay>
+<!-- 			<footer><![CDATA[<font color='black'>制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5</font>]]></footer>	    
+ -->			<sql>
+				<value>
+					<![CDATA[SELECT t.hmc AS xm,t.hh, '' bs, '' money, '' qc, '' qm, '' snm FROM rgr_intbus t WHERE t.bbdm ='103' AND t.hh NOT IN ('1','2','9','10','22','23')
+UNION ALL 
+SELECT r.hmc AS xm,r.hh, '' bs, '' money, '' qc, d.gdz qm, '' snm FROM rgr_intbus r,(SELECT gdz,'103' bbdm FROM dgr_intbus WHERE YEAR =2012 AND MONTH = 12 AND currency ='other') d
+WHERE r.bbdm ='103' AND r.hh ='1' AND r.bbdm = d.bbdm
+UNION ALL
+SELECT r.hmc AS xm,r.hh, '' bs, '' money, '' qc,  d.qm, '' snm FROM rgr_intbus r,(SELECT (gdz-qmye) AS qm,'103' bbdm FROM dgr_intbus WHERE YEAR =2012 AND MONTH = 12 AND currency ='other') d
+WHERE r.bbdm ='103' AND r.hh ='2' AND r.bbdm = d.bbdm
+UNION ALL
+SELECT r.hmc AS xm,r.hh, e.issnumber bs, e.issfee money, e.qcye qc,  e.qmye qm, e.snmye snm FROM rgr_intbus r,(SELECT issnumber,issfee,qcye,qmye,snmye,'103' bbdm FROM dgr_intbus WHERE YEAR =2012 AND MONTH = 12 AND currency ='other') e
+WHERE r.bbdm ='103' AND r.hh IN ('9','10') AND r.bbdm = e.bbdm
+UNION ALL
+SELECT r.hmc AS xm,r.hh, e.backnumber bs, e.money, '' qc,  '' qm, '' snm FROM rgr_intbus r,(SELECT backnumber,(qcye+issfee-qmye) AS money,'103' bbdm FROM dgr_intbus WHERE YEAR =2012 AND MONTH = 12 AND currency ='other') e
+WHERE r.bbdm ='103' AND r.hh IN ('22','23') AND r.bbdm = e.bbdm
+ORDER BY hh  	]]>
+				</value>
+				<condition name="ystart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				
+			</sql>
+
+		</report>
+	</page>
+	
+	<page id="bzwgj04" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="3  境内银行对外担保汇总备案表(人民币)" pagesize="23" scrollstyle="image"  dataexport="richexcel">
+			<header><![CDATA[<font color='black'>填制单位：中国再保险集团股份有限公司 报告期：2012.12 单位： 万元</font>]]></header>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50"/>
+				<col column="xm" label="项目名称" clickorderby="true" />
+				<group label="报告期发生额">
+				<col column="bs" label="笔数" clickorderby="true"/>
+				<col column="money" label="金额" clickorderby="true"/>
+				</group>
+				<col column="qc" label="期初余额" clickorderby="true"/>
+				<col column="qm" label="期末余额" clickorderby="true"/>
+				<col column="snm" label="上年末余额" clickorderby="true"/>
+			</display>
+			<subdisplay>
+					    <subrow displaytype="page|report" displayposition="bottom">
+						     <subcol property="sprop1" colspan="7" valuestyleproperty="bgcolor='#eeeeee' align='left'"></subcol>
+					    </subrow>
+					    <format>
+						     <imports>
+							      <import>com.wabacus.util.*</import>
+						     </imports>
+						     <value>
+						<![CDATA[
+							sprop1="制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5";
+						]]>
+						</value>
+					    </format>
+				   </subdisplay>
+<!-- 			<footer><![CDATA[<font color='black'>制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5</font>]]></footer>	    
+ -->			<sql>
+				<value>
+					<![CDATA[SELECT t.hmc AS xm,t.hh, '' bs, '' money, '' qc, '' qm, '' snm FROM rgr_intbus t WHERE t.bbdm ='103' AND t.hh NOT IN ('1','2','9','10','22','23')
+UNION ALL 
+SELECT r.hmc AS xm,r.hh, '' bs, '' money, '' qc, d.gdz qm, '' snm FROM rgr_intbus r,(SELECT gdz,'103' bbdm FROM dgr_intbus WHERE YEAR =2012 AND MONTH = 12 AND currency ='RMB') d
+WHERE r.bbdm ='103' AND r.hh ='1' AND r.bbdm = d.bbdm
+UNION ALL
+SELECT r.hmc AS xm,r.hh, '' bs, '' money, '' qc,  d.qm, '' snm FROM rgr_intbus r,(SELECT (gdz-qmye) AS qm,'103' bbdm FROM dgr_intbus WHERE YEAR =2012 AND MONTH = 12 AND currency ='RMB') d
+WHERE r.bbdm ='103' AND r.hh ='2' AND r.bbdm = d.bbdm
+UNION ALL
+SELECT r.hmc AS xm,r.hh, e.issnumber bs, e.issfee money, e.qcye qc,  e.qmye qm, e.snmye snm FROM rgr_intbus r,(SELECT issnumber,issfee,qcye,qmye,snmye,'103' bbdm FROM dgr_intbus WHERE YEAR =2012 AND MONTH = 12 AND currency ='RMB') e
+WHERE r.bbdm ='103' AND r.hh IN ('9','10') AND r.bbdm = e.bbdm
+UNION ALL
+SELECT r.hmc AS xm,r.hh, e.backnumber bs, e.money, '' qc,  '' qm, '' snm FROM rgr_intbus r,(SELECT backnumber,(qcye+issfee-qmye) AS money,'103' bbdm FROM dgr_intbus WHERE YEAR =2012 AND MONTH = 12 AND currency ='RMB') e
+WHERE r.bbdm ='103' AND r.hh IN ('22','23') AND r.bbdm = e.bbdm
+ORDER BY hh   	]]>
+				</value>
+				<condition name="ystart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				
+			</sql>
+			
+			<format>
+			  <value>
+			         <![CDATA[  ]]>
+					
+			  </value>
+			  
+			</format>
+
+		</report>
+	</page>
+	
+	
+	
+	<page id="bzwgj05" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="5 境内银行融资性对外担保履约逐笔备案表（外币）" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<header><![CDATA[<font color='black'>填制单位：中国再保险集团股份有限公司 报告期：2012.12 单位： 万元</font>]]></header>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50"/> 
+				<col column="assurenum" label="编号" clickorderby="true" />
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="assurefee" label="担保项下债务金额" clickorderby="true"/>
+				<col column="lvtime" label="履约时间" clickorderby="true"/>
+				<col column="lvmoney" label="履约金额" clickorderby="true"/>
+				<col column="rewarranter" label="反担保人名称" clickorderby="true"/>
+				<col column="remark" label="备注" />
+
+			</display>
+			<subdisplay>
+					    <subrow displaytype="page|report" displayposition="bottom">
+						     <subcol property="sprop1" colspan="9" valuestyleproperty="bgcolor='#eeeeee' align='left'"></subcol>
+					    </subrow>
+					    <format>
+						     <imports>
+							      <import>com.wabacus.util.*</import>
+						     </imports>
+						     <value>
+						<![CDATA[
+							sprop1="制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5";
+						]]>
+						</value>
+					    </format>
+				   </subdisplay>
+<!-- 			<footer><![CDATA[<font color='black'>制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5</font>]]></footer>	    
+ -->			<sql>
+				<value>
+					<![CDATA[select '无' assurenum,'无' recognizorName,'无' assureder,'无' assurefee,'无' lvtime, '无' lvmoney,'无' rewarranter, '无' remark from dual   ]]>
+				</value>
+<!-- 				<condition name="ystart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition> -->
+				
+			</sql>
+
+
+		</report>
+	</page>
+	
+	<page id="bzwgj06" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="6 境内银行融资性对外担保履约逐笔备案表（人民币）" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<header><![CDATA[<font color='black'>填制单位：中国再保险集团股份有限公司 报告期：2012.12 单位： 万元</font>]]></header>
+			<display>
+ 				<col column="{sequence:1}" label="序号" width="50"/> 
+				<col column="assurenum" label="编号" clickorderby="true" />
+				<col column="recognizorName" label="被担保人名称" clickorderby="true"/>
+				<col column="assureder" label="受益人名称" clickorderby="true"/>
+				<col column="assurefee" label="担保项下债务金额" clickorderby="true"/>
+				<col column="lvtime" label="履约时间" clickorderby="true"/>
+				<col column="lvmoney" label="履约金额" clickorderby="true"/>
+				<col column="rewarranter" label="反担保人名称" clickorderby="true"/>
+				<col column="remark" label="备注" />
+
+			</display>
+			<subdisplay>
+					    <subrow displaytype="page|report" displayposition="bottom">
+						     <subcol property="sprop1" colspan="9" valuestyleproperty="bgcolor='#eeeeee' align='left'"></subcol>
+					    </subrow>
+					    <format>
+						     <imports>
+							      <import>com.wabacus.util.*</import>
+						     </imports>
+						     <value>
+						<![CDATA[
+							sprop1="制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5";
+						]]>
+						</value>
+					    </format>
+				   </subdisplay>
+<!-- 			<footer><![CDATA[<font color='black'>制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5</font>]]></footer>	    
+ -->			<sql>
+				<value>
+					<![CDATA[select '无' assurenum,'无' recognizorName,'无' assureder,'无' assurefee,'无' lvtime, '无' lvmoney,'无' rewarranter, '无' remark from dual   	]]>
+				</value>
+<!-- 				<condition name="ystart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				 -->
+			</sql>
+			
+
+		</report>
+	</page>
+	
+	
+	<page id="bzwgj07" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="7  北京地区对外担保余额标执行情况表(外币)" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<header><![CDATA[<font color='black'>填制单位：中国再保险集团股份有限公司 报告期：2012.12 单位： 万美元</font>]]></header>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50"/>
+				<col column="jglb" label="机构类别" clickorderby="true" rowgroup="true" />
+				<col column="jgmc" label="机构名称" clickorderby="true"/>
+				<col column="a1" label="当前外汇局的核定余额指标（1）" clickorderby="true"/>
+				<col column="a2" label="融资性对外担保余额（2）" clickorderby="true"/>
+				<col column="a3" label="其中：为境外机构提供（3）" clickorderby="true"/>
+				<col column="a4" label="其中：受益人为境外机构（4）" clickorderby="true"/>
+				<col column="a5" label="其中：主债务期限为1年期（含）以上（5）" clickorderby="true"/>
+				<col column="a6" label="其中：主债务为境外发债（6）" clickorderby="true"/>
+				<col column="a7" label="其中：人民币对外担保（7）" clickorderby="true"/>
+				<col column="a8" label="非融资性对外担保余额（8）" clickorderby="true"/>
+				<col column="a9" label="本年累计履约发生额（9）" clickorderby="true"/>
+				<col column="a10" label="当前指标使用率（10）" clickorderby="true"/>
+				<col column="bz" label="备注" clickorderby="true"/>
+			</display>
+			<subdisplay>
+					    <subrow displaytype="page|report" displayposition="bottom">
+						     <subcol property="sprop1" colspan="14" valuestyleproperty="bgcolor='#eeeeee' align='left'"></subcol>
+					    </subrow>
+					    <format>
+						     <imports>
+							      <import>com.wabacus.util.*</import>
+						     </imports>
+						     <value>
+						<![CDATA[
+							sprop1="制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5";
+						]]>
+						</value>
+					    </format>
+				   </subdisplay>
+<!-- 			<footer><![CDATA[<font color='black'>制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5</font>]]></footer>	    
+ -->			<sql>
+				<value>
+					<![CDATA[SELECT r.bbdm,r.hh,r.dm AS jglb, r.hmc AS jgmc, '' a1, '' a2, '' a3, '' a4, '' a5, '' a6, '' a7, '' a8, '' a9, '' a10, '' bz FROM rgr_intbus r 
+WHERE r.bbdm='107' AND r.hh NOT IN ('4')
+UNION ALL
+SELECT t.bbdm,t.hh,t.dm AS jglb, t.hmc AS jgmc,f.gdz a1, '' a2, '' a3, '' a4, '' a5, '' a6, '' a7, f.qmye a8, '' a9, '' a10, '' bz FROM rgr_intbus t ,
+(SELECT d.gdz,d.qmye,'107' AS bbdm ,d.year,d.month,d.currency FROM dgr_intbus d WHERE d.year = 2012 AND d.month = 12 and d.currency ='other' ) f where t.bbdm = f.bbdm AND t.hh = '4'  	]]>
+				</value>
+				<condition name="ystart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				
+			</sql>
+			
+			<format>
+			  <value>
+			         <![CDATA[  ]]>
+					
+			  </value>
+			  
+			</format>
+
+		</report>
+	</page>
+	
+	
+	<page id="bzwgj08" js="/webresources/script/validate.js,/script/artdialog.js">
+		<report id="report1" title="8  北京地区对外担保余额标执行情况表(人民币)" pagesize="20" scrollstyle="image"  dataexport="richexcel">
+			<header><![CDATA[<font color='black'>填制单位：中国再保险集团股份有限公司 报告期：2012.12 单位： 万元</font>]]></header>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50"/>
+				<col column="jglb" label="机构类别" clickorderby="true" rowgroup="true" />
+				<col column="jgmc" label="机构名称" clickorderby="true"/>
+				<col column="a1" label="当前外汇局的核定余额指标（1）" clickorderby="true"/>
+				<col column="a2" label="融资性对外担保余额（2）" clickorderby="true"/>
+				<col column="a3" label="其中：为境外机构提供（3）" clickorderby="true"/>
+				<col column="a4" label="其中：受益人为境外机构（4）" clickorderby="true"/>
+				<col column="a5" label="其中：主债务期限为1年期（含）以上（5）" clickorderby="true"/>
+				<col column="a6" label="其中：主债务为境外发债（6）" clickorderby="true"/>
+				<col column="a7" label="其中：人民币对外担保（7）" clickorderby="true"/>
+				<col column="a8" label="非融资性对外担保余额（8）" clickorderby="true"/>
+				<col column="a9" label="本年累计履约发生额（9）" clickorderby="true"/>
+				<col column="a10" label="当前指标使用率（10）" clickorderby="true"/>
+				<col column="bz" label="备注" clickorderby="true"/>
+			</display>
+			<subdisplay>
+					    <subrow displaytype="page|report" displayposition="bottom">
+						     <subcol property="sprop1" colspan="14" valuestyleproperty="bgcolor='#eeeeee' align='left'"></subcol>
+					    </subrow>
+					    <format>
+						     <imports>
+							      <import>com.wabacus.util.*</import>
+						     </imports>
+						     <value>
+						<![CDATA[
+							sprop1="制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5";
+						]]>
+						</value>
+					    </format>
+				   </subdisplay>
+<!-- 			<footer><![CDATA[<font color='black'>制表人：刘蕊 /张远  联系电话：010-66576569 负责人签名：单红/刘晔 填表日期：2013.1.5</font>]]></footer>	    
+ -->			<sql>
+				<value>
+					<![CDATA[SELECT r.bbdm,r.hh,r.dm AS jglb, r.hmc AS jgmc, '' a1, '' a2, '' a3, '' a4, '' a5, '' a6, '' a7, '' a8, '' a9, '' a10, '' bz FROM rgr_intbus r 
+WHERE r.bbdm='107' AND r.hh NOT IN ('4')
+UNION ALL
+SELECT t.bbdm,t.hh,t.dm AS jglb, t.hmc AS jgmc,f.gdz a1, '' a2, '' a3, '' a4, '' a5, '' a6, '' a7, f.qmye a8, '' a9, '' a10, '' bz FROM rgr_intbus t ,
+(SELECT d.gdz,d.qmye,'107' AS bbdm ,d.year,d.month,d.currency FROM dgr_intbus d WHERE d.year = 2012 AND d.month = 12 and d.currency ='RMB' ) f where t.bbdm = f.bbdm AND t.hh = '4'  	]]>
+				</value>
+				<condition name="ystart" defaultvalue="url{startdate}" label="开始日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate >= #data#)]]>
+						</value>
+				</condition>
+				<condition name="yend" defaultvalue="url{enddate}" label="结束日期" hidden="true" labelstyle="2">
+						<value>
+							<![CDATA[(b.issuedate <= #data#)]]>
+						</value>
+				</condition>
+				
+			</sql>
+			
+			<format>
+			  <value>
+			         <![CDATA[  ]]>
+					
+			  </value>
+			  
+			</format>
+
+		</report>
+	</page>
+	
+	
+</applications>

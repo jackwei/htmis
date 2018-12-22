@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<applications xmlns="http://www.wabacus.com"
+			   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			   xsi:schemaLocation="http://www.wabacus.com ../xsd/wabacus.applications.xsd">
+
+	<page id="zh01">
+		<report id="report1" title="案件查询" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+     <import>java.net.*</import>  
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String flag = rrequest.getStringAttribute("flag","");
+  String groupid = rrequest.getStringAttribute("groupid","");
+  System.out.println("groupid:"+groupid);
+  String gid = rrequest.getStringAttribute("gid","");
+  System.out.println("接收到的gid:"+gid);
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+  
+  //自动解码,wabacus默认的编码格式
+  System.out.println("接收到的condition:"+condition);
+  
+  if("casecount".equals(flag)){
+    if("null".equals(groupid)){
+    System.out.println("判断groupid为null成功！");
+        condition = condition + " and " + gid + " is null " ;
+    }else{
+    System.out.println("判断groupid不为null！");
+        condition =condition + " and "+ gid +"='"+groupid+"' ";
+    }
+
+  }
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+<!-- 				<col column="case_id" type="hidden" label="ID" /> -->
+				<col column="ah" label="案号" clickorderby="true"/>
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="accidentport" label="事发口岸" clickorderby="true" />
+				<col column="consignorsn" label="委托人" clickorderby="true"/>
+				<col column="casedes" label="案件描述" clickorderby="true"/>
+				<col column="username" label="主办人" clickorderby="true"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select a.Case_Id as caseId,CONCAT(a.casenumber,a.excasenumber) as ah,a.casenumber,a.excasenumber,a.shipname,a.accidentport,a.consignorname,a.consignorsn,a.casedes,a.username from tbl_case a where 1=1 and a.case_id is not null %mycondition% ]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件" hidden="true" labelstyle="2" />
+			    <condition name="flag" defaultvalue="url{flag}" label="查询条件分组项" hidden="true" labelstyle="2" />
+				<condition name="groupid" defaultvalue="url{groupid}" label="查询条件分组项" hidden="true" labelstyle="2" />
+			    <condition name="gid" defaultvalue="gid" label="查询条件分组项2" hidden="true" labelstyle="2" />
+			</sql>				 					
+
+		</report>
+	</page>
+	
+	<page id="zh02">
+		<report id="report1" title="案件统计" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+  String group = rrequest.getStringAttribute("group","");
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+						sql=sql.replaceAll("%group%",group);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+ 			    <col column="groupid" label="ID" displaytype="hidden" /> 
+				<col column="groupname" label="分组项" clickorderby="true"/>
+				<col column="count" label="数量" clickorderby="true"/>
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="明细"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select %group%,count(*) as count from tbl_case a where 1=1 and a.case_id is not null %mycondition% group by groupid]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件" hidden="true" labelstyle="2" />
+				<condition name="group" defaultvalue="url{group}" label="查询条件分组项1" hidden="true" labelstyle="2" />
+				<condition name="gid" defaultvalue="gid" label="查询条件分组项2" hidden="true" labelstyle="2" />
+			</sql>
+			
+			<format>
+			  <imports>                                  
+                     <import>java.net.*</import>                   
+              </imports> 
+			  <value>
+			         <![CDATA[
+			         String condition = rrequest.getStringAttribute("condition","");
+			         System.out.println("condition:"+condition);
+			         condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+                     System.out.println("转码后的condition:"+condition);
+			         condition = java.net.URLEncoder.encode(condition,"UTF-8");
+			         System.out.println("condition:"+condition);
+			         String gid = rrequest.getStringAttribute("gid","");
+			         gid = java.net.URLEncoder.encode(gid,"UTF-8");
+			         System.out.println("gid:"+gid);
+					 detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('ShowReport.wx?PAGEID=zh01&flag=casecount&groupid=" + groupid + "&condition=" + condition + "&gid=" + gid + "',{title:'案件查询',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					
+					]]>
+					
+			  </value>
+			</format>			 					
+
+		</report>
+	</page>
+	
+	<page id="zh03">
+		<report id="report1" title="账单统计" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+  String group = rrequest.getStringAttribute("group","");
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+						sql=sql.replaceAll("%group%",group);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="zt" label="状态" rowgroup="true" />
+				<col column="currency" label="币种" rowgroup="true" />
+				<col column="status" label="状态" displaytype="hidden" />
+				<col column="groupid" label="ID" displaytype="hidden" />
+				<col column="groupname" label="分组项" clickorderby="true"/>
+				<col column="incom" label="收入" clickorderby="true"/>
+				<col column="accfee" label="发账金额" clickorderby="true" />
+				<col column="count" label="数量" clickorderby="true"/>
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="明细"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select * from (SELECT CASE 
+		WHEN b.accdate IS NULL AND b.arrdate IS NULL
+        THEN 1 
+        WHEN b.accdate IS NOT NULL AND b.arrdate IS NULL 
+        THEN 2 
+        WHEN b.accdate IS NOT NULL AND b.arrdate IS NOT NULL 
+        THEN 3 
+	END status,
+	CASE 
+		WHEN b.accdate IS NULL AND b.arrdate IS NULL
+        THEN '未发账' 
+        WHEN b.accdate IS NOT NULL AND b.arrdate IS NULL 
+        THEN '已发账未到账' 
+        WHEN b.accdate IS NOT NULL AND b.arrdate IS NOT NULL 
+        THEN '已发账已到账' 
+	END zt,
+	b.currency,
+	%group% ,
+    SUM(b.expendses+b.servicefee) AS incom,
+	SUM(b.feeamount) AS accfee,COUNT(*) AS COUNT FROM tbl_case a RIGHT JOIN tbl_case_bill b ON a.Case_Id = b.Case_Id
+	where 1=1 %mycondition% GROUP BY status,groupid,groupname,b.currency )tbl]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件1" hidden="true" labelstyle="2" />
+				<condition name="group" defaultvalue="url{group}" label="查询条件2" hidden="true" labelstyle="2" />
+				<condition name="gid" defaultvalue="url{gid}" label="查询条件3" hidden="true" labelstyle="2" />
+			</sql>		
+			
+						<format>
+						<imports>                                  
+                     <import>java.net.*</import>                   
+              </imports>
+			  <value>
+			         <![CDATA[
+			         //status=status==null?"0":status.trim();
+ 			         //if(status.equals("1")) status="未发账";
+			         //else if(status.equals("2")) status="已发账未到账";
+			         //else status="已发账已发账"; 
+			         String gid = rrequest.getStringAttribute("gid","");
+			         String condition = rrequest.getStringAttribute("condition","");
+			         condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+                     System.out.println("转码后的condition:"+condition);
+			         condition = java.net.URLEncoder.encode(condition,"UTF-8");
+			         detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('ShowReport.wx?PAGEID=zh031&flag=billcountdetail&condition=" + condition + "&status=" + status + "&currency=" + currency + "&groupid=" + groupid + "&gid=" + gid + "',{title:'案件查询',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					 //detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" href="ShowReport.wx?PAGEID=zh031&flag=billcountdetail&condition=" + condition + "&status=" + status + "&currency=" + currency + "&groupid=" + groupid + "&gid=" + gid + " ><font face=宋体  color=blue >查看</font></u>";	
+					 
+					]]>
+					
+			  </value>
+			</format>	 		
+
+		</report>
+	</page>
+	
+	
+	<page id="zh031">
+		<report id="report1" title="账单统计详细信息" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+  String groupid = rrequest.getStringAttribute("groupid","");
+  String gid = rrequest.getStringAttribute("gid","");
+  String status = rrequest.getStringAttribute("status","");
+  System.out.println("status:"+status);
+  String currency = rrequest.getStringAttribute("currency","");
+  String flag = rrequest.getStringAttribute("flag","");
+  if("billcountdetail".equals(flag)){
+   condition = condition + " and b.currency ='" + currency + "' and " + gid + " ='" + groupid + "' " ;
+   if("1".equals(status)){
+   condition = condition + " and b.accdate IS NULL AND b.arrdate IS NULL ";
+   }else if("2".equals(status)){
+   condition = condition + " and b.accdate IS NOT NULL AND b.arrdate IS NULL ";
+   }else if("3".equals(status)){
+   condition = condition + " and b.accdate IS NOT NULL AND b.arrdate IS NOT NULL ";
+   }
+  }
+  System.out.println("condition:"+condition);
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="ah" label="案号" clickorderby="true" />
+				<col column="shipname" label="船名" clickorderby="true" />
+				<col column="accidentport" label="事发口岸" displaytype="hidden" />
+				<col column="consignorsn" label="委托人" clickorderby="true"/>
+				<col column="feenumber" label="账单编号" clickorderby="true"/>
+				<col column="incom" label="收入" clickorderby="true" />
+				<col column="feeamount" label="发账金额" clickorderby="true"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select * from (SELECT a.Case_Id AS caseId,CONCAT(a.casenumber, a.excasenumber) AS ah,a.shipname,a.accidentport,a.consignorname,a.consignorsn,b.feenumber,(b.expendses+b.servicedes) AS incom,b.feeamount
+FROM
+  tbl_case a ,tbl_case_bill b
+WHERE 1 = 1 
+  AND a.case_id = b.Case_Id
+  AND a.case_id IS NOT NULL %mycondition%) tl ]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件1" hidden="true" labelstyle="2" />
+				<condition name="groupid" defaultvalue="url{groupid}" label="查询条件2" hidden="true" labelstyle="2" />
+				<condition name="gid" defaultvalue="url{gid}" label="查询条件3" hidden="true" labelstyle="2" />
+				<condition name="status" defaultvalue="url{status}" label="查询条件4" hidden="true" labelstyle="2" />
+				<condition name="currency" defaultvalue="url{currency}" label="查询条件5" hidden="true" labelstyle="2" />
+				<condition name="flag" defaultvalue="url{flag}" label="查询条件6" hidden="true" labelstyle="2" />
+			
+			</sql>		
+			 		
+
+		</report>
+	</page>
+	
+	
+	<page id="zh04">
+		<report id="report1" title="第三方账务" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="status" label="状态" rowgroup="true" />
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="money" label="金额" clickorderby="true"/>
+				<col column="count" label="数量" clickorderby="true"/>
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="明细"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select c.status,b.currency,sum(c.feeamount) as money,count(*) as count from tbl_case a,tbl_case_bill b,tbl_case_bill_detail c where a.case_id = b.case_id and b.bill_id = c.bill_id and c.feetype = 'thirdpart'
+                %mycondition% GROUP BY c.status,b.currency ]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件1" hidden="true" labelstyle="2" />
+			</sql>		
+			
+						<format>
+						<imports>                                  
+                     <import>java.net.*</import>                   
+              </imports>
+			  <value>
+			         <![CDATA[                    
+			         String condition = rrequest.getStringAttribute("condition","");
+			         condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+                     System.out.println("转码后的condition:"+condition);
+			         condition = java.net.URLEncoder.encode(condition,"UTF-8");
+			         detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('ShowReport.wx?PAGEID=zh041&flag=thirddetail&condition=" + condition + "&status=" + status + "&currency=" + currency +  "',{title:'第三方统计详细信息',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					 status=status==null?"0":status.trim();
+ 			         if(status.equals("0")) status="已发账";
+			         else if(status.equals("1")) status="已到账";
+			         else if(status.equals("2")) status="已申请待呈批";
+			         else if(status.equals("3")) status="审批中";
+			         else if(status.equals("4")) status="待划付";
+			         else if(status.equals("5")) status="已申请批量划付";
+			         else if(status.equals("6")) status="已划付";
+			         else status="未知";
+					]]>
+					
+			  </value>
+			</format>	 		
+
+		</report>
+	</page>
+	
+	
+<page id="zh041">
+		<report id="report1" title="第三方统计详细信息" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+  String status = rrequest.getStringAttribute("status","");
+
+  String currency = rrequest.getStringAttribute("currency","");
+  String flag = rrequest.getStringAttribute("flag","");
+  
+  String groupid = rrequest.getStringAttribute("groupid","");
+  String gid = rrequest.getStringAttribute("gid","");
+  
+  if("thirddetail".equals(flag)){
+   condition = condition + " and b.currency ='" + currency + "' and c.status=" + status ;
+  }else if("thirdcountdetail".equals(flag)){
+  condition = condition + " and b.currency ='" + currency + "' and " +gid+ "='"+groupid+"' ";
+  }
+  System.out.println("condition:"+condition);
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="ah" label="案号" clickorderby="true" />
+				<col column="shipname" label="船名" clickorderby="true" />
+				<col column="consignorname" label="第三方名称" clickorderby="true" />
+				<col column="tah" label="第三方案号" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="servicefee" label="服务费" clickorderby="true" />
+				<col column="expendses" label="费用" clickorderby="true" />
+				<col column="replacefee" label="代垫款" clickorderby="true" />
+				<col column="feeamount" label="总额" clickorderby="true"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[SELECT a.case_id AS caseid,CONCAT(a.casenumber,a.excasenumber) AS ah,a.shipname,c.consignorname
+					,c.casenumber AS tah,c.reportdate,b.currency,c.servicefee,c.expendses,c.replacefee,c.feeamount 
+FROM
+  tbl_case a,
+  tbl_case_bill b,
+  tbl_case_bill_detail c 
+  WHERE a.case_id = b.case_id AND b.bill_id = c.bill_id AND c.feetype = 'thirdpart' %mycondition% ]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件1" hidden="true" labelstyle="2" />			
+			    <condition name="groupid" defaultvalue="url{groupid}" label="查询条件2" hidden="true" labelstyle="2" />			
+			    <condition name="gid" defaultvalue="url{gid}" label="查询条件3" hidden="true" labelstyle="2" />			
+			    <condition name="flag" defaultvalue="url{flag}" label="查询条件4" hidden="true" labelstyle="2" />			
+			    <condition name="currency" defaultvalue="url{currency}" label="查询条件4" hidden="true" labelstyle="2" />			
+			
+			</sql>		
+			 		
+
+		</report>
+	</page>	
+	
+	
+		<page id="zh05">
+		<report id="report1" title="第三方明细" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+                     System.out.println("转码后的condition:"+condition);
+  String group = rrequest.getStringAttribute("group","");
+  
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+						sql=sql.replaceAll("%group%",group);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="groupid" label="ID" displaytype="hidden" />
+				<col column="groupname" label="分组项" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="money" label="金额" clickorderby="true"/>
+				<col column="count" label="数量" clickorderby="true" />
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="明细"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select %group% ,b.currency,sum(c.feeamount) as money,count(*) as count from tbl_case a,tbl_case_bill b,tbl_case_bill_detail c where a.case_id = b.case_id and b.bill_id = c.bill_id and c.feetype = 'thirdpart' %mycondition% 
+					group by groupid,groupname,b.currency]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件1" hidden="true" labelstyle="2" />
+				<condition name="group" defaultvalue="url{group}" label="查询条件2" hidden="true" labelstyle="2" />
+				<condition name="gid" defaultvalue="url{gid}" label="查询条件3" hidden="true" labelstyle="2" />
+			</sql>
+			
+			<format>
+						<imports>                                  
+                     <import>java.net.*</import>                   
+              </imports>
+			  <value>
+			         <![CDATA[                    
+			         String condition = rrequest.getStringAttribute("condition","");
+			         condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+                     System.out.println("转码后的condition:"+condition);
+			         condition = java.net.URLEncoder.encode(condition,"UTF-8");
+			         String gid = rrequest.getStringAttribute("gid","");
+			         detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('ShowReport.wx?PAGEID=zh041&flag=thirdcountdetail&condition=" + condition + "&groupid=" + groupid + "&gid=" + gid + "&currency=" + currency +  "',{title:'第三方统计详细信息',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+
+					]]>
+					
+			  </value>
+			</format>				 					
+
+		</report>
+	</page>
+	
+	
+	<page id="zh06">
+		<report id="report1" title="担保账务" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+  String group = rrequest.getStringAttribute("group","");
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+						sql=sql.replaceAll("%group%",group);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="feestatuse" label="状态" rowgroup="true" />
+				<col column="groupid" label="ID"  displaytype="hidden"/>
+				<col column="groupname" label="分组项" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="assurefee" label="担保金额" clickorderby="true"/>
+				<col column="rmbfee" label="RMB金额" clickorderby="true"/>
+				<col column="usdfee" label="USD金额" clickorderby="true"/>
+				<col column="servicefee" label="手续费" clickorderby="true"/>
+				<col column="count" label="数量" clickorderby="true" />
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="明细"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select b.feestatuse,
+				%group% ,b.currency,sum(b.assurefee) as assurefee,sum(b.rmbfee) as rmbfee,sum(b.usdfee) as usdfee,sum(b.servicefee) as servicefee,count(*) as count from tbl_case a,tbl_passureinfos b where a.case_id = b.caseid %mycondition%
+                group by b.feestatuse,groupid,groupname,b.currency]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件1" hidden="true" labelstyle="2" />
+				<condition name="group" defaultvalue="url{group}" label="查询条件2" hidden="true" labelstyle="2" />
+				<condition name="gid" defaultvalue="url{gid}" label="查询条件3" hidden="true" labelstyle="2" />
+			</sql>
+			
+			<format>
+			<imports>                                  
+                     <import>java.net.*</import>                   
+              </imports>
+			  <value>
+			         <![CDATA[
+			         String condition = rrequest.getStringAttribute("condition","");
+			         condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+                     System.out.println("转码后的condition:"+condition);
+			         condition = java.net.URLEncoder.encode(condition,"UTF-8");
+			         String gid = rrequest.getStringAttribute("gid","");
+			         detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('ShowReport.wx?PAGEID=zh061&flag=passuredetail&condition=" + condition + "&groupid=" + groupid + "&feestatuse=" + feestatuse + "&gid=" + gid + "&currency=" + currency +  "',{title:'第三方统计详细信息',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+			         
+                     feestatuse=feestatuse==null?"0":feestatuse.trim();
+ 			         if(feestatuse.equals("0")) feestatuse="已登记";
+			         else if(feestatuse.equals("1")) feestatuse="已发账";
+			         else if(feestatuse.equals("2")) feestatuse="已到账";
+			         else if(feestatuse.equals("3")) feestatuse="已申请待呈批";
+			         else if(feestatuse.equals("4")) feestatuse="审批中";
+			         else if(feestatuse.equals("5")) feestatuse="待划付";
+			         else if(feestatuse.equals("6")) feestatuse="已划付";
+			         else feestatuse="未知";					 
+					]]>
+					
+			  </value>
+			</format>			 					
+
+		</report>
+	</page>
+	
+	
+	<page id="zh061">
+		<report id="report1" title="担保统计详细信息" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+  String status = rrequest.getStringAttribute("status","");
+  System.out.println("status:"+status);
+  String feestatuse = rrequest.getStringAttribute("feestatuse","");
+  System.out.println("feestatuse:"+feestatuse);
+
+  String currency = rrequest.getStringAttribute("currency","");
+  String flag = rrequest.getStringAttribute("flag","");
+  
+  String groupid = rrequest.getStringAttribute("groupid","");
+  String gid = rrequest.getStringAttribute("gid","");
+  
+  if("passuredetail".equals(flag)){
+  
+   condition = condition + " and b.currency ='" + currency + "' and " +gid+ "='"+groupid+"' and b.feestatuse=" + feestatuse ;
+  
+  }else if("passurecountdetail".equals(flag)){
+ 
+  condition = condition + " and b.currency ='" + currency + "' and " +gid+ "='"+groupid+"' ";
+  if("1".equals(status)){
+  condition = condition + " and b.issuedate IS NOT NULL " ;
+  }else if("2".equals(status)){
+  condition = condition + " and b.issuedate IS NOT NULL AND b.backdate IS NULL " ;
+  }else if("3".equals(status)){
+  condition = condition + " and b.issuedate IS NOT NULL AND b.backdate IS NOT NULL " ;
+  }
+
+  }
+  System.out.println("condition:"+condition);
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="ah" label="案号" clickorderby="true" />
+				<col column="shipname" label="船名" clickorderby="true" />
+				<col column="rewarrantersn" label="反担保人" clickorderby="true" />
+				<col column="assurenum" label="担保编号" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="assurefee" label="担保金额" clickorderby="true" />
+				<col column="rmbfee" label="RMB金额" clickorderby="true" />
+				<col column="usdfee" label="USD金额" clickorderby="true" />
+				<col column="servicefee" label="手续费" clickorderby="true"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[SELECT a.case_id AS caseid,CONCAT(a.casenumber,a.excasenumber) AS ah,a.shipname,
+  b.rewarrantersn ,b.assurenum,b.currency,b.assurefee,b.rmbfee,b.usdfee,b.servicefee 
+FROM
+  tbl_case a,
+  tbl_passureinfos b 
+  WHERE a.case_id = b.caseid %mycondition% ]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件1" hidden="true" labelstyle="2" />			
+			    <condition name="groupid" defaultvalue="url{groupid}" label="查询条件2" hidden="true" labelstyle="2" />			
+			    <condition name="gid" defaultvalue="url{gid}" label="查询条件3" hidden="true" labelstyle="2" />			
+			    <condition name="flag" defaultvalue="url{flag}" label="查询条件4" hidden="true" labelstyle="2" />			
+			    <condition name="currency" defaultvalue="url{currency}" label="查询条件5" hidden="true" labelstyle="2" />			
+				<condition name="status" defaultvalue="url{status}" label="查询条件6" hidden="true" labelstyle="2" />			
+				<condition name="feestatuse" defaultvalue="url{feestatuse}" label="查询条件7" hidden="true" labelstyle="2" />			
+			
+			</sql>		
+			 		
+
+		</report>
+	</page>	
+	
+	
+	<page id="zh07">
+		<report id="report1" title="担保明细" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+  String group = rrequest.getStringAttribute("group","");
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+						sql=sql.replaceAll("%group%",group);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="billstatuse" label="状态" rowgroup="true" />
+				<col column="groupid" label="ID" displaytype="hidden" />
+				<col column="status" label="zt" displaytype="hidden"/>
+				<col column="groupname" label="分组项" clickorderby="true"/>
+				<col column="currency" label="币种" clickorderby="true"/>
+				<col column="assurefee" label="担保金额" clickorderby="true"/>
+				<col column="rmbfee" label="RMB金额" clickorderby="true"/>
+				<col column="usdfee" label="USD金额" clickorderby="true"/>
+				<col column="servicefee" label="手续费" clickorderby="true"/>
+				<col column="count" label="数量" clickorderby="true" />
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="明细"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select b.billstatuse,b.status, %group%,b.currency,sum(b.assurefee) as assurefee,sum(b.rmbfee) as rmbfee,sum(b.usdfee) as usdfee,sum(b.servicefee) as servicefee,count(*) as count from tbl_case a,
+				(SELECT '出具担保' AS billstatuse,'1' as status, f.* FROM tbl_passureinfos f WHERE f.issuedate IS NOT NULL 
+				UNION ALL 
+				SELECT '有效担保' AS billstatuse,'2' as status, t.* FROM tbl_passureinfos t WHERE t.issuedate IS NOT NULL AND t.backdate IS NULL 
+				UNION ALL 
+				SELECT '撤回担保' AS billstatuse,'3' as status, g.* FROM tbl_passureinfos g WHERE g.issuedate IS NOT NULL AND g.backdate IS NOT NULL) b 
+				where a.case_id = b.caseid %mycondition%
+                group by b.billstatuse,b.status,groupid,groupname,b.currency]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件1" hidden="true" labelstyle="2" />
+				<condition name="group" defaultvalue="url{group}" label="查询条件2" hidden="true" labelstyle="2" />
+				<condition name="gid" defaultvalue="url{gid}" label="查询条件3" hidden="true" labelstyle="2" />
+			
+			</sql>
+			
+			<format>
+			<imports>                                  
+                     <import>java.net.*</import>                   
+              </imports>
+			  <value>
+			         <![CDATA[
+			         String condition = rrequest.getStringAttribute("condition","");
+			         condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+                     System.out.println("转码后的condition:"+condition);
+			         condition = java.net.URLEncoder.encode(condition,"UTF-8");
+			         String gid = rrequest.getStringAttribute("gid","");
+			         detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('ShowReport.wx?PAGEID=zh061&flag=passurecountdetail&condition=" + condition + "&groupid=" + groupid + "&status=" + status + "&gid=" + gid + "&currency=" + currency +  "',{title:'担保统计详细信息',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					 
+					]]>
+					
+			  </value>
+			</format>			 					
+
+		</report>
+	</page>
+	
+	<page id="zh08">
+		<report id="report1" title="收入**美元及以上账单统计" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    <import>java.net.*</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[ 			
+  String condition = rrequest.getStringAttribute("condition","");
+  System.out.println("接收到的condition:"+condition);
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+  String group = rrequest.getStringAttribute("group","");
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+						sql=sql.replaceAll("%group%",group);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="groupid" label="ID" displaytype="hidden" />
+				<col column="groupname" label="分组项" clickorderby="true"/>
+				<col column="ah" label="案号" clickorderby="true"/>
+				<col column="shipname" label="船名" clickorderby="true"/>
+				<col column="income" label="收入USD" clickorderby="true" />
+				<col column="feeamount" label="发账金额USD" clickorderby="true"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select %group%,CONCAT(a.casenumber,a.excasenumber) as ah,a.shipname,b.income,b.feeamount from tbl_case a right join (select (tb.servicefee + tb.expendses) as income,tb.* from tbl_case_bill tb)b on a.case_id =b.case_id where 1=1 %mycondition% ]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件1" hidden="true" labelstyle="2" />
+				<condition name="group" defaultvalue="url{group}" label="查询条件2" hidden="true" labelstyle="2" />
+			</sql>			 					
+
+		</report>
+	</page>
+	
+	<page id="zh09">
+		<report id="report1" title="全球地区性市场份额" pagesize="20" scrollstyle="image"  dataexport="richexcel" >
+ 		<interceptor>
+    <imports>
+     <import>com.wabacus.system.component.application.report.abstractreport.configbean.AbsListReportFilterBean</import>
+    </imports>
+    <beforeloaddata>
+  <![CDATA[
+  String condition = rrequest.getStringAttribute("condition","");
+  condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+  System.out.println("转码后的condition:"+condition);
+    if(typeObj instanceof ReportDataSetValueBean||typeObj instanceof AbsListReportFilterBean)
+					{//当前是在执行加载报表数据或列过滤选项数据，则将其中sql中的%mycondition%改为相应的条件
+						sql=sql.replaceAll("%mycondition%",condition);
+					}
+System.out.println("====执行的sql===："+sql);
+return sql;
+  ]]>
+</beforeloaddata>
+   </interceptor>
+			<display>
+				<col column="{sequence:1}" label="序号" width="50" />
+				<col column="area" label="地区"  rowgroup="true"/>
+ 			    <col column="country" label="国家" /> 
+				<col column="count" label="数量" clickorderby="true"/>
+				<col property="detailView" defaultvalue="查看" column="{non-fromdb}" width="80" label="明细"/>
+			</display>	   			
+			 
+			<sql>
+				<value>
+					<![CDATA[select b.area,b.country,count(*) as count from tbl_case a,tbl_consignor b where 1=1 and a.consignorid = b.oid  %mycondition% group by b.area,b.country]]>
+				</value>
+				<condition name="condition" defaultvalue="url{condition}" label="查询条件" hidden="true" labelstyle="2" />
+			</sql>
+			
+			<format>
+			  <value>
+			         <![CDATA[
+			         String condition = rrequest.getStringAttribute("condition","");
+			         condition=new String(condition.getBytes("ISO-8859-1"),"UTF-8");
+                     System.out.println("转码后的condition:"+condition);
+					 //detailView = "<u onMouseOver=\"this.style.cursor='pointer'\" onclick=\"wx_winpage('ShowReport.wx?PAGEID=zh01&flag=casecount&condition=" + condition  + "&groupid=" + groupid + "',{title:'案件查询',initsize:'max'});\" ><font face=宋体  color=blue >查看</font></u>";	
+					 
+					]]>
+					
+			  </value>
+			</format>			 					
+
+		</report>
+	</page>
+	
+</applications>

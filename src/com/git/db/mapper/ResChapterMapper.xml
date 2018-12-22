@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.ResChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.ResChapter" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="BOOK_ID" property="bookId" jdbcType="INTEGER" />
+    <result column="AUTHOR_ID" property="authorId" jdbcType="INTEGER" />
+    <result column="TRANSLATOR" property="translator" jdbcType="VARCHAR" />
+    <result column="CHAPTER_NO" property="chapterNo" jdbcType="INTEGER" />
+    <result column="NAME_CN" property="nameCn" jdbcType="VARCHAR" />
+    <result column="NAME_EN" property="nameEn" jdbcType="VARCHAR" />
+    <result column="SUMMARY" property="summary" jdbcType="VARCHAR" />
+    <result column="PATH" property="path" jdbcType="VARCHAR" />
+    <result column="KEYWORDS" property="keywords" jdbcType="VARCHAR" />
+    <result column="INIT_CONTENT" property="initContent" jdbcType="BIT" />
+    <result column="START_PAGE_NO" property="startPageNo" jdbcType="INTEGER" />
+    <result column="PAGE_COUNT" property="pageCount" jdbcType="INTEGER" />
+    <result column="INSERT_DATE" property="insertDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.git.db.beans.ResChapter" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, BOOK_ID, AUTHOR_ID, TRANSLATOR, CHAPTER_NO, NAME_CN, NAME_EN, SUMMARY, PATH, 
+    KEYWORDS, INIT_CONTENT, START_PAGE_NO, PAGE_COUNT, INSERT_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.git.db.beans.ResChapterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from res_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.ResChapterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from res_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from res_chapter
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from res_chapter
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.ResChapterExample" >
+    delete from res_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.ResChapter" >
+    insert into res_chapter (ID, BOOK_ID, AUTHOR_ID, 
+      TRANSLATOR, CHAPTER_NO, NAME_CN, 
+      NAME_EN, SUMMARY, PATH, 
+      KEYWORDS, INIT_CONTENT, START_PAGE_NO, 
+      PAGE_COUNT, INSERT_DATE, UPDATE_DATE, 
+      CONTENT)
+    values (#{id,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{authorId,jdbcType=INTEGER}, 
+      #{translator,jdbcType=VARCHAR}, #{chapterNo,jdbcType=INTEGER}, #{nameCn,jdbcType=VARCHAR}, 
+      #{nameEn,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{keywords,jdbcType=VARCHAR}, #{initContent,jdbcType=BIT}, #{startPageNo,jdbcType=INTEGER}, 
+      #{pageCount,jdbcType=INTEGER}, #{insertDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.ResChapter" >
+    insert into res_chapter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="bookId != null" >
+        BOOK_ID,
+      </if>
+      <if test="authorId != null" >
+        AUTHOR_ID,
+      </if>
+      <if test="translator != null" >
+        TRANSLATOR,
+      </if>
+      <if test="chapterNo != null" >
+        CHAPTER_NO,
+      </if>
+      <if test="nameCn != null" >
+        NAME_CN,
+      </if>
+      <if test="nameEn != null" >
+        NAME_EN,
+      </if>
+      <if test="summary != null" >
+        SUMMARY,
+      </if>
+      <if test="path != null" >
+        PATH,
+      </if>
+      <if test="keywords != null" >
+        KEYWORDS,
+      </if>
+      <if test="initContent != null" >
+        INIT_CONTENT,
+      </if>
+      <if test="startPageNo != null" >
+        START_PAGE_NO,
+      </if>
+      <if test="pageCount != null" >
+        PAGE_COUNT,
+      </if>
+      <if test="insertDate != null" >
+        INSERT_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="authorId != null" >
+        #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="translator != null" >
+        #{translator,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterNo != null" >
+        #{chapterNo,jdbcType=INTEGER},
+      </if>
+      <if test="nameCn != null" >
+        #{nameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null" >
+        #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="initContent != null" >
+        #{initContent,jdbcType=BIT},
+      </if>
+      <if test="startPageNo != null" >
+        #{startPageNo,jdbcType=INTEGER},
+      </if>
+      <if test="pageCount != null" >
+        #{pageCount,jdbcType=INTEGER},
+      </if>
+      <if test="insertDate != null" >
+        #{insertDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.ResChapterExample" resultType="java.lang.Integer" >
+    select count(*) from res_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update res_chapter
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookId != null" >
+        BOOK_ID = #{record.bookId,jdbcType=INTEGER},
+      </if>
+      <if test="record.authorId != null" >
+        AUTHOR_ID = #{record.authorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.translator != null" >
+        TRANSLATOR = #{record.translator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chapterNo != null" >
+        CHAPTER_NO = #{record.chapterNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.nameCn != null" >
+        NAME_CN = #{record.nameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameEn != null" >
+        NAME_EN = #{record.nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summary != null" >
+        SUMMARY = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.path != null" >
+        PATH = #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keywords != null" >
+        KEYWORDS = #{record.keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.initContent != null" >
+        INIT_CONTENT = #{record.initContent,jdbcType=BIT},
+      </if>
+      <if test="record.startPageNo != null" >
+        START_PAGE_NO = #{record.startPageNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.pageCount != null" >
+        PAGE_COUNT = #{record.pageCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.insertDate != null" >
+        INSERT_DATE = #{record.insertDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null" >
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update res_chapter
+    set ID = #{record.id,jdbcType=INTEGER},
+      BOOK_ID = #{record.bookId,jdbcType=INTEGER},
+      AUTHOR_ID = #{record.authorId,jdbcType=INTEGER},
+      TRANSLATOR = #{record.translator,jdbcType=VARCHAR},
+      CHAPTER_NO = #{record.chapterNo,jdbcType=INTEGER},
+      NAME_CN = #{record.nameCn,jdbcType=VARCHAR},
+      NAME_EN = #{record.nameEn,jdbcType=VARCHAR},
+      SUMMARY = #{record.summary,jdbcType=VARCHAR},
+      PATH = #{record.path,jdbcType=VARCHAR},
+      KEYWORDS = #{record.keywords,jdbcType=VARCHAR},
+      INIT_CONTENT = #{record.initContent,jdbcType=BIT},
+      START_PAGE_NO = #{record.startPageNo,jdbcType=INTEGER},
+      PAGE_COUNT = #{record.pageCount,jdbcType=INTEGER},
+      INSERT_DATE = #{record.insertDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      CONTENT = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update res_chapter
+    set ID = #{record.id,jdbcType=INTEGER},
+      BOOK_ID = #{record.bookId,jdbcType=INTEGER},
+      AUTHOR_ID = #{record.authorId,jdbcType=INTEGER},
+      TRANSLATOR = #{record.translator,jdbcType=VARCHAR},
+      CHAPTER_NO = #{record.chapterNo,jdbcType=INTEGER},
+      NAME_CN = #{record.nameCn,jdbcType=VARCHAR},
+      NAME_EN = #{record.nameEn,jdbcType=VARCHAR},
+      SUMMARY = #{record.summary,jdbcType=VARCHAR},
+      PATH = #{record.path,jdbcType=VARCHAR},
+      KEYWORDS = #{record.keywords,jdbcType=VARCHAR},
+      INIT_CONTENT = #{record.initContent,jdbcType=BIT},
+      START_PAGE_NO = #{record.startPageNo,jdbcType=INTEGER},
+      PAGE_COUNT = #{record.pageCount,jdbcType=INTEGER},
+      INSERT_DATE = #{record.insertDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.ResChapter" >
+    update res_chapter
+    <set >
+      <if test="bookId != null" >
+        BOOK_ID = #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="authorId != null" >
+        AUTHOR_ID = #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="translator != null" >
+        TRANSLATOR = #{translator,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterNo != null" >
+        CHAPTER_NO = #{chapterNo,jdbcType=INTEGER},
+      </if>
+      <if test="nameCn != null" >
+        NAME_CN = #{nameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null" >
+        NAME_EN = #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        SUMMARY = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        PATH = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        KEYWORDS = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="initContent != null" >
+        INIT_CONTENT = #{initContent,jdbcType=BIT},
+      </if>
+      <if test="startPageNo != null" >
+        START_PAGE_NO = #{startPageNo,jdbcType=INTEGER},
+      </if>
+      <if test="pageCount != null" >
+        PAGE_COUNT = #{pageCount,jdbcType=INTEGER},
+      </if>
+      <if test="insertDate != null" >
+        INSERT_DATE = #{insertDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.git.db.beans.ResChapter" >
+    update res_chapter
+    set BOOK_ID = #{bookId,jdbcType=INTEGER},
+      AUTHOR_ID = #{authorId,jdbcType=INTEGER},
+      TRANSLATOR = #{translator,jdbcType=VARCHAR},
+      CHAPTER_NO = #{chapterNo,jdbcType=INTEGER},
+      NAME_CN = #{nameCn,jdbcType=VARCHAR},
+      NAME_EN = #{nameEn,jdbcType=VARCHAR},
+      SUMMARY = #{summary,jdbcType=VARCHAR},
+      PATH = #{path,jdbcType=VARCHAR},
+      KEYWORDS = #{keywords,jdbcType=VARCHAR},
+      INIT_CONTENT = #{initContent,jdbcType=BIT},
+      START_PAGE_NO = #{startPageNo,jdbcType=INTEGER},
+      PAGE_COUNT = #{pageCount,jdbcType=INTEGER},
+      INSERT_DATE = #{insertDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.ResChapter" >
+    update res_chapter
+    set BOOK_ID = #{bookId,jdbcType=INTEGER},
+      AUTHOR_ID = #{authorId,jdbcType=INTEGER},
+      TRANSLATOR = #{translator,jdbcType=VARCHAR},
+      CHAPTER_NO = #{chapterNo,jdbcType=INTEGER},
+      NAME_CN = #{nameCn,jdbcType=VARCHAR},
+      NAME_EN = #{nameEn,jdbcType=VARCHAR},
+      SUMMARY = #{summary,jdbcType=VARCHAR},
+      PATH = #{path,jdbcType=VARCHAR},
+      KEYWORDS = #{keywords,jdbcType=VARCHAR},
+      INIT_CONTENT = #{initContent,jdbcType=BIT},
+      START_PAGE_NO = #{startPageNo,jdbcType=INTEGER},
+      PAGE_COUNT = #{pageCount,jdbcType=INTEGER},
+      INSERT_DATE = #{insertDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

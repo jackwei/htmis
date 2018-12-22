@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.CaseClaimImplMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.CaseClaimImpl" >
+    <id column="Claim_Id" property="claimId" jdbcType="BIGINT" />
+    <result column="Case_Id" property="caseId" jdbcType="BIGINT" />
+    <result column="casenumber" property="casenumber" jdbcType="VARCHAR" />
+    <result column="shipname" property="shipname" jdbcType="VARCHAR" />
+    <result column="clientname" property="clientname" jdbcType="VARCHAR" />
+    <result column="realamount" property="realamount" jdbcType="REAL" />
+    <result column="applyamount" property="applyamount" jdbcType="REAL" />
+    <result column="applycurrency" property="applycurrency" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="banknum" property="banknum" jdbcType="VARCHAR" />
+    <result column="treatdate" property="treatdate" jdbcType="TIMESTAMP" />
+    <result column="usdrate" property="usdrate" jdbcType="DECIMAL" />
+    <result column="usdamount" property="usdamount" jdbcType="REAL" />
+    <result column="lockdate" property="lockdate" jdbcType="TIMESTAMP" />
+    <result column="recordtype" property="recordtype" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="Create_Operator" property="createOperator" jdbcType="BIGINT" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="applybanknum" property="applybanknum" jdbcType="VARCHAR" />
+    <result column="applybank" property="applybank" jdbcType="VARCHAR" />
+    <result column="transfercurrency" property="transfercurrency" jdbcType="VARCHAR" />
+    <result column="transfermount" property="transfermount" jdbcType="REAL" />
+    <result column="payee" property="payee" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="thingcause" property="thingcause" jdbcType="VARCHAR" />
+    <result column="branch" property="branch" jdbcType="VARCHAR" />
+    <result column="transferdate" property="transferdate" jdbcType="TIMESTAMP" />
+    <result column="unitname" property="unitname" jdbcType="VARCHAR" />
+    <result column="advancefeetype" property="advancefeetype" jdbcType="VARCHAR" />
+    <result column="incaseno" property="incaseno" jdbcType="VARCHAR" />
+    <result column="recordmount" property="recordmount" jdbcType="REAL" />
+    <result column="recordcurrency" property="recordcurrency" jdbcType="VARCHAR" />
+    <result column="paymount" property="paymount" jdbcType="REAL" />
+    <result column="paycurrency" property="paycurrency" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="bill_id" property="billId" jdbcType="BIGINT" />
+    <result column="billnumber" property="billnumber" jdbcType="VARCHAR" />
+    <result column="differamount" property="differamount" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Claim_Id, Case_Id, casenumber, shipname, clientname, realamount, applyamount, applycurrency, 
+    currency, banknum, treatdate, usdrate, usdamount, lockdate, recordtype, remark, Create_Operator, 
+    Modify_Operator_Id, Modify_Time, Create_Time, applybanknum, applybank, transfercurrency, 
+    transfermount, payee, status, thingcause, branch, transferdate, unitname, advancefeetype, 
+    incaseno, recordmount, recordcurrency, paymount, paycurrency, remark1, remark2, bill_id, 
+    billnumber, differamount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.CaseClaimImplExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_case_claim 
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_case_claim
+    where Claim_Id = #{claimId,jdbcType=BIGINT}
+  </select>
+  
+   <select id="searchcaseClaimByIncomeId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_case_claim
+    where remark1 = #{remark1,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_case_claim
+    where Claim_Id = #{claimId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByIncomeId" parameterType="java.lang.Long" >
+    delete from tbl_case_claim
+    where remark1 = #{remark1,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.git.db.beans.CaseClaimImplExample" >
+    delete from tbl_case_claim
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.CaseClaimImpl" >
+    insert into tbl_case_claim (Claim_Id, Case_Id, casenumber, 
+      shipname, clientname, realamount, 
+      applyamount, applycurrency, currency, 
+      banknum, treatdate, usdrate, 
+      usdamount, lockdate, recordtype, 
+      remark, Create_Operator, Modify_Operator_Id, 
+      Modify_Time, Create_Time, applybanknum, 
+      applybank, transfercurrency, transfermount, 
+      payee, status, thingcause, 
+      branch, transferdate, unitname, 
+      advancefeetype, incaseno, recordmount, 
+      recordcurrency, paymount, paycurrency, 
+      remark1, remark2, bill_id, 
+      billnumber, differamount)
+    values (#{claimId,jdbcType=BIGINT}, #{caseId,jdbcType=BIGINT}, #{casenumber,jdbcType=VARCHAR}, 
+      #{shipname,jdbcType=VARCHAR}, #{clientname,jdbcType=VARCHAR}, #{realamount,jdbcType=REAL}, 
+      #{applyamount,jdbcType=REAL}, #{applycurrency,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, 
+      #{banknum,jdbcType=VARCHAR}, #{treatdate,jdbcType=TIMESTAMP}, #{usdrate,jdbcType=DECIMAL}, 
+      #{usdamount,jdbcType=REAL}, #{lockdate,jdbcType=TIMESTAMP}, #{recordtype,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createOperator,jdbcType=BIGINT}, #{modifyOperatorId,jdbcType=BIGINT}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{applybanknum,jdbcType=VARCHAR}, 
+      #{applybank,jdbcType=VARCHAR}, #{transfercurrency,jdbcType=VARCHAR}, #{transfermount,jdbcType=REAL}, 
+      #{payee,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{thingcause,jdbcType=VARCHAR}, 
+      #{branch,jdbcType=VARCHAR}, #{transferdate,jdbcType=TIMESTAMP}, #{unitname,jdbcType=VARCHAR}, 
+      #{advancefeetype,jdbcType=VARCHAR}, #{incaseno,jdbcType=VARCHAR}, #{recordmount,jdbcType=REAL}, 
+      #{recordcurrency,jdbcType=VARCHAR}, #{paymount,jdbcType=REAL}, #{paycurrency,jdbcType=VARCHAR}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{billId,jdbcType=BIGINT}, 
+      #{billnumber,jdbcType=VARCHAR}, #{differamount,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.CaseClaimImpl" >
+    insert into tbl_case_claim
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="claimId != null" >
+        Claim_Id,
+      </if>
+      <if test="caseId != null" >
+        Case_Id,
+      </if>
+      <if test="casenumber != null" >
+        casenumber,
+      </if>
+      <if test="shipname != null" >
+        shipname,
+      </if>
+      <if test="clientname != null" >
+        clientname,
+      </if>
+      <if test="realamount != null" >
+        realamount,
+      </if>
+      <if test="applyamount != null" >
+        applyamount,
+      </if>
+      <if test="applycurrency != null" >
+        applycurrency,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="banknum != null" >
+        banknum,
+      </if>
+      <if test="treatdate != null" >
+        treatdate,
+      </if>
+      <if test="usdrate != null" >
+        usdrate,
+      </if>
+      <if test="usdamount != null" >
+        usdamount,
+      </if>
+      <if test="lockdate != null" >
+        lockdate,
+      </if>
+      <if test="recordtype != null" >
+        recordtype,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="applybanknum != null" >
+        applybanknum,
+      </if>
+      <if test="applybank != null" >
+        applybank,
+      </if>
+      <if test="transfercurrency != null" >
+        transfercurrency,
+      </if>
+      <if test="transfermount != null" >
+        transfermount,
+      </if>
+      <if test="payee != null" >
+        payee,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="thingcause != null" >
+        thingcause,
+      </if>
+      <if test="branch != null" >
+        branch,
+      </if>
+      <if test="transferdate != null" >
+        transferdate,
+      </if>
+      <if test="unitname != null" >
+        unitname,
+      </if>
+      <if test="advancefeetype != null" >
+        advancefeetype,
+      </if>
+      <if test="incaseno != null" >
+        incaseno,
+      </if>
+      <if test="recordmount != null" >
+        recordmount,
+      </if>
+      <if test="recordcurrency != null" >
+        recordcurrency,
+      </if>
+      <if test="paymount != null" >
+        paymount,
+      </if>
+      <if test="paycurrency != null" >
+        paycurrency,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="billId != null" >
+        bill_id,
+      </if>
+      <if test="billnumber != null" >
+        billnumber,
+      </if>
+      <if test="differamount != null" >
+        differamount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="claimId != null" >
+        #{claimId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="shipname != null" >
+        #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="clientname != null" >
+        #{clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="realamount != null" >
+        #{realamount,jdbcType=REAL},
+      </if>
+      <if test="applyamount != null" >
+        #{applyamount,jdbcType=REAL},
+      </if>
+      <if test="applycurrency != null" >
+        #{applycurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="banknum != null" >
+        #{banknum,jdbcType=VARCHAR},
+      </if>
+      <if test="treatdate != null" >
+        #{treatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usdrate != null" >
+        #{usdrate,jdbcType=DECIMAL},
+      </if>
+      <if test="usdamount != null" >
+        #{usdamount,jdbcType=REAL},
+      </if>
+      <if test="lockdate != null" >
+        #{lockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordtype != null" >
+        #{recordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applybanknum != null" >
+        #{applybanknum,jdbcType=VARCHAR},
+      </if>
+      <if test="applybank != null" >
+        #{applybank,jdbcType=VARCHAR},
+      </if>
+      <if test="transfercurrency != null" >
+        #{transfercurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="transfermount != null" >
+        #{transfermount,jdbcType=REAL},
+      </if>
+      <if test="payee != null" >
+        #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="thingcause != null" >
+        #{thingcause,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="transferdate != null" >
+        #{transferdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unitname != null" >
+        #{unitname,jdbcType=VARCHAR},
+      </if>
+      <if test="advancefeetype != null" >
+        #{advancefeetype,jdbcType=VARCHAR},
+      </if>
+      <if test="incaseno != null" >
+        #{incaseno,jdbcType=VARCHAR},
+      </if>
+      <if test="recordmount != null" >
+        #{recordmount,jdbcType=REAL},
+      </if>
+      <if test="recordcurrency != null" >
+        #{recordcurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="paymount != null" >
+        #{paymount,jdbcType=REAL},
+      </if>
+      <if test="paycurrency != null" >
+        #{paycurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null" >
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="billnumber != null" >
+        #{billnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="differamount != null" >
+        #{differamount,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.CaseClaimImplExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_case_claim
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_case_claim
+    <set >
+      <if test="record.claimId != null" >
+        Claim_Id = #{record.claimId,jdbcType=BIGINT},
+      </if>
+      <if test="record.caseId != null" >
+        Case_Id = #{record.caseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.casenumber != null" >
+        casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipname != null" >
+        shipname = #{record.shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientname != null" >
+        clientname = #{record.clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realamount != null" >
+        realamount = #{record.realamount,jdbcType=REAL},
+      </if>
+      <if test="record.applyamount != null" >
+        applyamount = #{record.applyamount,jdbcType=REAL},
+      </if>
+      <if test="record.applycurrency != null" >
+        applycurrency = #{record.applycurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null" >
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.banknum != null" >
+        banknum = #{record.banknum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treatdate != null" >
+        treatdate = #{record.treatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usdrate != null" >
+        usdrate = #{record.usdrate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.usdamount != null" >
+        usdamount = #{record.usdamount,jdbcType=REAL},
+      </if>
+      <if test="record.lockdate != null" >
+        lockdate = #{record.lockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recordtype != null" >
+        recordtype = #{record.recordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOperator != null" >
+        Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applybanknum != null" >
+        applybanknum = #{record.applybanknum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applybank != null" >
+        applybank = #{record.applybank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transfercurrency != null" >
+        transfercurrency = #{record.transfercurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transfermount != null" >
+        transfermount = #{record.transfermount,jdbcType=REAL},
+      </if>
+      <if test="record.payee != null" >
+        payee = #{record.payee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thingcause != null" >
+        thingcause = #{record.thingcause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.branch != null" >
+        branch = #{record.branch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferdate != null" >
+        transferdate = #{record.transferdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.unitname != null" >
+        unitname = #{record.unitname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advancefeetype != null" >
+        advancefeetype = #{record.advancefeetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.incaseno != null" >
+        incaseno = #{record.incaseno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordmount != null" >
+        recordmount = #{record.recordmount,jdbcType=REAL},
+      </if>
+      <if test="record.recordcurrency != null" >
+        recordcurrency = #{record.recordcurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymount != null" >
+        paymount = #{record.paymount,jdbcType=REAL},
+      </if>
+      <if test="record.paycurrency != null" >
+        paycurrency = #{record.paycurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark1 != null" >
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark2 != null" >
+        remark2 = #{record.remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null" >
+        bill_id = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billnumber != null" >
+        billnumber = #{record.billnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.differamount != null" >
+        differamount = #{record.differamount,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_case_claim
+    set Claim_Id = #{record.claimId,jdbcType=BIGINT},
+      Case_Id = #{record.caseId,jdbcType=BIGINT},
+      casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      shipname = #{record.shipname,jdbcType=VARCHAR},
+      clientname = #{record.clientname,jdbcType=VARCHAR},
+      realamount = #{record.realamount,jdbcType=REAL},
+      applyamount = #{record.applyamount,jdbcType=REAL},
+      applycurrency = #{record.applycurrency,jdbcType=VARCHAR},
+      currency = #{record.currency,jdbcType=VARCHAR},
+      banknum = #{record.banknum,jdbcType=VARCHAR},
+      treatdate = #{record.treatdate,jdbcType=TIMESTAMP},
+      usdrate = #{record.usdrate,jdbcType=DECIMAL},
+      usdamount = #{record.usdamount,jdbcType=REAL},
+      lockdate = #{record.lockdate,jdbcType=TIMESTAMP},
+      recordtype = #{record.recordtype,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      applybanknum = #{record.applybanknum,jdbcType=VARCHAR},
+      applybank = #{record.applybank,jdbcType=VARCHAR},
+      transfercurrency = #{record.transfercurrency,jdbcType=VARCHAR},
+      transfermount = #{record.transfermount,jdbcType=REAL},
+      payee = #{record.payee,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      thingcause = #{record.thingcause,jdbcType=VARCHAR},
+      branch = #{record.branch,jdbcType=VARCHAR},
+      transferdate = #{record.transferdate,jdbcType=TIMESTAMP},
+      unitname = #{record.unitname,jdbcType=VARCHAR},
+      advancefeetype = #{record.advancefeetype,jdbcType=VARCHAR},
+      incaseno = #{record.incaseno,jdbcType=VARCHAR},
+      recordmount = #{record.recordmount,jdbcType=REAL},
+      recordcurrency = #{record.recordcurrency,jdbcType=VARCHAR},
+      paymount = #{record.paymount,jdbcType=REAL},
+      paycurrency = #{record.paycurrency,jdbcType=VARCHAR},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      remark2 = #{record.remark2,jdbcType=VARCHAR},
+      bill_id = #{record.billId,jdbcType=BIGINT},
+      billnumber = #{record.billnumber,jdbcType=VARCHAR},
+      differamount = #{record.differamount,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.CaseClaimImpl" >
+    update tbl_case_claim
+    <set >
+      <if test="caseId != null" >
+        Case_Id = #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        casenumber = #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="shipname != null" >
+        shipname = #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="clientname != null" >
+        clientname = #{clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="realamount != null" >
+        realamount = #{realamount,jdbcType=REAL},
+      </if>
+      <if test="applyamount != null" >
+        applyamount = #{applyamount,jdbcType=REAL},
+      </if>
+      <if test="applycurrency != null" >
+        applycurrency = #{applycurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="banknum != null" >
+        banknum = #{banknum,jdbcType=VARCHAR},
+      </if>
+      <if test="treatdate != null" >
+        treatdate = #{treatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usdrate != null" >
+        usdrate = #{usdrate,jdbcType=DECIMAL},
+      </if>
+      <if test="usdamount != null" >
+        usdamount = #{usdamount,jdbcType=REAL},
+      </if>
+      <if test="lockdate != null" >
+        lockdate = #{lockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordtype != null" >
+        recordtype = #{recordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator = #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applybanknum != null" >
+        applybanknum = #{applybanknum,jdbcType=VARCHAR},
+      </if>
+      <if test="applybank != null" >
+        applybank = #{applybank,jdbcType=VARCHAR},
+      </if>
+      <if test="transfercurrency != null" >
+        transfercurrency = #{transfercurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="transfermount != null" >
+        transfermount = #{transfermount,jdbcType=REAL},
+      </if>
+      <if test="payee != null" >
+        payee = #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="thingcause != null" >
+        thingcause = #{thingcause,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        branch = #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="transferdate != null" >
+        transferdate = #{transferdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unitname != null" >
+        unitname = #{unitname,jdbcType=VARCHAR},
+      </if>
+      <if test="advancefeetype != null" >
+        advancefeetype = #{advancefeetype,jdbcType=VARCHAR},
+      </if>
+      <if test="incaseno != null" >
+        incaseno = #{incaseno,jdbcType=VARCHAR},
+      </if>
+      <if test="recordmount != null" >
+        recordmount = #{recordmount,jdbcType=REAL},
+      </if>
+      <if test="recordcurrency != null" >
+        recordcurrency = #{recordcurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="paymount != null" >
+        paymount = #{paymount,jdbcType=REAL},
+      </if>
+      <if test="paycurrency != null" >
+        paycurrency = #{paycurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null" >
+        bill_id = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="billnumber != null" >
+        billnumber = #{billnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="differamount != null" >
+        differamount = #{differamount,jdbcType=REAL},
+      </if>
+    </set>
+    where Claim_Id = #{claimId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.CaseClaimImpl" >
+    update tbl_case_claim
+    set Case_Id = #{caseId,jdbcType=BIGINT},
+      casenumber = #{casenumber,jdbcType=VARCHAR},
+      shipname = #{shipname,jdbcType=VARCHAR},
+      clientname = #{clientname,jdbcType=VARCHAR},
+      realamount = #{realamount,jdbcType=REAL},
+      applyamount = #{applyamount,jdbcType=REAL},
+      applycurrency = #{applycurrency,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      banknum = #{banknum,jdbcType=VARCHAR},
+      treatdate = #{treatdate,jdbcType=TIMESTAMP},
+      usdrate = #{usdrate,jdbcType=DECIMAL},
+      usdamount = #{usdamount,jdbcType=REAL},
+      lockdate = #{lockdate,jdbcType=TIMESTAMP},
+      recordtype = #{recordtype,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      Create_Operator = #{createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      applybanknum = #{applybanknum,jdbcType=VARCHAR},
+      applybank = #{applybank,jdbcType=VARCHAR},
+      transfercurrency = #{transfercurrency,jdbcType=VARCHAR},
+      transfermount = #{transfermount,jdbcType=REAL},
+      payee = #{payee,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      thingcause = #{thingcause,jdbcType=VARCHAR},
+      branch = #{branch,jdbcType=VARCHAR},
+      transferdate = #{transferdate,jdbcType=TIMESTAMP},
+      unitname = #{unitname,jdbcType=VARCHAR},
+      advancefeetype = #{advancefeetype,jdbcType=VARCHAR},
+      incaseno = #{incaseno,jdbcType=VARCHAR},
+      recordmount = #{recordmount,jdbcType=REAL},
+      recordcurrency = #{recordcurrency,jdbcType=VARCHAR},
+      paymount = #{paymount,jdbcType=REAL},
+      paycurrency = #{paycurrency,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      bill_id = #{billId,jdbcType=BIGINT},
+      billnumber = #{billnumber,jdbcType=VARCHAR},
+      differamount = #{differamount,jdbcType=REAL}
+    where Claim_Id = #{claimId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.CaseClaimImplExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_case_claim
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

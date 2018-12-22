@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblParamsMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblParams" >
+    <id column="oid" property="oid" jdbcType="BIGINT" />
+    <result column="biztype" property="biztype" jdbcType="VARCHAR" />
+    <result column="biztypename" property="biztypename" jdbcType="VARCHAR" />
+    <result column="paramtype" property="paramtype" jdbcType="VARCHAR" />
+    <result column="paramtexta" property="paramtexta" jdbcType="VARCHAR" />
+    <result column="paramtextb" property="paramtextb" jdbcType="VARCHAR" />
+    <result column="CreateOperatorId" property="createoperatorid" jdbcType="BIGINT" />
+    <result column="ModifyOperatorId" property="modifyoperatorid" jdbcType="BIGINT" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oid, biztype, biztypename, paramtype, paramtexta, paramtextb, CreateOperatorId, ModifyOperatorId, 
+    CreateTime, ModifyTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblParamsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_params
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_params
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_params
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblParamsExample" >
+    delete from tbl_params
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblParams" >
+    insert into tbl_params (oid, biztype, biztypename, 
+      paramtype, paramtexta, paramtextb, 
+      CreateOperatorId, ModifyOperatorId, CreateTime, 
+      ModifyTime)
+    values (#{oid,jdbcType=BIGINT}, #{biztype,jdbcType=VARCHAR}, #{biztypename,jdbcType=VARCHAR}, 
+      #{paramtype,jdbcType=VARCHAR}, #{paramtexta,jdbcType=VARCHAR}, #{paramtextb,jdbcType=VARCHAR}, 
+      #{createoperatorid,jdbcType=BIGINT}, #{modifyoperatorid,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblParams" >
+    insert into tbl_params
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="biztype != null" >
+        biztype,
+      </if>
+      <if test="biztypename != null" >
+        biztypename,
+      </if>
+      <if test="paramtype != null" >
+        paramtype,
+      </if>
+      <if test="paramtexta != null" >
+        paramtexta,
+      </if>
+      <if test="paramtextb != null" >
+        paramtextb,
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId,
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="biztype != null" >
+        #{biztype,jdbcType=VARCHAR},
+      </if>
+      <if test="biztypename != null" >
+        #{biztypename,jdbcType=VARCHAR},
+      </if>
+      <if test="paramtype != null" >
+        #{paramtype,jdbcType=VARCHAR},
+      </if>
+      <if test="paramtexta != null" >
+        #{paramtexta,jdbcType=VARCHAR},
+      </if>
+      <if test="paramtextb != null" >
+        #{paramtextb,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblParamsExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_params
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_params
+    <set >
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=BIGINT},
+      </if>
+      <if test="record.biztype != null" >
+        biztype = #{record.biztype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.biztypename != null" >
+        biztypename = #{record.biztypename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramtype != null" >
+        paramtype = #{record.paramtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramtexta != null" >
+        paramtexta = #{record.paramtexta,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramtextb != null" >
+        paramtextb = #{record.paramtextb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createoperatorid != null" >
+        CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyoperatorid != null" >
+        ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifytime != null" >
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_params
+    set oid = #{record.oid,jdbcType=BIGINT},
+      biztype = #{record.biztype,jdbcType=VARCHAR},
+      biztypename = #{record.biztypename,jdbcType=VARCHAR},
+      paramtype = #{record.paramtype,jdbcType=VARCHAR},
+      paramtexta = #{record.paramtexta,jdbcType=VARCHAR},
+      paramtextb = #{record.paramtextb,jdbcType=VARCHAR},
+      CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblParams" >
+    update tbl_params
+    <set >
+      <if test="biztype != null" >
+        biztype = #{biztype,jdbcType=VARCHAR},
+      </if>
+      <if test="biztypename != null" >
+        biztypename = #{biztypename,jdbcType=VARCHAR},
+      </if>
+      <if test="paramtype != null" >
+        paramtype = #{paramtype,jdbcType=VARCHAR},
+      </if>
+      <if test="paramtexta != null" >
+        paramtexta = #{paramtexta,jdbcType=VARCHAR},
+      </if>
+      <if test="paramtextb != null" >
+        paramtextb = #{paramtextb,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblParams" >
+    update tbl_params
+    set biztype = #{biztype,jdbcType=VARCHAR},
+      biztypename = #{biztypename,jdbcType=VARCHAR},
+      paramtype = #{paramtype,jdbcType=VARCHAR},
+      paramtexta = #{paramtexta,jdbcType=VARCHAR},
+      paramtextb = #{paramtextb,jdbcType=VARCHAR},
+      CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="map" >
+    select    
+   		<include refid="Base_Column_List" />
+    from tbl_params c
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keywords != null">
+				AND (
+					c.paramtexta LIKE "%"#{keywords}"%"
+					or c.paramtextb LIKE "%"#{keywords}"%"
+				)
+      		</if>
+      	</trim>
+      	order by c.oid ASC 
+  </select>
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="map" >
+    select count(0) as a from tbl_params c
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keywords != null">
+				AND (
+					c.paramtexta LIKE "%"#{keywords}"%"
+					or c.paramtextb LIKE "%"#{keywords}"%"
+				)
+      		</if>
+      	</trim>
+  </select>
+</mapper>

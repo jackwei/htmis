@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.SysCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.SysCode" >
+    <id column="CodeId" property="codeid" jdbcType="VARCHAR" />
+    <result column="CodeName" property="codename" jdbcType="VARCHAR" />
+    <result column="CodeValue" property="codevalue" jdbcType="VARCHAR" />
+    <result column="Property" property="property" jdbcType="CHAR" />
+    <result column="Backup" property="backup" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CodeId, CodeName, CodeValue, Property, Backup
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.SysCodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_code
+    where CodeId = #{codeid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_code
+    where CodeId = #{codeid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.SysCodeExample" >
+    delete from sys_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.SysCode" >
+    insert into sys_code (CodeId, CodeName, CodeValue, 
+      Property, Backup)
+    values (#{codeid,jdbcType=VARCHAR}, #{codename,jdbcType=VARCHAR}, #{codevalue,jdbcType=VARCHAR}, 
+      #{property,jdbcType=CHAR}, #{backup,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.SysCode" >
+    insert into sys_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="codeid != null" >
+        CodeId,
+      </if>
+      <if test="codename != null" >
+        CodeName,
+      </if>
+      <if test="codevalue != null" >
+        CodeValue,
+      </if>
+      <if test="property != null" >
+        Property,
+      </if>
+      <if test="backup != null" >
+        Backup,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="codeid != null" >
+        #{codeid,jdbcType=VARCHAR},
+      </if>
+      <if test="codename != null" >
+        #{codename,jdbcType=VARCHAR},
+      </if>
+      <if test="codevalue != null" >
+        #{codevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="property != null" >
+        #{property,jdbcType=CHAR},
+      </if>
+      <if test="backup != null" >
+        #{backup,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.SysCodeExample" resultType="java.lang.Integer" >
+    select count(*) from sys_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_code
+    <set >
+      <if test="record.codeid != null" >
+        CodeId = #{record.codeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codename != null" >
+        CodeName = #{record.codename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codevalue != null" >
+        CodeValue = #{record.codevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.property != null" >
+        Property = #{record.property,jdbcType=CHAR},
+      </if>
+      <if test="record.backup != null" >
+        Backup = #{record.backup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_code
+    set CodeId = #{record.codeid,jdbcType=VARCHAR},
+      CodeName = #{record.codename,jdbcType=VARCHAR},
+      CodeValue = #{record.codevalue,jdbcType=VARCHAR},
+      Property = #{record.property,jdbcType=CHAR},
+      Backup = #{record.backup,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.SysCode" >
+    update sys_code
+    <set >
+      <if test="codename != null" >
+        CodeName = #{codename,jdbcType=VARCHAR},
+      </if>
+      <if test="codevalue != null" >
+        CodeValue = #{codevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="property != null" >
+        Property = #{property,jdbcType=CHAR},
+      </if>
+      <if test="backup != null" >
+        Backup = #{backup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CodeId = #{codeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.SysCode" >
+    update sys_code
+    set CodeName = #{codename,jdbcType=VARCHAR},
+      CodeValue = #{codevalue,jdbcType=VARCHAR},
+      Property = #{property,jdbcType=CHAR},
+      Backup = #{backup,jdbcType=VARCHAR}
+    where CodeId = #{codeid,jdbcType=VARCHAR}
+  </update>
+</mapper>

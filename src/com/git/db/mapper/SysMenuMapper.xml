@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.SysMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.SysMenu" >
+    <id column="Menu_Id" property="menuId" jdbcType="BIGINT" />
+    <result column="Menu_Name" property="menuName" jdbcType="VARCHAR" />
+    <result column="Parent_Id" property="parentId" jdbcType="BIGINT" />
+    <result column="Is_Leaf" property="isLeaf" jdbcType="CHAR" />
+    <result column="Url" property="url" jdbcType="VARCHAR" />
+    <result column="Menu_Status" property="menuStatus" jdbcType="CHAR" />
+    <result column="Extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="Extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="Extend3" property="extend3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Menu_Id, Menu_Name, Parent_Id, Is_Leaf, Url, Menu_Status, Extend1, Extend2, Extend3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.SysMenuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where Menu_Id = #{menuId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_menu
+    where Menu_Id = #{menuId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.SysMenuExample" >
+    delete from sys_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.SysMenu" >
+    insert into sys_menu (Menu_Id, Menu_Name, Parent_Id, 
+      Is_Leaf, Url, Menu_Status, 
+      Extend1, Extend2, Extend3
+      )
+    values (#{menuId,jdbcType=BIGINT}, #{menuName,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
+      #{isLeaf,jdbcType=CHAR}, #{url,jdbcType=VARCHAR}, #{menuStatus,jdbcType=CHAR}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.SysMenu" >
+    insert into sys_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        Menu_Id,
+      </if>
+      <if test="menuName != null" >
+        Menu_Name,
+      </if>
+      <if test="parentId != null" >
+        Parent_Id,
+      </if>
+      <if test="isLeaf != null" >
+        Is_Leaf,
+      </if>
+      <if test="url != null" >
+        Url,
+      </if>
+      <if test="menuStatus != null" >
+        Menu_Status,
+      </if>
+      <if test="extend1 != null" >
+        Extend1,
+      </if>
+      <if test="extend2 != null" >
+        Extend2,
+      </if>
+      <if test="extend3 != null" >
+        Extend3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="isLeaf != null" >
+        #{isLeaf,jdbcType=CHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="menuStatus != null" >
+        #{menuStatus,jdbcType=CHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.SysMenuExample" resultType="java.lang.Integer" >
+    select count(*) from sys_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_menu
+    <set >
+      <if test="record.menuId != null" >
+        Menu_Id = #{record.menuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuName != null" >
+        Menu_Name = #{record.menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        Parent_Id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isLeaf != null" >
+        Is_Leaf = #{record.isLeaf,jdbcType=CHAR},
+      </if>
+      <if test="record.url != null" >
+        Url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuStatus != null" >
+        Menu_Status = #{record.menuStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.extend1 != null" >
+        Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend2 != null" >
+        Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend3 != null" >
+        Extend3 = #{record.extend3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_menu
+    set Menu_Id = #{record.menuId,jdbcType=BIGINT},
+      Menu_Name = #{record.menuName,jdbcType=VARCHAR},
+      Parent_Id = #{record.parentId,jdbcType=BIGINT},
+      Is_Leaf = #{record.isLeaf,jdbcType=CHAR},
+      Url = #{record.url,jdbcType=VARCHAR},
+      Menu_Status = #{record.menuStatus,jdbcType=CHAR},
+      Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      Extend3 = #{record.extend3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.SysMenu" >
+    update sys_menu
+    <set >
+      <if test="menuName != null" >
+        Menu_Name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        Parent_Id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="isLeaf != null" >
+        Is_Leaf = #{isLeaf,jdbcType=CHAR},
+      </if>
+      <if test="url != null" >
+        Url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="menuStatus != null" >
+        Menu_Status = #{menuStatus,jdbcType=CHAR},
+      </if>
+      <if test="extend1 != null" >
+        Extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        Extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        Extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Menu_Id = #{menuId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.SysMenu" >
+    update sys_menu
+    set Menu_Name = #{menuName,jdbcType=VARCHAR},
+      Parent_Id = #{parentId,jdbcType=BIGINT},
+      Is_Leaf = #{isLeaf,jdbcType=CHAR},
+      Url = #{url,jdbcType=VARCHAR},
+      Menu_Status = #{menuStatus,jdbcType=CHAR},
+      Extend1 = #{extend1,jdbcType=VARCHAR},
+      Extend2 = #{extend2,jdbcType=VARCHAR},
+      Extend3 = #{extend3,jdbcType=VARCHAR}
+    where Menu_Id = #{menuId,jdbcType=BIGINT}
+  </update>
+</mapper>

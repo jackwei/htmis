@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.FinDataDealLogMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.FinDataDealLog" >
+    <id column="Log_Id" property="logId" jdbcType="BIGINT" />
+    <result column="Batch_No" property="batchNo" jdbcType="VARCHAR" />
+    <result column="Item_Id" property="itemId" jdbcType="VARCHAR" />
+    <result column="Buss_Id" property="bussId" jdbcType="VARCHAR" />
+    <result column="Make_Time" property="makeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.git.db.beans.FinDataDealLog" extends="BaseResultMap" >
+    <result column="Content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Log_Id, Batch_No, Item_Id, Buss_Id, Make_Time
+  </sql>
+  <sql id="Blob_Column_List" >
+    Content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.git.db.beans.FinDataDealLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_fin_data_deal_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.FinDataDealLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_fin_data_deal_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_fin_data_deal_log
+    where Log_Id = #{logId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_fin_data_deal_log
+    where Log_Id = #{logId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.FinDataDealLogExample" >
+    delete from t_fin_data_deal_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.FinDataDealLog" >
+    insert into t_fin_data_deal_log (Log_Id, Batch_No, Item_Id, 
+      Buss_Id, Make_Time, Content
+      )
+    values (#{logId,jdbcType=BIGINT}, #{batchNo,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, 
+      #{bussId,jdbcType=VARCHAR}, #{makeTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.FinDataDealLog" >
+    insert into t_fin_data_deal_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        Log_Id,
+      </if>
+      <if test="batchNo != null" >
+        Batch_No,
+      </if>
+      <if test="itemId != null" >
+        Item_Id,
+      </if>
+      <if test="bussId != null" >
+        Buss_Id,
+      </if>
+      <if test="makeTime != null" >
+        Make_Time,
+      </if>
+      <if test="content != null" >
+        Content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=BIGINT},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="bussId != null" >
+        #{bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="makeTime != null" >
+        #{makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.FinDataDealLogExample" resultType="java.lang.Integer" >
+    select count(*) from t_fin_data_deal_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_fin_data_deal_log
+    <set >
+      <if test="record.logId != null" >
+        Log_Id = #{record.logId,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchNo != null" >
+        Batch_No = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemId != null" >
+        Item_Id = #{record.itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussId != null" >
+        Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.makeTime != null" >
+        Make_Time = #{record.makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null" >
+        Content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_fin_data_deal_log
+    set Log_Id = #{record.logId,jdbcType=BIGINT},
+      Batch_No = #{record.batchNo,jdbcType=VARCHAR},
+      Item_Id = #{record.itemId,jdbcType=VARCHAR},
+      Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      Make_Time = #{record.makeTime,jdbcType=TIMESTAMP},
+      Content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_fin_data_deal_log
+    set Log_Id = #{record.logId,jdbcType=BIGINT},
+      Batch_No = #{record.batchNo,jdbcType=VARCHAR},
+      Item_Id = #{record.itemId,jdbcType=VARCHAR},
+      Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      Make_Time = #{record.makeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.FinDataDealLog" >
+    update t_fin_data_deal_log
+    <set >
+      <if test="batchNo != null" >
+        Batch_No = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        Item_Id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="bussId != null" >
+        Buss_Id = #{bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="makeTime != null" >
+        Make_Time = #{makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        Content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where Log_Id = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.git.db.beans.FinDataDealLog" >
+    update t_fin_data_deal_log
+    set Batch_No = #{batchNo,jdbcType=VARCHAR},
+      Item_Id = #{itemId,jdbcType=VARCHAR},
+      Buss_Id = #{bussId,jdbcType=VARCHAR},
+      Make_Time = #{makeTime,jdbcType=TIMESTAMP},
+      Content = #{content,jdbcType=LONGVARCHAR}
+    where Log_Id = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.FinDataDealLog" >
+    update t_fin_data_deal_log
+    set Batch_No = #{batchNo,jdbcType=VARCHAR},
+      Item_Id = #{itemId,jdbcType=VARCHAR},
+      Buss_Id = #{bussId,jdbcType=VARCHAR},
+      Make_Time = #{makeTime,jdbcType=TIMESTAMP}
+    where Log_Id = #{logId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.git.db.beans.FinDataDealLogExample" id="selectByExampleWithBLOBsWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_fin_data_deal_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.FinDataDealLogExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_fin_data_deal_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

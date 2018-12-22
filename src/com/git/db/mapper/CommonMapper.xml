@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.CommonMapper">
+	<insert id="insertSql" parameterType="java.util.HashMap" flushCache="true" statementType="PREPARED">
+		${SQL}
+	</insert>
+	<update id="updateSql" parameterType="java.util.HashMap" flushCache="true" statementType="PREPARED">
+		${SQL}
+	</update>
+	<delete id="deleteSql" parameterType="java.util.HashMap" flushCache="true" statementType="PREPARED">
+		${SQL}
+	</delete>
+	
+	<select id="executeSQL1" parameterType="java.util.HashMap" resultType="java.util.HashMap">${SQL}</select>
+	<select id="executeSQL2" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL}</select>
+	<select id="executeSQL3" parameterType="java.util.HashMap" resultType="java.util.HashMap">	${SQL}</select>
+	<select id="executeSQL4" parameterType="java.util.HashMap" resultType="java.util.HashMap">	${SQL}</select>
+	<select id="executeSQL5" parameterType="java.util.HashMap" resultType="java.util.HashMap">	${SQL}</select>	
+	<select id="executeSQL6" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+ 	<select id="executeSQL7" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL8" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL9" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL10" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL11" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL12" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL13" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL14" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL15" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL16" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL17" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL18" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL19" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL20" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL21" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL22" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL23" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL24" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL25" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL26" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL27" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL28" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL29" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL30" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL31" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL32" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL33" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL34" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL35" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL36" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL37" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL38" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL39" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL40" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL41" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL42" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL43" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL44" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL45" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL46" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL47" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL48" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL49" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL50" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL51" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL52" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL53" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL54" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL55" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL56" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL57" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL58" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL59" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL60" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL61" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL62" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL63" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL64" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL65" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL66" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL67" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL68" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL69" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL70" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL71" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL72" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL73" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL74" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL75" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL76" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL77" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL78" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL79" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL80" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL81" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL82" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL83" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL84" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL85" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL86" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL87" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL88" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL89" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL90" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL91" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL92" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL93" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL94" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL95" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL96" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL97" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL98" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL99" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL100" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL101" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL102" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL103" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL104" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL105" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL106" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL107" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL108" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL109" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL110" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL111" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL112" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL113" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL114" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL115" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL116" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL117" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL118" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL119" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL120" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL121" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL122" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL123" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL124" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL125" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL126" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL127" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL128" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL129" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL130" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL131" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL132" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL133" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL134" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL135" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL136" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL137" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL138" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL139" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL140" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL141" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL142" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL143" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL144" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL145" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL146" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL147" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL148" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL149" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL150" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL151" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL152" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL153" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL154" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL155" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL156" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL157" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL158" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL159" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL160" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL161" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL162" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL163" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL164" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL165" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL166" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL167" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL168" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL169" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL170" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL171" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL172" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL173" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL174" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL175" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL176" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL177" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL178" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL179" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL180" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL181" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL182" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL183" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL184" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL185" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL186" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL187" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL188" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL189" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL190" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL191" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL192" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL193" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL194" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL195" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL196" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL197" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL198" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL199" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+	<select id="executeSQL200" parameterType="java.util.HashMap" resultType="java.util.HashMap">  ${SQL} </select>
+
+</mapper>

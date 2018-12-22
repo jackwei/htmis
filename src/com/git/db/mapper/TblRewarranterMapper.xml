@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblRewarranterMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblRewarranter" >
+    <id column="oid" property="oid" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="names" property="names" jdbcType="VARCHAR" />
+    <result column="propertyid" property="propertyid" jdbcType="BIGINT" />
+    <result column="propertyname" property="propertyname" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="CreateOperatorId" property="createoperatorid" jdbcType="BIGINT" />
+    <result column="ModifyOperatorId" property="modifyoperatorid" jdbcType="BIGINT" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oid, name, names, propertyid, propertyname, address, country, area, CreateOperatorId, 
+    ModifyOperatorId, CreateTime, ModifyTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblRewarranterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_rewarranter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_rewarranter
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_rewarranter
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblRewarranterExample" >
+    delete from tbl_rewarranter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblRewarranter" >
+    insert into tbl_rewarranter (oid, name, names, 
+      propertyid, propertyname, address, 
+      country, area, CreateOperatorId, 
+      ModifyOperatorId, CreateTime, ModifyTime
+      )
+    values (#{oid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{names,jdbcType=VARCHAR}, 
+      #{propertyid,jdbcType=BIGINT}, #{propertyname,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{createoperatorid,jdbcType=BIGINT}, 
+      #{modifyoperatorid,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblRewarranter" >
+    insert into tbl_rewarranter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="names != null" >
+        names,
+      </if>
+      <if test="propertyid != null" >
+        propertyid,
+      </if>
+      <if test="propertyname != null" >
+        propertyname,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId,
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="names != null" >
+        #{names,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyid != null" >
+        #{propertyid,jdbcType=BIGINT},
+      </if>
+      <if test="propertyname != null" >
+        #{propertyname,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblRewarranterExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_rewarranter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_rewarranter
+    <set >
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.names != null" >
+        names = #{record.names,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertyid != null" >
+        propertyid = #{record.propertyid,jdbcType=BIGINT},
+      </if>
+      <if test="record.propertyname != null" >
+        propertyname = #{record.propertyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createoperatorid != null" >
+        CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyoperatorid != null" >
+        ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifytime != null" >
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_rewarranter
+    set oid = #{record.oid,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      names = #{record.names,jdbcType=VARCHAR},
+      propertyid = #{record.propertyid,jdbcType=BIGINT},
+      propertyname = #{record.propertyname,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblRewarranter" >
+    update tbl_rewarranter
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="names != null" >
+        names = #{names,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyid != null" >
+        propertyid = #{propertyid,jdbcType=BIGINT},
+      </if>
+      <if test="propertyname != null" >
+        propertyname = #{propertyname,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblRewarranter" >
+    update tbl_rewarranter
+    set name = #{name,jdbcType=VARCHAR},
+      names = #{names,jdbcType=VARCHAR},
+      propertyid = #{propertyid,jdbcType=BIGINT},
+      propertyname = #{propertyname,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.TblRewarranterExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_rewarranter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

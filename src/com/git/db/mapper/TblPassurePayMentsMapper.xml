@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblPassurePayMentsMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblPassurePayMents" >
+    <id column="passurepayid" property="passurepayid" jdbcType="BIGINT" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="userid" property="userid" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="reportflag" property="reportflag" jdbcType="VARCHAR" />
+    <result column="paydate" property="paydate" jdbcType="TIMESTAMP" />
+    <result column="orgcode" property="orgcode" jdbcType="VARCHAR" />
+    <result column="orgname" property="orgname" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="BIGINT" />
+    <result column="feemount" property="feemount" jdbcType="DECIMAL" />
+    <result column="receivedetail" property="receivedetail" jdbcType="VARCHAR" />
+    <result column="paydetail" property="paydetail" jdbcType="VARCHAR" />
+    <result column="CreateOperatorId" property="createoperatorid" jdbcType="BIGINT" />
+    <result column="ModifyOperatorId" property="modifyoperatorid" jdbcType="BIGINT" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="cpid" property="cpid" jdbcType="BIGINT" />
+    <result column="year" property="year" jdbcType="BIGINT" />
+    <result column="month" property="month" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    passurepayid, createdate, userid, username, reportflag, paydate, orgcode, orgname, 
+    total, feemount, receivedetail, paydetail, CreateOperatorId, ModifyOperatorId, CreateTime, 
+    ModifyTime, cpid, year, month
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblPassurePayMentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_passurepayments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_passurepayments
+    where passurepayid = #{passurepayid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_passurepayments
+    where passurepayid = #{passurepayid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblPassurePayMentsExample" >
+    delete from tbl_passurepayments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblPassurePayMents" >
+    insert into tbl_passurepayments (passurepayid, createdate, userid, 
+      username, reportflag, paydate, 
+      orgcode, orgname, total, 
+      feemount, receivedetail, paydetail, 
+      CreateOperatorId, ModifyOperatorId, CreateTime, 
+      ModifyTime, cpid, year, 
+      month)
+    values (#{passurepayid,jdbcType=BIGINT}, #{createdate,jdbcType=TIMESTAMP}, #{userid,jdbcType=BIGINT}, 
+      #{username,jdbcType=VARCHAR}, #{reportflag,jdbcType=VARCHAR}, #{paydate,jdbcType=TIMESTAMP}, 
+      #{orgcode,jdbcType=VARCHAR}, #{orgname,jdbcType=VARCHAR}, #{total,jdbcType=BIGINT}, 
+      #{feemount,jdbcType=DECIMAL}, #{receivedetail,jdbcType=VARCHAR}, #{paydetail,jdbcType=VARCHAR}, 
+      #{createoperatorid,jdbcType=BIGINT}, #{modifyoperatorid,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifytime,jdbcType=TIMESTAMP}, #{cpid,jdbcType=BIGINT}, #{year,jdbcType=BIGINT}, 
+      #{month,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblPassurePayMents" >
+    insert into tbl_passurepayments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="passurepayid != null" >
+        passurepayid,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="reportflag != null" >
+        reportflag,
+      </if>
+      <if test="paydate != null" >
+        paydate,
+      </if>
+      <if test="orgcode != null" >
+        orgcode,
+      </if>
+      <if test="orgname != null" >
+        orgname,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="feemount != null" >
+        feemount,
+      </if>
+      <if test="receivedetail != null" >
+        receivedetail,
+      </if>
+      <if test="paydetail != null" >
+        paydetail,
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId,
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+      <if test="cpid != null" >
+        cpid,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="passurepayid != null" >
+        #{passurepayid,jdbcType=BIGINT},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="reportflag != null" >
+        #{reportflag,jdbcType=VARCHAR},
+      </if>
+      <if test="paydate != null" >
+        #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgcode != null" >
+        #{orgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        #{orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=BIGINT},
+      </if>
+      <if test="feemount != null" >
+        #{feemount,jdbcType=DECIMAL},
+      </if>
+      <if test="receivedetail != null" >
+        #{receivedetail,jdbcType=VARCHAR},
+      </if>
+      <if test="paydetail != null" >
+        #{paydetail,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpid != null" >
+        #{cpid,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=BIGINT},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblPassurePayMentsExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_passurepayments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_passurepayments
+    <set >
+      <if test="record.passurepayid != null" >
+        passurepayid = #{record.passurepayid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportflag != null" >
+        reportflag = #{record.reportflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paydate != null" >
+        paydate = #{record.paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgcode != null" >
+        orgcode = #{record.orgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgname != null" >
+        orgname = #{record.orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=BIGINT},
+      </if>
+      <if test="record.feemount != null" >
+        feemount = #{record.feemount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.receivedetail != null" >
+        receivedetail = #{record.receivedetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paydetail != null" >
+        paydetail = #{record.paydetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createoperatorid != null" >
+        CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyoperatorid != null" >
+        ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifytime != null" >
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cpid != null" >
+        cpid = #{record.cpid,jdbcType=BIGINT},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=BIGINT},
+      </if>
+      <if test="record.month != null" >
+        month = #{record.month,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_passurepayments
+    set passurepayid = #{record.passurepayid,jdbcType=BIGINT},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP},
+      userid = #{record.userid,jdbcType=BIGINT},
+      username = #{record.username,jdbcType=VARCHAR},
+      reportflag = #{record.reportflag,jdbcType=VARCHAR},
+      paydate = #{record.paydate,jdbcType=TIMESTAMP},
+      orgcode = #{record.orgcode,jdbcType=VARCHAR},
+      orgname = #{record.orgname,jdbcType=VARCHAR},
+      total = #{record.total,jdbcType=BIGINT},
+      feemount = #{record.feemount,jdbcType=DECIMAL},
+      receivedetail = #{record.receivedetail,jdbcType=VARCHAR},
+      paydetail = #{record.paydetail,jdbcType=VARCHAR},
+      CreateOperatorId = #{record.createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{record.modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      cpid = #{record.cpid,jdbcType=BIGINT},
+      year = #{record.year,jdbcType=BIGINT},
+      month = #{record.month,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblPassurePayMents" >
+    update tbl_passurepayments
+    <set >
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="reportflag != null" >
+        reportflag = #{reportflag,jdbcType=VARCHAR},
+      </if>
+      <if test="paydate != null" >
+        paydate = #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgcode != null" >
+        orgcode = #{orgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        orgname = #{orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=BIGINT},
+      </if>
+      <if test="feemount != null" >
+        feemount = #{feemount,jdbcType=DECIMAL},
+      </if>
+      <if test="receivedetail != null" >
+        receivedetail = #{receivedetail,jdbcType=VARCHAR},
+      </if>
+      <if test="paydetail != null" >
+        paydetail = #{paydetail,jdbcType=VARCHAR},
+      </if>
+      <if test="createoperatorid != null" >
+        CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="modifyoperatorid != null" >
+        ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpid != null" >
+        cpid = #{cpid,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=BIGINT},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=BIGINT},
+      </if>
+    </set>
+    where passurepayid = #{passurepayid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblPassurePayMents" >
+    update tbl_passurepayments
+    set createdate = #{createdate,jdbcType=TIMESTAMP},
+      userid = #{userid,jdbcType=BIGINT},
+      username = #{username,jdbcType=VARCHAR},
+      reportflag = #{reportflag,jdbcType=VARCHAR},
+      paydate = #{paydate,jdbcType=TIMESTAMP},
+      orgcode = #{orgcode,jdbcType=VARCHAR},
+      orgname = #{orgname,jdbcType=VARCHAR},
+      total = #{total,jdbcType=BIGINT},
+      feemount = #{feemount,jdbcType=DECIMAL},
+      receivedetail = #{receivedetail,jdbcType=VARCHAR},
+      paydetail = #{paydetail,jdbcType=VARCHAR},
+      CreateOperatorId = #{createoperatorid,jdbcType=BIGINT},
+      ModifyOperatorId = #{modifyoperatorid,jdbcType=BIGINT},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      cpid = #{cpid,jdbcType=BIGINT},
+      year = #{year,jdbcType=BIGINT},
+      month = #{month,jdbcType=BIGINT}
+    where passurepayid = #{passurepayid,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.TblPassurePayMentsExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_passurepayments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

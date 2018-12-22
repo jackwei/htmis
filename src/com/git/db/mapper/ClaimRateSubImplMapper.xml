@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.ClaimRateSubImplMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.ClaimRateSubImpl" >
+    <id column="rate_id" property="rateId" jdbcType="BIGINT" />
+    <result column="casenumber" property="casenumber" jdbcType="VARCHAR" />
+    <result column="bill_id" property="billId" jdbcType="BIGINT" />
+    <result column="cratesub" property="cratesub" jdbcType="REAL" />
+    <result column="accrate" property="accrate" jdbcType="REAL" />
+    <result column="arrdate" property="arrdate" jdbcType="TIMESTAMP" />
+    <result column="accdate" property="accdate" jdbcType="TIMESTAMP" />
+    <result column="accamount" property="accamount" jdbcType="REAL" />
+    <result column="inComeId" property="incomeid" jdbcType="BIGINT" />
+    <result column="claimId" property="claimid" jdbcType="BIGINT" />
+    <result column="clientname" property="clientname" jdbcType="VARCHAR" />
+    <result column="payer" property="payer" jdbcType="VARCHAR" />
+    <result column="Create_Operator" property="createOperator" jdbcType="BIGINT" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="billnumber" property="billnumber" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rate_id, casenumber, bill_id, cratesub, accrate, arrdate, accdate, accamount, inComeId, 
+    claimId, clientname, payer, Create_Operator, Modify_Operator_Id, Modify_Time, Create_Time, 
+    billnumber, currency
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.ClaimRateSubImplExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_claim_ratesub
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_claim_ratesub
+    where rate_id = #{rateId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_claim_ratesub
+    where rate_id = #{rateId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.ClaimRateSubImplExample" >
+    delete from tbl_claim_ratesub
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.ClaimRateSubImpl" >
+    insert into tbl_claim_ratesub (rate_id, casenumber, bill_id, 
+      cratesub, accrate, arrdate, 
+      accdate, accamount, inComeId, 
+      claimId, clientname, payer, 
+      Create_Operator, Modify_Operator_Id, Modify_Time, 
+      Create_Time, billnumber, currency
+      )
+    values (#{rateId,jdbcType=BIGINT}, #{casenumber,jdbcType=VARCHAR}, #{billId,jdbcType=BIGINT}, 
+      #{cratesub,jdbcType=REAL}, #{accrate,jdbcType=REAL}, #{arrdate,jdbcType=TIMESTAMP}, 
+      #{accdate,jdbcType=TIMESTAMP}, #{accamount,jdbcType=REAL}, #{incomeid,jdbcType=BIGINT}, 
+      #{claimid,jdbcType=BIGINT}, #{clientname,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, 
+      #{createOperator,jdbcType=BIGINT}, #{modifyOperatorId,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{billnumber,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.ClaimRateSubImpl" >
+    insert into tbl_claim_ratesub
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rateId != null" >
+        rate_id,
+      </if>
+      <if test="casenumber != null" >
+        casenumber,
+      </if>
+      <if test="billId != null" >
+        bill_id,
+      </if>
+      <if test="cratesub != null" >
+        cratesub,
+      </if>
+      <if test="accrate != null" >
+        accrate,
+      </if>
+      <if test="arrdate != null" >
+        arrdate,
+      </if>
+      <if test="accdate != null" >
+        accdate,
+      </if>
+      <if test="accamount != null" >
+        accamount,
+      </if>
+      <if test="incomeid != null" >
+        inComeId,
+      </if>
+      <if test="claimid != null" >
+        claimId,
+      </if>
+      <if test="clientname != null" >
+        clientname,
+      </if>
+      <if test="payer != null" >
+        payer,
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="billnumber != null" >
+        billnumber,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rateId != null" >
+        #{rateId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null" >
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="cratesub != null" >
+        #{cratesub,jdbcType=REAL},
+      </if>
+      <if test="accrate != null" >
+        #{accrate,jdbcType=REAL},
+      </if>
+      <if test="arrdate != null" >
+        #{arrdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accdate != null" >
+        #{accdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accamount != null" >
+        #{accamount,jdbcType=REAL},
+      </if>
+      <if test="incomeid != null" >
+        #{incomeid,jdbcType=BIGINT},
+      </if>
+      <if test="claimid != null" >
+        #{claimid,jdbcType=BIGINT},
+      </if>
+      <if test="clientname != null" >
+        #{clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billnumber != null" >
+        #{billnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.ClaimRateSubImplExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_claim_ratesub
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_claim_ratesub
+    <set >
+      <if test="record.rateId != null" >
+        rate_id = #{record.rateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.casenumber != null" >
+        casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null" >
+        bill_id = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cratesub != null" >
+        cratesub = #{record.cratesub,jdbcType=REAL},
+      </if>
+      <if test="record.accrate != null" >
+        accrate = #{record.accrate,jdbcType=REAL},
+      </if>
+      <if test="record.arrdate != null" >
+        arrdate = #{record.arrdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accdate != null" >
+        accdate = #{record.accdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accamount != null" >
+        accamount = #{record.accamount,jdbcType=REAL},
+      </if>
+      <if test="record.incomeid != null" >
+        inComeId = #{record.incomeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimid != null" >
+        claimId = #{record.claimid,jdbcType=BIGINT},
+      </if>
+      <if test="record.clientname != null" >
+        clientname = #{record.clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payer != null" >
+        payer = #{record.payer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOperator != null" >
+        Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.billnumber != null" >
+        billnumber = #{record.billnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null" >
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_claim_ratesub
+    set rate_id = #{record.rateId,jdbcType=BIGINT},
+      casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      bill_id = #{record.billId,jdbcType=BIGINT},
+      cratesub = #{record.cratesub,jdbcType=REAL},
+      accrate = #{record.accrate,jdbcType=REAL},
+      arrdate = #{record.arrdate,jdbcType=TIMESTAMP},
+      accdate = #{record.accdate,jdbcType=TIMESTAMP},
+      accamount = #{record.accamount,jdbcType=REAL},
+      inComeId = #{record.incomeid,jdbcType=BIGINT},
+      claimId = #{record.claimid,jdbcType=BIGINT},
+      clientname = #{record.clientname,jdbcType=VARCHAR},
+      payer = #{record.payer,jdbcType=VARCHAR},
+      Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      billnumber = #{record.billnumber,jdbcType=VARCHAR},
+      currency = #{record.currency,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.ClaimRateSubImpl" >
+    update tbl_claim_ratesub
+    <set >
+      <if test="casenumber != null" >
+        casenumber = #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null" >
+        bill_id = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="cratesub != null" >
+        cratesub = #{cratesub,jdbcType=REAL},
+      </if>
+      <if test="accrate != null" >
+        accrate = #{accrate,jdbcType=REAL},
+      </if>
+      <if test="arrdate != null" >
+        arrdate = #{arrdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accdate != null" >
+        accdate = #{accdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accamount != null" >
+        accamount = #{accamount,jdbcType=REAL},
+      </if>
+      <if test="incomeid != null" >
+        inComeId = #{incomeid,jdbcType=BIGINT},
+      </if>
+      <if test="claimid != null" >
+        claimId = #{claimid,jdbcType=BIGINT},
+      </if>
+      <if test="clientname != null" >
+        clientname = #{clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        payer = #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator = #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billnumber != null" >
+        billnumber = #{billnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rate_id = #{rateId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.ClaimRateSubImpl" >
+    update tbl_claim_ratesub
+    set casenumber = #{casenumber,jdbcType=VARCHAR},
+      bill_id = #{billId,jdbcType=BIGINT},
+      cratesub = #{cratesub,jdbcType=REAL},
+      accrate = #{accrate,jdbcType=REAL},
+      arrdate = #{arrdate,jdbcType=TIMESTAMP},
+      accdate = #{accdate,jdbcType=TIMESTAMP},
+      accamount = #{accamount,jdbcType=REAL},
+      inComeId = #{incomeid,jdbcType=BIGINT},
+      claimId = #{claimid,jdbcType=BIGINT},
+      clientname = #{clientname,jdbcType=VARCHAR},
+      payer = #{payer,jdbcType=VARCHAR},
+      Create_Operator = #{createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      billnumber = #{billnumber,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR}
+    where rate_id = #{rateId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.ClaimRateSubImplExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_claim_ratesub
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

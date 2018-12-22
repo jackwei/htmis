@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.SysGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.SysGroup" >
+    <id column="Org_Id" property="orgId" jdbcType="BIGINT" />
+    <result column="Org_Code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="Org_Level" property="orgLevel" jdbcType="INTEGER" />
+    <result column="Org_Type" property="orgType" jdbcType="CHAR" />
+    <result column="Parent_Id" property="parentId" jdbcType="BIGINT" />
+    <result column="Org_Sname" property="orgSname" jdbcType="VARCHAR" />
+    <result column="Org_Name" property="orgName" jdbcType="VARCHAR" />
+    <result column="Org_EName" property="orgEname" jdbcType="VARCHAR" />
+    <result column="Link_Address" property="linkAddress" jdbcType="VARCHAR" />
+    <result column="Link_Phone" property="linkPhone" jdbcType="VARCHAR" />
+    <result column="Flag" property="flag" jdbcType="CHAR" />
+    <result column="Org_Status" property="orgStatus" jdbcType="CHAR" />
+    <result column="Dept_Manager_Id" property="deptManagerId" jdbcType="BIGINT" />
+    <result column="Dept_Leader_Id" property="deptLeaderId" jdbcType="BIGINT" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="Operator_Id" property="operatorId" jdbcType="BIGINT" />
+    <result column="Extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="Extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="Extend3" property="extend3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Org_Id, Org_Code, Org_Level, Org_Type, Parent_Id, Org_Sname, Org_Name, Org_EName, 
+    Link_Address, Link_Phone, Flag, Org_Status, Dept_Manager_Id, Dept_Leader_Id, Create_Time, 
+    Modify_Operator_Id, Modify_Time, Operator_Id, Extend1, Extend2, Extend3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.SysGroupExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_group
+    where Org_Id = #{orgId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_group
+    where Org_Id = #{orgId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.SysGroupExample" >
+    delete from sys_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.SysGroup" >
+    insert into sys_group (Org_Id, Org_Code, Org_Level, 
+      Org_Type, Parent_Id, Org_Sname, 
+      Org_Name, Org_EName, Link_Address, 
+      Link_Phone, Flag, Org_Status, 
+      Dept_Manager_Id, Dept_Leader_Id, Create_Time, 
+      Modify_Operator_Id, Modify_Time, Operator_Id, 
+      Extend1, Extend2, Extend3
+      )
+    values (#{orgId,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{orgLevel,jdbcType=INTEGER}, 
+      #{orgType,jdbcType=CHAR}, #{parentId,jdbcType=BIGINT}, #{orgSname,jdbcType=VARCHAR}, 
+      #{orgName,jdbcType=VARCHAR}, #{orgEname,jdbcType=VARCHAR}, #{linkAddress,jdbcType=VARCHAR}, 
+      #{linkPhone,jdbcType=VARCHAR}, #{flag,jdbcType=CHAR}, #{orgStatus,jdbcType=CHAR}, 
+      #{deptManagerId,jdbcType=BIGINT}, #{deptLeaderId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyOperatorId,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=BIGINT}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.SysGroup" >
+    insert into sys_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        Org_Id,
+      </if>
+      <if test="orgCode != null" >
+        Org_Code,
+      </if>
+      <if test="orgLevel != null" >
+        Org_Level,
+      </if>
+      <if test="orgType != null" >
+        Org_Type,
+      </if>
+      <if test="parentId != null" >
+        Parent_Id,
+      </if>
+      <if test="orgSname != null" >
+        Org_Sname,
+      </if>
+      <if test="orgName != null" >
+        Org_Name,
+      </if>
+      <if test="orgEname != null" >
+        Org_EName,
+      </if>
+      <if test="linkAddress != null" >
+        Link_Address,
+      </if>
+      <if test="linkPhone != null" >
+        Link_Phone,
+      </if>
+      <if test="flag != null" >
+        Flag,
+      </if>
+      <if test="orgStatus != null" >
+        Org_Status,
+      </if>
+      <if test="deptManagerId != null" >
+        Dept_Manager_Id,
+      </if>
+      <if test="deptLeaderId != null" >
+        Dept_Leader_Id,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+      <if test="operatorId != null" >
+        Operator_Id,
+      </if>
+      <if test="extend1 != null" >
+        Extend1,
+      </if>
+      <if test="extend2 != null" >
+        Extend2,
+      </if>
+      <if test="extend3 != null" >
+        Extend3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevel != null" >
+        #{orgLevel,jdbcType=INTEGER},
+      </if>
+      <if test="orgType != null" >
+        #{orgType,jdbcType=CHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="orgSname != null" >
+        #{orgSname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgEname != null" >
+        #{orgEname,jdbcType=VARCHAR},
+      </if>
+      <if test="linkAddress != null" >
+        #{linkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone != null" >
+        #{linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=CHAR},
+      </if>
+      <if test="orgStatus != null" >
+        #{orgStatus,jdbcType=CHAR},
+      </if>
+      <if test="deptManagerId != null" >
+        #{deptManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="deptLeaderId != null" >
+        #{deptLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.SysGroupExample" resultType="java.lang.Integer" >
+    select count(*) from sys_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_group
+    <set >
+      <if test="record.orgId != null" >
+        Org_Id = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgCode != null" >
+        Org_Code = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgLevel != null" >
+        Org_Level = #{record.orgLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgType != null" >
+        Org_Type = #{record.orgType,jdbcType=CHAR},
+      </if>
+      <if test="record.parentId != null" >
+        Parent_Id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgSname != null" >
+        Org_Sname = #{record.orgSname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        Org_Name = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgEname != null" >
+        Org_EName = #{record.orgEname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkAddress != null" >
+        Link_Address = #{record.linkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkPhone != null" >
+        Link_Phone = #{record.linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flag != null" >
+        Flag = #{record.flag,jdbcType=CHAR},
+      </if>
+      <if test="record.orgStatus != null" >
+        Org_Status = #{record.orgStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.deptManagerId != null" >
+        Dept_Manager_Id = #{record.deptManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.deptLeaderId != null" >
+        Dept_Leader_Id = #{record.deptLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatorId != null" >
+        Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.extend1 != null" >
+        Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend2 != null" >
+        Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend3 != null" >
+        Extend3 = #{record.extend3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_group
+    set Org_Id = #{record.orgId,jdbcType=BIGINT},
+      Org_Code = #{record.orgCode,jdbcType=VARCHAR},
+      Org_Level = #{record.orgLevel,jdbcType=INTEGER},
+      Org_Type = #{record.orgType,jdbcType=CHAR},
+      Parent_Id = #{record.parentId,jdbcType=BIGINT},
+      Org_Sname = #{record.orgSname,jdbcType=VARCHAR},
+      Org_Name = #{record.orgName,jdbcType=VARCHAR},
+      Org_EName = #{record.orgEname,jdbcType=VARCHAR},
+      Link_Address = #{record.linkAddress,jdbcType=VARCHAR},
+      Link_Phone = #{record.linkPhone,jdbcType=VARCHAR},
+      Flag = #{record.flag,jdbcType=CHAR},
+      Org_Status = #{record.orgStatus,jdbcType=CHAR},
+      Dept_Manager_Id = #{record.deptManagerId,jdbcType=BIGINT},
+      Dept_Leader_Id = #{record.deptLeaderId,jdbcType=BIGINT},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      Operator_Id = #{record.operatorId,jdbcType=BIGINT},
+      Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      Extend3 = #{record.extend3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.SysGroup" >
+    update sys_group
+    <set >
+      <if test="orgCode != null" >
+        Org_Code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevel != null" >
+        Org_Level = #{orgLevel,jdbcType=INTEGER},
+      </if>
+      <if test="orgType != null" >
+        Org_Type = #{orgType,jdbcType=CHAR},
+      </if>
+      <if test="parentId != null" >
+        Parent_Id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="orgSname != null" >
+        Org_Sname = #{orgSname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        Org_Name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgEname != null" >
+        Org_EName = #{orgEname,jdbcType=VARCHAR},
+      </if>
+      <if test="linkAddress != null" >
+        Link_Address = #{linkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone != null" >
+        Link_Phone = #{linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        Flag = #{flag,jdbcType=CHAR},
+      </if>
+      <if test="orgStatus != null" >
+        Org_Status = #{orgStatus,jdbcType=CHAR},
+      </if>
+      <if test="deptManagerId != null" >
+        Dept_Manager_Id = #{deptManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="deptLeaderId != null" >
+        Dept_Leader_Id = #{deptLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        Operator_Id = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="extend1 != null" >
+        Extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        Extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        Extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Org_Id = #{orgId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.SysGroup" >
+    update sys_group
+    set Org_Code = #{orgCode,jdbcType=VARCHAR},
+      Org_Level = #{orgLevel,jdbcType=INTEGER},
+      Org_Type = #{orgType,jdbcType=CHAR},
+      Parent_Id = #{parentId,jdbcType=BIGINT},
+      Org_Sname = #{orgSname,jdbcType=VARCHAR},
+      Org_Name = #{orgName,jdbcType=VARCHAR},
+      Org_EName = #{orgEname,jdbcType=VARCHAR},
+      Link_Address = #{linkAddress,jdbcType=VARCHAR},
+      Link_Phone = #{linkPhone,jdbcType=VARCHAR},
+      Flag = #{flag,jdbcType=CHAR},
+      Org_Status = #{orgStatus,jdbcType=CHAR},
+      Dept_Manager_Id = #{deptManagerId,jdbcType=BIGINT},
+      Dept_Leader_Id = #{deptLeaderId,jdbcType=BIGINT},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      Operator_Id = #{operatorId,jdbcType=BIGINT},
+      Extend1 = #{extend1,jdbcType=VARCHAR},
+      Extend2 = #{extend2,jdbcType=VARCHAR},
+      Extend3 = #{extend3,jdbcType=VARCHAR}
+    where Org_Id = #{orgId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.SysGroupExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="findPageBreakByCondition" resultMap="BaseResultMap" parameterType="map">
+		SELECT 
+	        <include refid="Base_Column_List" />
+		from sys_group c  
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+		    <if test="orgType != null &amp;&amp; orgType != ''">
+				AND c.Org_Type = #{orgType} 
+      		</if>      		
+			<if test="keywords != null &amp;&amp; keywords != ''">
+				AND (
+					c.Org_Sname LIKE "%"#{keywords}"%"
+					or c.Org_Name LIKE "%"#{keywords}"%"
+					or c.Org_EName LIKE "%"#{keywords}"%"
+				)
+      		</if>
+      	</trim>
+      	order by c.Parent_Id,c.Org_Id 
+	</select>
+	<select id="findNumberByCondition" resultType="java.lang.Integer" parameterType="map">
+		select count(0) as a from sys_group c  
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+		    <if test="orgType != null &amp;&amp; orgType != ''">
+				AND c.Org_Type = #{orgType} 
+      		</if>      		
+			<if test="keywords != null &amp;&amp; keywords != ''">
+				AND (
+					c.Org_Sname LIKE "%"#{keywords}"%"
+					or c.Org_Name LIKE "%"#{keywords}"%"
+					or c.Org_EName LIKE "%"#{keywords}"%"
+				)
+      		</if>
+      	</trim>
+	</select>
+</mapper>

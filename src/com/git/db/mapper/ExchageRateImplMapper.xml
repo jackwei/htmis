@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.ExchageRateImplMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.ExchageRateImpl" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="shortName" property="shortname" jdbcType="VARCHAR" />
+    <result column="rate1" property="rate1" jdbcType="VARCHAR" />
+    <result column="rate2" property="rate2" jdbcType="VARCHAR" />
+    <result column="rate3" property="rate3" jdbcType="VARCHAR" />
+    <result column="rate4" property="rate4" jdbcType="VARCHAR" />
+    <result column="rate5" property="rate5" jdbcType="VARCHAR" />
+    <result column="Create_Operator" property="createOperator" jdbcType="BIGINT" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code, status, currency, shortName, rate1, rate2, rate3, rate4, rate5, Create_Operator, 
+    Modify_Operator_Id, Modify_Time, Create_Time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.ExchageRateImplExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_exchagerate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_exchagerate
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_exchagerate
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.ExchageRateImplExample" >
+    delete from tbl_exchagerate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.ExchageRateImpl" >
+    insert into tbl_exchagerate (id, code, status, 
+      currency, shortName, rate1, 
+      rate2, rate3, rate4, 
+      rate5, Create_Operator, Modify_Operator_Id, 
+      Modify_Time, Create_Time)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{currency,jdbcType=VARCHAR}, #{shortname,jdbcType=VARCHAR}, #{rate1,jdbcType=VARCHAR}, 
+      #{rate2,jdbcType=VARCHAR}, #{rate3,jdbcType=VARCHAR}, #{rate4,jdbcType=VARCHAR}, 
+      #{rate5,jdbcType=VARCHAR}, #{createOperator,jdbcType=BIGINT}, #{modifyOperatorId,jdbcType=BIGINT}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.ExchageRateImpl" >
+    insert into tbl_exchagerate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="shortname != null" >
+        shortName,
+      </if>
+      <if test="rate1 != null" >
+        rate1,
+      </if>
+      <if test="rate2 != null" >
+        rate2,
+      </if>
+      <if test="rate3 != null" >
+        rate3,
+      </if>
+      <if test="rate4 != null" >
+        rate4,
+      </if>
+      <if test="rate5 != null" >
+        rate5,
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="shortname != null" >
+        #{shortname,jdbcType=VARCHAR},
+      </if>
+      <if test="rate1 != null" >
+        #{rate1,jdbcType=VARCHAR},
+      </if>
+      <if test="rate2 != null" >
+        #{rate2,jdbcType=VARCHAR},
+      </if>
+      <if test="rate3 != null" >
+        #{rate3,jdbcType=VARCHAR},
+      </if>
+      <if test="rate4 != null" >
+        #{rate4,jdbcType=VARCHAR},
+      </if>
+      <if test="rate5 != null" >
+        #{rate5,jdbcType=VARCHAR},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.ExchageRateImplExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_exchagerate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_exchagerate
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null" >
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shortname != null" >
+        shortName = #{record.shortname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rate1 != null" >
+        rate1 = #{record.rate1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rate2 != null" >
+        rate2 = #{record.rate2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rate3 != null" >
+        rate3 = #{record.rate3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rate4 != null" >
+        rate4 = #{record.rate4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rate5 != null" >
+        rate5 = #{record.rate5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOperator != null" >
+        Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_exchagerate
+    set id = #{record.id,jdbcType=BIGINT},
+      code = #{record.code,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      currency = #{record.currency,jdbcType=VARCHAR},
+      shortName = #{record.shortname,jdbcType=VARCHAR},
+      rate1 = #{record.rate1,jdbcType=VARCHAR},
+      rate2 = #{record.rate2,jdbcType=VARCHAR},
+      rate3 = #{record.rate3,jdbcType=VARCHAR},
+      rate4 = #{record.rate4,jdbcType=VARCHAR},
+      rate5 = #{record.rate5,jdbcType=VARCHAR},
+      Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.ExchageRateImpl" >
+    update tbl_exchagerate
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="shortname != null" >
+        shortName = #{shortname,jdbcType=VARCHAR},
+      </if>
+      <if test="rate1 != null" >
+        rate1 = #{rate1,jdbcType=VARCHAR},
+      </if>
+      <if test="rate2 != null" >
+        rate2 = #{rate2,jdbcType=VARCHAR},
+      </if>
+      <if test="rate3 != null" >
+        rate3 = #{rate3,jdbcType=VARCHAR},
+      </if>
+      <if test="rate4 != null" >
+        rate4 = #{rate4,jdbcType=VARCHAR},
+      </if>
+      <if test="rate5 != null" >
+        rate5 = #{rate5,jdbcType=VARCHAR},
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator = #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.ExchageRateImpl" >
+    update tbl_exchagerate
+    set code = #{code,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      shortName = #{shortname,jdbcType=VARCHAR},
+      rate1 = #{rate1,jdbcType=VARCHAR},
+      rate2 = #{rate2,jdbcType=VARCHAR},
+      rate3 = #{rate3,jdbcType=VARCHAR},
+      rate4 = #{rate4,jdbcType=VARCHAR},
+      rate5 = #{rate5,jdbcType=VARCHAR},
+      Create_Operator = #{createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.ExchageRateImplExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_exchagerate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

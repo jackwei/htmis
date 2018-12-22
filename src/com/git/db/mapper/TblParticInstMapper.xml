@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblParticInstMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblParticInst" >
+    <id column="Partic_Inst_Id" property="particInstId" jdbcType="BIGINT" />
+    <result column="Process_Inst_ID" property="processInstId" jdbcType="BIGINT" />
+    <result column="Activity_Inst_ID" property="activityInstId" jdbcType="BIGINT" />
+    <result column="Partic_User_Id" property="particUserId" jdbcType="BIGINT" />
+    <result column="Partic_User_Value" property="particUserValue" jdbcType="VARCHAR" />
+    <result column="Excute_State" property="excuteState" jdbcType="CHAR" />
+    <result column="PartiIn_Type" property="partiinType" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Partic_Inst_Id, Process_Inst_ID, Activity_Inst_ID, Partic_User_Id, Partic_User_Value, 
+    Excute_State, PartiIn_Type, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblParticInstExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_partic_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_partic_inst
+    where Partic_Inst_Id = #{particInstId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_partic_inst
+    where Partic_Inst_Id = #{particInstId,jdbcType=BIGINT}
+  </delete>
+  
+   <delete id="deleteByProcessInstId" parameterType="java.lang.Long" >
+    delete from tbl_partic_inst
+    where Process_Inst_ID = #{processInstId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblParticInstExample" >
+    delete from tbl_partic_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblParticInst" >
+    insert into tbl_partic_inst (Partic_Inst_Id, Process_Inst_ID, Activity_Inst_ID, 
+      Partic_User_Id, Partic_User_Value, Excute_State, 
+      PartiIn_Type, remark)
+    values (#{particInstId,jdbcType=BIGINT}, #{processInstId,jdbcType=BIGINT}, #{activityInstId,jdbcType=BIGINT}, 
+      #{particUserId,jdbcType=BIGINT}, #{particUserValue,jdbcType=VARCHAR}, #{excuteState,jdbcType=CHAR}, 
+      #{partiinType,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblParticInst" >
+    insert into tbl_partic_inst
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="particInstId != null" >
+        Partic_Inst_Id,
+      </if>
+      <if test="processInstId != null" >
+        Process_Inst_ID,
+      </if>
+      <if test="activityInstId != null" >
+        Activity_Inst_ID,
+      </if>
+      <if test="particUserId != null" >
+        Partic_User_Id,
+      </if>
+      <if test="particUserValue != null" >
+        Partic_User_Value,
+      </if>
+      <if test="excuteState != null" >
+        Excute_State,
+      </if>
+      <if test="partiinType != null" >
+        PartiIn_Type,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="particInstId != null" >
+        #{particInstId,jdbcType=BIGINT},
+      </if>
+      <if test="processInstId != null" >
+        #{processInstId,jdbcType=BIGINT},
+      </if>
+      <if test="activityInstId != null" >
+        #{activityInstId,jdbcType=BIGINT},
+      </if>
+      <if test="particUserId != null" >
+        #{particUserId,jdbcType=BIGINT},
+      </if>
+      <if test="particUserValue != null" >
+        #{particUserValue,jdbcType=VARCHAR},
+      </if>
+      <if test="excuteState != null" >
+        #{excuteState,jdbcType=CHAR},
+      </if>
+      <if test="partiinType != null" >
+        #{partiinType,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblParticInstExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_partic_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_partic_inst
+    <set >
+      <if test="record.particInstId != null" >
+        Partic_Inst_Id = #{record.particInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.processInstId != null" >
+        Process_Inst_ID = #{record.processInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.activityInstId != null" >
+        Activity_Inst_ID = #{record.activityInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.particUserId != null" >
+        Partic_User_Id = #{record.particUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.particUserValue != null" >
+        Partic_User_Value = #{record.particUserValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.excuteState != null" >
+        Excute_State = #{record.excuteState,jdbcType=CHAR},
+      </if>
+      <if test="record.partiinType != null" >
+        PartiIn_Type = #{record.partiinType,jdbcType=CHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_partic_inst
+    set Partic_Inst_Id = #{record.particInstId,jdbcType=BIGINT},
+      Process_Inst_ID = #{record.processInstId,jdbcType=BIGINT},
+      Activity_Inst_ID = #{record.activityInstId,jdbcType=BIGINT},
+      Partic_User_Id = #{record.particUserId,jdbcType=BIGINT},
+      Partic_User_Value = #{record.particUserValue,jdbcType=VARCHAR},
+      Excute_State = #{record.excuteState,jdbcType=CHAR},
+      PartiIn_Type = #{record.partiinType,jdbcType=CHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblParticInst" >
+    update tbl_partic_inst
+    <set >
+      <if test="processInstId != null" >
+        Process_Inst_ID = #{processInstId,jdbcType=BIGINT},
+      </if>
+      <if test="activityInstId != null" >
+        Activity_Inst_ID = #{activityInstId,jdbcType=BIGINT},
+      </if>
+      <if test="particUserId != null" >
+        Partic_User_Id = #{particUserId,jdbcType=BIGINT},
+      </if>
+      <if test="particUserValue != null" >
+        Partic_User_Value = #{particUserValue,jdbcType=VARCHAR},
+      </if>
+      <if test="excuteState != null" >
+        Excute_State = #{excuteState,jdbcType=CHAR},
+      </if>
+      <if test="partiinType != null" >
+        PartiIn_Type = #{partiinType,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Partic_Inst_Id = #{particInstId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblParticInst" >
+    update tbl_partic_inst
+    set Process_Inst_ID = #{processInstId,jdbcType=BIGINT},
+      Activity_Inst_ID = #{activityInstId,jdbcType=BIGINT},
+      Partic_User_Id = #{particUserId,jdbcType=BIGINT},
+      Partic_User_Value = #{particUserValue,jdbcType=VARCHAR},
+      Excute_State = #{excuteState,jdbcType=CHAR},
+      PartiIn_Type = #{partiinType,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where Partic_Inst_Id = #{particInstId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.TblParticInstExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_partic_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

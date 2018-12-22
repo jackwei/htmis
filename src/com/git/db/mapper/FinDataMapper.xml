@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.FinDataMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.FinData" >
+    <id column="Batch_No" property="batchNo" jdbcType="VARCHAR" />
+    <result column="Buss_Id" property="bussId" jdbcType="VARCHAR" />
+    <result column="Buss_Key_No" property="bussKeyNo" jdbcType="VARCHAR" />
+    <result column="Fin_No" property="finNo" jdbcType="VARCHAR" />
+    <result column="Fin_Name" property="finName" jdbcType="VARCHAR" />
+    <result column="Money" property="money" jdbcType="REAL" />
+    <result column="Currency" property="currency" jdbcType="VARCHAR" />
+    <result column="Fin_Date" property="finDate" jdbcType="DATE" />
+    <result column="Extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="Extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="Extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="Make_User" property="makeUser" jdbcType="VARCHAR" />
+    <result column="Make_Time" property="makeTime" jdbcType="TIMESTAMP" />
+    <result column="Deal_Flag" property="dealFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Batch_No, Buss_Id, Buss_Key_No, Fin_No, Fin_Name, Money, Currency, Fin_Date, Extend1, 
+    Extend2, Extend3, Make_User, Make_Time, Deal_Flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.FinDataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_fin_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_fin_data
+    where Batch_No = #{batchNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_fin_data
+    where Batch_No = #{batchNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.FinDataExample" >
+    delete from t_fin_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.FinData" >
+    insert into t_fin_data (Batch_No, Buss_Id, Buss_Key_No, 
+      Fin_No, Fin_Name, Money, 
+      Currency, Fin_Date, Extend1, 
+      Extend2, Extend3, Make_User, 
+      Make_Time, Deal_Flag)
+    values (#{batchNo,jdbcType=VARCHAR}, #{bussId,jdbcType=VARCHAR}, #{bussKeyNo,jdbcType=VARCHAR}, 
+      #{finNo,jdbcType=VARCHAR}, #{finName,jdbcType=VARCHAR}, #{money,jdbcType=REAL}, 
+      #{currency,jdbcType=VARCHAR}, #{finDate,jdbcType=DATE}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, #{makeUser,jdbcType=VARCHAR}, 
+      #{makeTime,jdbcType=TIMESTAMP}, #{dealFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.FinData" >
+    insert into t_fin_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="batchNo != null" >
+        Batch_No,
+      </if>
+      <if test="bussId != null" >
+        Buss_Id,
+      </if>
+      <if test="bussKeyNo != null" >
+        Buss_Key_No,
+      </if>
+      <if test="finNo != null" >
+        Fin_No,
+      </if>
+      <if test="finName != null" >
+        Fin_Name,
+      </if>
+      <if test="money != null" >
+        Money,
+      </if>
+      <if test="currency != null" >
+        Currency,
+      </if>
+      <if test="finDate != null" >
+        Fin_Date,
+      </if>
+      <if test="extend1 != null" >
+        Extend1,
+      </if>
+      <if test="extend2 != null" >
+        Extend2,
+      </if>
+      <if test="extend3 != null" >
+        Extend3,
+      </if>
+      <if test="makeUser != null" >
+        Make_User,
+      </if>
+      <if test="makeTime != null" >
+        Make_Time,
+      </if>
+      <if test="dealFlag != null" >
+        Deal_Flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bussId != null" >
+        #{bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="bussKeyNo != null" >
+        #{bussKeyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="finNo != null" >
+        #{finNo,jdbcType=VARCHAR},
+      </if>
+      <if test="finName != null" >
+        #{finName,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="finDate != null" >
+        #{finDate,jdbcType=DATE},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="makeUser != null" >
+        #{makeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="makeTime != null" >
+        #{makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealFlag != null" >
+        #{dealFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.FinDataExample" resultType="java.lang.Integer" >
+    select count(*) from t_fin_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_fin_data
+    <set >
+      <if test="record.batchNo != null" >
+        Batch_No = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussId != null" >
+        Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussKeyNo != null" >
+        Buss_Key_No = #{record.bussKeyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.finNo != null" >
+        Fin_No = #{record.finNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.finName != null" >
+        Fin_Name = #{record.finName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null" >
+        Money = #{record.money,jdbcType=REAL},
+      </if>
+      <if test="record.currency != null" >
+        Currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.finDate != null" >
+        Fin_Date = #{record.finDate,jdbcType=DATE},
+      </if>
+      <if test="record.extend1 != null" >
+        Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend2 != null" >
+        Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend3 != null" >
+        Extend3 = #{record.extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.makeUser != null" >
+        Make_User = #{record.makeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.makeTime != null" >
+        Make_Time = #{record.makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dealFlag != null" >
+        Deal_Flag = #{record.dealFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_fin_data
+    set Batch_No = #{record.batchNo,jdbcType=VARCHAR},
+      Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      Buss_Key_No = #{record.bussKeyNo,jdbcType=VARCHAR},
+      Fin_No = #{record.finNo,jdbcType=VARCHAR},
+      Fin_Name = #{record.finName,jdbcType=VARCHAR},
+      Money = #{record.money,jdbcType=REAL},
+      Currency = #{record.currency,jdbcType=VARCHAR},
+      Fin_Date = #{record.finDate,jdbcType=DATE},
+      Extend1 = #{record.extend1,jdbcType=VARCHAR},
+      Extend2 = #{record.extend2,jdbcType=VARCHAR},
+      Extend3 = #{record.extend3,jdbcType=VARCHAR},
+      Make_User = #{record.makeUser,jdbcType=VARCHAR},
+      Make_Time = #{record.makeTime,jdbcType=TIMESTAMP},
+      Deal_Flag = #{record.dealFlag,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.FinData" >
+    update t_fin_data
+    <set >
+      <if test="bussId != null" >
+        Buss_Id = #{bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="bussKeyNo != null" >
+        Buss_Key_No = #{bussKeyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="finNo != null" >
+        Fin_No = #{finNo,jdbcType=VARCHAR},
+      </if>
+      <if test="finName != null" >
+        Fin_Name = #{finName,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        Money = #{money,jdbcType=REAL},
+      </if>
+      <if test="currency != null" >
+        Currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="finDate != null" >
+        Fin_Date = #{finDate,jdbcType=DATE},
+      </if>
+      <if test="extend1 != null" >
+        Extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        Extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        Extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="makeUser != null" >
+        Make_User = #{makeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="makeTime != null" >
+        Make_Time = #{makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealFlag != null" >
+        Deal_Flag = #{dealFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where Batch_No = #{batchNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.FinData" >
+    update t_fin_data
+    set Buss_Id = #{bussId,jdbcType=VARCHAR},
+      Buss_Key_No = #{bussKeyNo,jdbcType=VARCHAR},
+      Fin_No = #{finNo,jdbcType=VARCHAR},
+      Fin_Name = #{finName,jdbcType=VARCHAR},
+      Money = #{money,jdbcType=REAL},
+      Currency = #{currency,jdbcType=VARCHAR},
+      Fin_Date = #{finDate,jdbcType=DATE},
+      Extend1 = #{extend1,jdbcType=VARCHAR},
+      Extend2 = #{extend2,jdbcType=VARCHAR},
+      Extend3 = #{extend3,jdbcType=VARCHAR},
+      Make_User = #{makeUser,jdbcType=VARCHAR},
+      Make_Time = #{makeTime,jdbcType=TIMESTAMP},
+      Deal_Flag = #{dealFlag,jdbcType=CHAR}
+    where Batch_No = #{batchNo,jdbcType=VARCHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.FinDataExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_fin_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

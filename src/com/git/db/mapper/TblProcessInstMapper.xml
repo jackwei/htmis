@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblProcessInstMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblProcessInst" >
+    <id column="Process_Inst_ID" property="processInstId" jdbcType="BIGINT" />
+    <result column="Buss_No" property="bussNo" jdbcType="VARCHAR" />
+    <result column="ProcessInstName" property="processinstname" jdbcType="VARCHAR" />
+    <result column="ProcessInstDesc" property="processinstdesc" jdbcType="VARCHAR" />
+    <result column="Creator" property="creator" jdbcType="VARCHAR" />
+    <result column="Current_State" property="currentState" jdbcType="CHAR" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Final_Time" property="finalTime" jdbcType="TIMESTAMP" />
+    <result column="Process_Def_Id" property="processDefId" jdbcType="BIGINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="Param1" property="param1" jdbcType="REAL" />
+    <result column="Param2" property="param2" jdbcType="VARCHAR" />
+    <result column="Param3" property="param3" jdbcType="VARCHAR" />
+    <result column="Param4" property="param4" jdbcType="BIGINT" />
+    <result column="Param5" property="param5" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Process_Inst_ID, Buss_No, ProcessInstName, ProcessInstDesc, Creator, Current_State, 
+    Create_Time, Final_Time, Process_Def_Id, remark, remark1,,Param1,Param2,Param3,Param4,Param5 
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblProcessInstExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_process_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_process_inst
+    where Process_Inst_ID = #{processInstId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_process_inst
+    where Process_Inst_ID = #{processInstId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblProcessInstExample" >
+    delete from tbl_process_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblProcessInst" >
+    insert into tbl_process_inst (Process_Inst_ID, Buss_No, ProcessInstName, 
+      ProcessInstDesc, Creator, Current_State, 
+      Create_Time, Final_Time, Process_Def_Id, 
+      remark, remark1, Param1, 
+      Param2, Param3, Param4, 
+      Param5)
+    values (#{processInstId,jdbcType=BIGINT}, #{bussNo,jdbcType=VARCHAR}, #{processinstname,jdbcType=VARCHAR}, 
+      #{processinstdesc,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{currentState,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{finalTime,jdbcType=TIMESTAMP}, #{processDefId,jdbcType=BIGINT}, 
+      #{remark,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, #{param1,jdbcType=REAL}, 
+      #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=BIGINT}, 
+      #{param5,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblProcessInst" >
+    insert into tbl_process_inst
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="processInstId != null" >
+        Process_Inst_ID,
+      </if>
+      <if test="bussNo != null" >
+        Buss_No,
+      </if>
+      <if test="processinstname != null" >
+        ProcessInstName,
+      </if>
+      <if test="processinstdesc != null" >
+        ProcessInstDesc,
+      </if>
+      <if test="creator != null" >
+        Creator,
+      </if>
+      <if test="currentState != null" >
+        Current_State,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="finalTime != null" >
+        Final_Time,
+      </if>
+      <if test="processDefId != null" >
+        Process_Def_Id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="param1 != null" >
+        Param1,
+      </if>
+      <if test="param2 != null" >
+        Param2,
+      </if>
+      <if test="param3 != null" >
+        Param3,
+      </if>
+      <if test="param4 != null" >
+        Param4,
+      </if>
+      <if test="param5 != null" >
+        Param5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="processInstId != null" >
+        #{processInstId,jdbcType=BIGINT},
+      </if>
+      <if test="bussNo != null" >
+        #{bussNo,jdbcType=VARCHAR},
+      </if>
+      <if test="processinstname != null" >
+        #{processinstname,jdbcType=VARCHAR},
+      </if>
+      <if test="processinstdesc != null" >
+        #{processinstdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="currentState != null" >
+        #{currentState,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finalTime != null" >
+        #{finalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="processDefId != null" >
+        #{processDefId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null" >
+        #{param1,jdbcType=REAL},
+      </if>
+      <if test="param2 != null" >
+        #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null" >
+        #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null" >
+        #{param4,jdbcType=BIGINT},
+      </if>
+      <if test="param5 != null" >
+        #{param5,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblProcessInstExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_process_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_process_inst
+    <set >
+      <if test="record.processInstId != null" >
+        Process_Inst_ID = #{record.processInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bussNo != null" >
+        Buss_No = #{record.bussNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.processinstname != null" >
+        ProcessInstName = #{record.processinstname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.processinstdesc != null" >
+        ProcessInstDesc = #{record.processinstdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null" >
+        Creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentState != null" >
+        Current_State = #{record.currentState,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finalTime != null" >
+        Final_Time = #{record.finalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.processDefId != null" >
+        Process_Def_Id = #{record.processDefId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark1 != null" >
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.param1 != null" >
+        Param1 = #{record.param1,jdbcType=REAL},
+      </if>
+      <if test="record.param2 != null" >
+        Param2 = #{record.param2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.param3 != null" >
+        Param3 = #{record.param3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.param4 != null" >
+        Param4 = #{record.param4,jdbcType=BIGINT},
+      </if>
+      <if test="record.param5 != null" >
+        Param5 = #{record.param5,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_process_inst
+    set Process_Inst_ID = #{record.processInstId,jdbcType=BIGINT},
+      Buss_No = #{record.bussNo,jdbcType=VARCHAR},
+      ProcessInstName = #{record.processinstname,jdbcType=VARCHAR},
+      ProcessInstDesc = #{record.processinstdesc,jdbcType=VARCHAR},
+      Creator = #{record.creator,jdbcType=VARCHAR},
+      Current_State = #{record.currentState,jdbcType=CHAR},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      Final_Time = #{record.finalTime,jdbcType=TIMESTAMP},
+      Process_Def_Id = #{record.processDefId,jdbcType=BIGINT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      Param1 = #{record.param1,jdbcType=REAL},
+      Param2 = #{record.param2,jdbcType=VARCHAR},
+      Param3 = #{record.param3,jdbcType=VARCHAR},
+      Param4 = #{record.param4,jdbcType=BIGINT},
+      Param5 = #{record.param5,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblProcessInst" >
+    update tbl_process_inst
+    <set >
+      <if test="bussNo != null" >
+        Buss_No = #{bussNo,jdbcType=VARCHAR},
+      </if>
+      <if test="processinstname != null" >
+        ProcessInstName = #{processinstname,jdbcType=VARCHAR},
+      </if>
+      <if test="processinstdesc != null" >
+        ProcessInstDesc = #{processinstdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        Creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="currentState != null" >
+        Current_State = #{currentState,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finalTime != null" >
+        Final_Time = #{finalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="processDefId != null" >
+        Process_Def_Id = #{processDefId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null" >
+        Param1 = #{param1,jdbcType=REAL},
+      </if>
+      <if test="param2 != null" >
+        Param2 = #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null" >
+        Param3 = #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null" >
+        Param4 = #{param4,jdbcType=BIGINT},
+      </if>
+      <if test="param5 != null" >
+        Param5 = #{param5,jdbcType=DATE},
+      </if>
+    </set>
+    where Process_Inst_ID = #{processInstId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblProcessInst" >
+    update tbl_process_inst
+    set Buss_No = #{bussNo,jdbcType=VARCHAR},
+      ProcessInstName = #{processinstname,jdbcType=VARCHAR},
+      ProcessInstDesc = #{processinstdesc,jdbcType=VARCHAR},
+      Creator = #{creator,jdbcType=VARCHAR},
+      Current_State = #{currentState,jdbcType=CHAR},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Final_Time = #{finalTime,jdbcType=TIMESTAMP},
+      Process_Def_Id = #{processDefId,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      Param1 = #{param1,jdbcType=REAL},
+      Param2 = #{param2,jdbcType=VARCHAR},
+      Param3 = #{param3,jdbcType=VARCHAR},
+      Param4 = #{param4,jdbcType=BIGINT},
+      Param5 = #{param5,jdbcType=DATE}
+    where Process_Inst_ID = #{processInstId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.TblProcessInstExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_process_inst
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

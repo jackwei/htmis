@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.SysUserLogMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.SysUserLog" >
+    <id column="Log_Id" property="logId" jdbcType="BIGINT" />
+    <result column="User_Id" property="userId" jdbcType="BIGINT" />
+    <result column="Login_Time" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="Login_Out_Time" property="loginOutTime" jdbcType="TIMESTAMP" />
+    <result column="IP_Address" property="ipAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Log_Id, User_Id, Login_Time, Login_Out_Time, IP_Address
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.SysUserLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_user_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_log
+    where Log_Id = #{logId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_user_log
+    where Log_Id = #{logId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.SysUserLogExample" >
+    delete from sys_user_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.SysUserLog" >
+    insert into sys_user_log (Log_Id, User_Id, Login_Time, 
+      Login_Out_Time, IP_Address)
+    values (#{logId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{loginTime,jdbcType=TIMESTAMP}, 
+      #{loginOutTime,jdbcType=TIMESTAMP}, #{ipAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.SysUserLog" >
+    insert into sys_user_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        Log_Id,
+      </if>
+      <if test="userId != null" >
+        User_Id,
+      </if>
+      <if test="loginTime != null" >
+        Login_Time,
+      </if>
+      <if test="loginOutTime != null" >
+        Login_Out_Time,
+      </if>
+      <if test="ipAddress != null" >
+        IP_Address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginOutTime != null" >
+        #{loginOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipAddress != null" >
+        #{ipAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.SysUserLogExample" resultType="java.lang.Integer" >
+    select count(*) from sys_user_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_user_log
+    <set >
+      <if test="record.logId != null" >
+        Log_Id = #{record.logId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        User_Id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.loginTime != null" >
+        Login_Time = #{record.loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loginOutTime != null" >
+        Login_Out_Time = #{record.loginOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ipAddress != null" >
+        IP_Address = #{record.ipAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_user_log
+    set Log_Id = #{record.logId,jdbcType=BIGINT},
+      User_Id = #{record.userId,jdbcType=BIGINT},
+      Login_Time = #{record.loginTime,jdbcType=TIMESTAMP},
+      Login_Out_Time = #{record.loginOutTime,jdbcType=TIMESTAMP},
+      IP_Address = #{record.ipAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.SysUserLog" >
+    update sys_user_log
+    <set >
+      <if test="userId != null" >
+        User_Id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="loginTime != null" >
+        Login_Time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginOutTime != null" >
+        Login_Out_Time = #{loginOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipAddress != null" >
+        IP_Address = #{ipAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Log_Id = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.SysUserLog" >
+    update sys_user_log
+    set User_Id = #{userId,jdbcType=BIGINT},
+      Login_Time = #{loginTime,jdbcType=TIMESTAMP},
+      Login_Out_Time = #{loginOutTime,jdbcType=TIMESTAMP},
+      IP_Address = #{ipAddress,jdbcType=VARCHAR}
+    where Log_Id = #{logId,jdbcType=BIGINT}
+  </update>
+</mapper>

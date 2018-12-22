@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.TblActivityDefMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.TblActivityDef" >
+    <id column="Activity_Def_Id" property="activityDefId" jdbcType="BIGINT" />
+    <result column="Process_Def_Id" property="processDefId" jdbcType="BIGINT" />
+    <result column="Activity_No" property="activityNo" jdbcType="VARCHAR" />
+    <result column="Activity_Name" property="activityName" jdbcType="VARCHAR" />
+    <result column="Activity_Desc" property="activityDesc" jdbcType="VARCHAR" />
+    <result column="Start_Type" property="startType" jdbcType="VARCHAR" />
+    <result column="Pre_Activity" property="preActivity" jdbcType="VARCHAR" />
+    <result column="Param1" property="param1" jdbcType="REAL" />
+    <result column="Param2" property="param2" jdbcType="VARCHAR" />
+    <result column="Param3" property="param3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Activity_Def_Id, Process_Def_Id, Activity_No, Activity_Name, Activity_Desc, Start_Type, 
+    Pre_Activity,Param1,Param2,Param3 
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.TblActivityDefExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_activity_def
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_activity_def
+    where Activity_Def_Id = #{activityDefId,jdbcType=BIGINT}
+  </select>
+  
+   <select id="selectByProcessDefId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_activity_def
+    where Pre_Activity='0' and Process_Def_Id =#{processDefId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_activity_def
+    where Activity_Def_Id = #{activityDefId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.TblActivityDefExample" >
+    delete from tbl_activity_def
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.TblActivityDef" >
+    insert into tbl_activity_def (Activity_Def_Id, Process_Def_Id, Activity_No, 
+      Activity_Name, Activity_Desc, Start_Type, 
+      Pre_Activity, Param1, Param2, 
+      Param3)
+    values (#{activityDefId,jdbcType=BIGINT}, #{processDefId,jdbcType=BIGINT}, #{activityNo,jdbcType=VARCHAR}, 
+      #{activityName,jdbcType=VARCHAR}, #{activityDesc,jdbcType=VARCHAR}, #{startType,jdbcType=VARCHAR}, 
+      #{preActivity,jdbcType=VARCHAR}, #{param1,jdbcType=REAL}, #{param2,jdbcType=VARCHAR}, 
+      #{param3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.TblActivityDef" >
+    insert into tbl_activity_def
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityDefId != null" >
+        Activity_Def_Id,
+      </if>
+      <if test="processDefId != null" >
+        Process_Def_Id,
+      </if>
+      <if test="activityNo != null" >
+        Activity_No,
+      </if>
+      <if test="activityName != null" >
+        Activity_Name,
+      </if>
+      <if test="activityDesc != null" >
+        Activity_Desc,
+      </if>
+      <if test="startType != null" >
+        Start_Type,
+      </if>
+      <if test="preActivity != null" >
+        Pre_Activity,
+      </if>
+      <if test="param1 != null" >
+        Param1,
+      </if>
+      <if test="param2 != null" >
+        Param2,
+      </if>
+      <if test="param3 != null" >
+        Param3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityDefId != null" >
+        #{activityDefId,jdbcType=BIGINT},
+      </if>
+      <if test="processDefId != null" >
+        #{processDefId,jdbcType=BIGINT},
+      </if>
+      <if test="activityNo != null" >
+        #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityDesc != null" >
+        #{activityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="startType != null" >
+        #{startType,jdbcType=VARCHAR},
+      </if>
+      <if test="preActivity != null" >
+        #{preActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null" >
+        #{param1,jdbcType=REAL},
+      </if>
+      <if test="param2 != null" >
+        #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null" >
+        #{param3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.TblActivityDefExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_activity_def
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_activity_def
+    <set >
+      <if test="record.activityDefId != null" >
+        Activity_Def_Id = #{record.activityDefId,jdbcType=BIGINT},
+      </if>
+      <if test="record.processDefId != null" >
+        Process_Def_Id = #{record.processDefId,jdbcType=BIGINT},
+      </if>
+      <if test="record.activityNo != null" >
+        Activity_No = #{record.activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityName != null" >
+        Activity_Name = #{record.activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityDesc != null" >
+        Activity_Desc = #{record.activityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startType != null" >
+        Start_Type = #{record.startType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preActivity != null" >
+        Pre_Activity = #{record.preActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.param1 != null" >
+        Param1 = #{record.param1,jdbcType=REAL},
+      </if>
+      <if test="record.param2 != null" >
+        Param2 = #{record.param2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.param3 != null" >
+        Param3 = #{record.param3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_activity_def
+    set Activity_Def_Id = #{record.activityDefId,jdbcType=BIGINT},
+      Process_Def_Id = #{record.processDefId,jdbcType=BIGINT},
+      Activity_No = #{record.activityNo,jdbcType=VARCHAR},
+      Activity_Name = #{record.activityName,jdbcType=VARCHAR},
+      Activity_Desc = #{record.activityDesc,jdbcType=VARCHAR},
+      Start_Type = #{record.startType,jdbcType=VARCHAR},
+      Pre_Activity = #{record.preActivity,jdbcType=VARCHAR},
+      Param1 = #{record.param1,jdbcType=REAL},
+      Param2 = #{record.param2,jdbcType=VARCHAR},
+      Param3 = #{record.param3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.TblActivityDef" >
+    update tbl_activity_def
+    <set >
+      <if test="processDefId != null" >
+        Process_Def_Id = #{processDefId,jdbcType=BIGINT},
+      </if>
+      <if test="activityNo != null" >
+        Activity_No = #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null" >
+        Activity_Name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityDesc != null" >
+        Activity_Desc = #{activityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="startType != null" >
+        Start_Type = #{startType,jdbcType=VARCHAR},
+      </if>
+      <if test="preActivity != null" >
+        Pre_Activity = #{preActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null" >
+        Param1 = #{param1,jdbcType=REAL},
+      </if>
+      <if test="param2 != null" >
+        Param2 = #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null" >
+        Param3 = #{param3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Activity_Def_Id = #{activityDefId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.TblActivityDef" >
+    update tbl_activity_def
+    set Process_Def_Id = #{processDefId,jdbcType=BIGINT},
+      Activity_No = #{activityNo,jdbcType=VARCHAR},
+      Activity_Name = #{activityName,jdbcType=VARCHAR},
+      Activity_Desc = #{activityDesc,jdbcType=VARCHAR},
+      Start_Type = #{startType,jdbcType=VARCHAR},
+      Pre_Activity = #{preActivity,jdbcType=VARCHAR},
+      Param1 = #{param1,jdbcType=REAL},
+      Param2 = #{param2,jdbcType=VARCHAR},
+      Param3 = #{param3,jdbcType=VARCHAR}
+    where Activity_Def_Id = #{activityDefId,jdbcType=BIGINT}
+  </update>
+   <select id="selectByProcessId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_activity_def
+    where Process_Def_Id = #{processDefId,jdbcType=BIGINT}
+  </select>
+  <select id="searchMaxId"  parameterType="java.lang.Long" resultType="java.lang.Long">
+    select  max(Activity_Def_Id) from tbl_activity_def
+    where Process_Def_Id = #{processDefId,jdbcType=BIGINT}
+  </select>
+
+</mapper>

@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.CaseInfoImplMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.CaseInfoImpl" >
+    <id column="Case_Id" property="caseId" jdbcType="BIGINT" />
+    <result column="casenumber" property="casenumber" jdbcType="VARCHAR" />
+    <result column="excasenumber" property="excasenumber" jdbcType="VARCHAR" />
+    <result column="academynum" property="academynum" jdbcType="VARCHAR" />
+    <result column="shipname" property="shipname" jdbcType="VARCHAR" />
+    <result column="casetypeid" property="casetypeid" jdbcType="VARCHAR" />
+    <result column="casetypename" property="casetypename" jdbcType="VARCHAR" />
+    <result column="accidentdate" property="accidentdate" jdbcType="TIMESTAMP" />
+    <result column="accidentportid" property="accidentportid" jdbcType="VARCHAR" />
+    <result column="accidentport" property="accidentport" jdbcType="VARCHAR" />
+    <result column="consignortypeid" property="consignortypeid" jdbcType="VARCHAR" />
+    <result column="consignortypename" property="consignortypename" jdbcType="VARCHAR" />
+    <result column="consignorid" property="consignorid" jdbcType="VARCHAR" />
+    <result column="consignorname" property="consignorname" jdbcType="VARCHAR" />
+    <result column="consignorsn" property="consignorsn" jdbcType="VARCHAR" />
+    <result column="casecontact" property="casecontact" jdbcType="VARCHAR" />
+    <result column="checkcompany" property="checkcompany" jdbcType="VARCHAR" />
+    <result column="barristers" property="barristers" jdbcType="VARCHAR" />
+    <result column="casedes" property="casedes" jdbcType="VARCHAR" />
+    <result column="orgcode" property="orgcode" jdbcType="VARCHAR" />
+    <result column="oraname" property="oraname" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="setdate" property="setdate" jdbcType="TIMESTAMP" />
+    <result column="enddate" property="enddate" jdbcType="TIMESTAMP" />
+    <result column="casestatus" property="casestatus" jdbcType="VARCHAR" />
+    <result column="feecount" property="feecount" jdbcType="BIGINT" />
+    <result column="accflag" property="accflag" jdbcType="VARCHAR" />
+    <result column="alertdate" property="alertdate" jdbcType="TIMESTAMP" />
+    <result column="Create_Operator" property="createOperator" jdbcType="BIGINT" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Case_Id, casenumber, excasenumber, academynum, shipname, casetypeid, casetypename, 
+    accidentdate, accidentportid, accidentport, consignortypeid, consignortypename, consignorid, 
+    consignorname, consignorsn, casecontact, checkcompany, barristers, casedes, orgcode, 
+    oraname, userid, username, setdate, enddate, casestatus, feecount, accflag, alertdate, 
+    Create_Operator, Modify_Operator_Id, Modify_Time, Create_Time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.CaseInfoImplExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_case
+    where Case_Id = #{caseId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_case
+    where Case_Id = #{caseId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.CaseInfoImplExample" >
+    delete from tbl_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.CaseInfoImpl" >
+    insert into tbl_case (Case_Id, casenumber, excasenumber, 
+      academynum, shipname, casetypeid, 
+      casetypename, accidentdate, accidentportid, 
+      accidentport, consignortypeid, consignortypename, 
+      consignorid, consignorname, consignorsn, 
+      casecontact, checkcompany, barristers, 
+      casedes, orgcode, oraname, 
+      userid, username, setdate, 
+      enddate, casestatus, feecount, 
+      accflag, alertdate, Create_Operator, 
+      Modify_Operator_Id, Modify_Time, Create_Time
+      )
+    values (#{caseId,jdbcType=BIGINT}, #{casenumber,jdbcType=VARCHAR}, #{excasenumber,jdbcType=VARCHAR}, 
+      #{academynum,jdbcType=VARCHAR}, #{shipname,jdbcType=VARCHAR}, #{casetypeid,jdbcType=VARCHAR}, 
+      #{casetypename,jdbcType=VARCHAR}, #{accidentdate,jdbcType=TIMESTAMP}, #{accidentportid,jdbcType=VARCHAR}, 
+      #{accidentport,jdbcType=VARCHAR}, #{consignortypeid,jdbcType=VARCHAR}, #{consignortypename,jdbcType=VARCHAR}, 
+      #{consignorid,jdbcType=VARCHAR}, #{consignorname,jdbcType=VARCHAR}, #{consignorsn,jdbcType=VARCHAR}, 
+      #{casecontact,jdbcType=VARCHAR}, #{checkcompany,jdbcType=VARCHAR}, #{barristers,jdbcType=VARCHAR}, 
+      #{casedes,jdbcType=VARCHAR}, #{orgcode,jdbcType=VARCHAR}, #{oraname,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{setdate,jdbcType=TIMESTAMP}, 
+      #{enddate,jdbcType=TIMESTAMP}, #{casestatus,jdbcType=VARCHAR}, #{feecount,jdbcType=BIGINT}, 
+      #{accflag,jdbcType=VARCHAR}, #{alertdate,jdbcType=TIMESTAMP}, #{createOperator,jdbcType=BIGINT}, 
+      #{modifyOperatorId,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.CaseInfoImpl" >
+    insert into tbl_case
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        Case_Id,
+      </if>
+      <if test="casenumber != null" >
+        casenumber,
+      </if>
+      <if test="excasenumber != null" >
+        excasenumber,
+      </if>
+      <if test="academynum != null" >
+        academynum,
+      </if>
+      <if test="shipname != null" >
+        shipname,
+      </if>
+      <if test="casetypeid != null" >
+        casetypeid,
+      </if>
+      <if test="casetypename != null" >
+        casetypename,
+      </if>
+      <if test="accidentdate != null" >
+        accidentdate,
+      </if>
+      <if test="accidentportid != null" >
+        accidentportid,
+      </if>
+      <if test="accidentport != null" >
+        accidentport,
+      </if>
+      <if test="consignortypeid != null" >
+        consignortypeid,
+      </if>
+      <if test="consignortypename != null" >
+        consignortypename,
+      </if>
+      <if test="consignorid != null" >
+        consignorid,
+      </if>
+      <if test="consignorname != null" >
+        consignorname,
+      </if>
+      <if test="consignorsn != null" >
+        consignorsn,
+      </if>
+      <if test="casecontact != null" >
+        casecontact,
+      </if>
+      <if test="checkcompany != null" >
+        checkcompany,
+      </if>
+      <if test="barristers != null" >
+        barristers,
+      </if>
+      <if test="casedes != null" >
+        casedes,
+      </if>
+      <if test="orgcode != null" >
+        orgcode,
+      </if>
+      <if test="oraname != null" >
+        oraname,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="setdate != null" >
+        setdate,
+      </if>
+      <if test="enddate != null" >
+        enddate,
+      </if>
+      <if test="casestatus != null" >
+        casestatus,
+      </if>
+      <if test="feecount != null" >
+        feecount,
+      </if>
+      <if test="accflag != null" >
+        accflag,
+      </if>
+      <if test="alertdate != null" >
+        alertdate,
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="excasenumber != null" >
+        #{excasenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="academynum != null" >
+        #{academynum,jdbcType=VARCHAR},
+      </if>
+      <if test="shipname != null" >
+        #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="casetypeid != null" >
+        #{casetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="casetypename != null" >
+        #{casetypename,jdbcType=VARCHAR},
+      </if>
+      <if test="accidentdate != null" >
+        #{accidentdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accidentportid != null" >
+        #{accidentportid,jdbcType=VARCHAR},
+      </if>
+      <if test="accidentport != null" >
+        #{accidentport,jdbcType=VARCHAR},
+      </if>
+      <if test="consignortypeid != null" >
+        #{consignortypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="consignortypename != null" >
+        #{consignortypename,jdbcType=VARCHAR},
+      </if>
+      <if test="consignorid != null" >
+        #{consignorid,jdbcType=VARCHAR},
+      </if>
+      <if test="consignorname != null" >
+        #{consignorname,jdbcType=VARCHAR},
+      </if>
+      <if test="consignorsn != null" >
+        #{consignorsn,jdbcType=VARCHAR},
+      </if>
+      <if test="casecontact != null" >
+        #{casecontact,jdbcType=VARCHAR},
+      </if>
+      <if test="checkcompany != null" >
+        #{checkcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="barristers != null" >
+        #{barristers,jdbcType=VARCHAR},
+      </if>
+      <if test="casedes != null" >
+        #{casedes,jdbcType=VARCHAR},
+      </if>
+      <if test="orgcode != null" >
+        #{orgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="oraname != null" >
+        #{oraname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="setdate != null" >
+        #{setdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="casestatus != null" >
+        #{casestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="feecount != null" >
+        #{feecount,jdbcType=BIGINT},
+      </if>
+      <if test="accflag != null" >
+        #{accflag,jdbcType=VARCHAR},
+      </if>
+      <if test="alertdate != null" >
+        #{alertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.CaseInfoImplExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_case
+    <set >
+      <if test="record.caseId != null" >
+        Case_Id = #{record.caseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.casenumber != null" >
+        casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.excasenumber != null" >
+        excasenumber = #{record.excasenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.academynum != null" >
+        academynum = #{record.academynum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipname != null" >
+        shipname = #{record.shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.casetypeid != null" >
+        casetypeid = #{record.casetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.casetypename != null" >
+        casetypename = #{record.casetypename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accidentdate != null" >
+        accidentdate = #{record.accidentdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accidentportid != null" >
+        accidentportid = #{record.accidentportid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accidentport != null" >
+        accidentport = #{record.accidentport,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consignortypeid != null" >
+        consignortypeid = #{record.consignortypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consignortypename != null" >
+        consignortypename = #{record.consignortypename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consignorid != null" >
+        consignorid = #{record.consignorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consignorname != null" >
+        consignorname = #{record.consignorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consignorsn != null" >
+        consignorsn = #{record.consignorsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.casecontact != null" >
+        casecontact = #{record.casecontact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkcompany != null" >
+        checkcompany = #{record.checkcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.barristers != null" >
+        barristers = #{record.barristers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.casedes != null" >
+        casedes = #{record.casedes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgcode != null" >
+        orgcode = #{record.orgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oraname != null" >
+        oraname = #{record.oraname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.setdate != null" >
+        setdate = #{record.setdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enddate != null" >
+        enddate = #{record.enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.casestatus != null" >
+        casestatus = #{record.casestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feecount != null" >
+        feecount = #{record.feecount,jdbcType=BIGINT},
+      </if>
+      <if test="record.accflag != null" >
+        accflag = #{record.accflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alertdate != null" >
+        alertdate = #{record.alertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createOperator != null" >
+        Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_case
+    set Case_Id = #{record.caseId,jdbcType=BIGINT},
+      casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      excasenumber = #{record.excasenumber,jdbcType=VARCHAR},
+      academynum = #{record.academynum,jdbcType=VARCHAR},
+      shipname = #{record.shipname,jdbcType=VARCHAR},
+      casetypeid = #{record.casetypeid,jdbcType=VARCHAR},
+      casetypename = #{record.casetypename,jdbcType=VARCHAR},
+      accidentdate = #{record.accidentdate,jdbcType=TIMESTAMP},
+      accidentportid = #{record.accidentportid,jdbcType=VARCHAR},
+      accidentport = #{record.accidentport,jdbcType=VARCHAR},
+      consignortypeid = #{record.consignortypeid,jdbcType=VARCHAR},
+      consignortypename = #{record.consignortypename,jdbcType=VARCHAR},
+      consignorid = #{record.consignorid,jdbcType=VARCHAR},
+      consignorname = #{record.consignorname,jdbcType=VARCHAR},
+      consignorsn = #{record.consignorsn,jdbcType=VARCHAR},
+      casecontact = #{record.casecontact,jdbcType=VARCHAR},
+      checkcompany = #{record.checkcompany,jdbcType=VARCHAR},
+      barristers = #{record.barristers,jdbcType=VARCHAR},
+      casedes = #{record.casedes,jdbcType=VARCHAR},
+      orgcode = #{record.orgcode,jdbcType=VARCHAR},
+      oraname = #{record.oraname,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      setdate = #{record.setdate,jdbcType=TIMESTAMP},
+      enddate = #{record.enddate,jdbcType=TIMESTAMP},
+      casestatus = #{record.casestatus,jdbcType=VARCHAR},
+      feecount = #{record.feecount,jdbcType=BIGINT},
+      accflag = #{record.accflag,jdbcType=VARCHAR},
+      alertdate = #{record.alertdate,jdbcType=TIMESTAMP},
+      Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.CaseInfoImpl" >
+    update tbl_case
+    <set >
+      <if test="casenumber != null" >
+        casenumber = #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="excasenumber != null" >
+        excasenumber = #{excasenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="academynum != null" >
+        academynum = #{academynum,jdbcType=VARCHAR},
+      </if>
+      <if test="shipname != null" >
+        shipname = #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="casetypeid != null" >
+        casetypeid = #{casetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="casetypename != null" >
+        casetypename = #{casetypename,jdbcType=VARCHAR},
+      </if>
+      <if test="accidentdate != null" >
+        accidentdate = #{accidentdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accidentportid != null" >
+        accidentportid = #{accidentportid,jdbcType=VARCHAR},
+      </if>
+      <if test="accidentport != null" >
+        accidentport = #{accidentport,jdbcType=VARCHAR},
+      </if>
+      <if test="consignortypeid != null" >
+        consignortypeid = #{consignortypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="consignortypename != null" >
+        consignortypename = #{consignortypename,jdbcType=VARCHAR},
+      </if>
+      <if test="consignorid != null" >
+        consignorid = #{consignorid,jdbcType=VARCHAR},
+      </if>
+      <if test="consignorname != null" >
+        consignorname = #{consignorname,jdbcType=VARCHAR},
+      </if>
+      <if test="consignorsn != null" >
+        consignorsn = #{consignorsn,jdbcType=VARCHAR},
+      </if>
+      <if test="casecontact != null" >
+        casecontact = #{casecontact,jdbcType=VARCHAR},
+      </if>
+      <if test="checkcompany != null" >
+        checkcompany = #{checkcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="barristers != null" >
+        barristers = #{barristers,jdbcType=VARCHAR},
+      </if>
+      <if test="casedes != null" >
+        casedes = #{casedes,jdbcType=VARCHAR},
+      </if>
+      <if test="orgcode != null" >
+        orgcode = #{orgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="oraname != null" >
+        oraname = #{oraname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="setdate != null" >
+        setdate = #{setdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="casestatus != null" >
+        casestatus = #{casestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="feecount != null" >
+        feecount = #{feecount,jdbcType=BIGINT},
+      </if>
+      <if test="accflag != null" >
+        accflag = #{accflag,jdbcType=VARCHAR},
+      </if>
+      <if test="alertdate != null" >
+        alertdate = #{alertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator = #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Case_Id = #{caseId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.CaseInfoImpl" >
+    update tbl_case
+    set casenumber = #{casenumber,jdbcType=VARCHAR},
+      excasenumber = #{excasenumber,jdbcType=VARCHAR},
+      academynum = #{academynum,jdbcType=VARCHAR},
+      shipname = #{shipname,jdbcType=VARCHAR},
+      casetypeid = #{casetypeid,jdbcType=VARCHAR},
+      casetypename = #{casetypename,jdbcType=VARCHAR},
+      accidentdate = #{accidentdate,jdbcType=TIMESTAMP},
+      accidentportid = #{accidentportid,jdbcType=VARCHAR},
+      accidentport = #{accidentport,jdbcType=VARCHAR},
+      consignortypeid = #{consignortypeid,jdbcType=VARCHAR},
+      consignortypename = #{consignortypename,jdbcType=VARCHAR},
+      consignorid = #{consignorid,jdbcType=VARCHAR},
+      consignorname = #{consignorname,jdbcType=VARCHAR},
+      consignorsn = #{consignorsn,jdbcType=VARCHAR},
+      casecontact = #{casecontact,jdbcType=VARCHAR},
+      checkcompany = #{checkcompany,jdbcType=VARCHAR},
+      barristers = #{barristers,jdbcType=VARCHAR},
+      casedes = #{casedes,jdbcType=VARCHAR},
+      orgcode = #{orgcode,jdbcType=VARCHAR},
+      oraname = #{oraname,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      setdate = #{setdate,jdbcType=TIMESTAMP},
+      enddate = #{enddate,jdbcType=TIMESTAMP},
+      casestatus = #{casestatus,jdbcType=VARCHAR},
+      feecount = #{feecount,jdbcType=BIGINT},
+      accflag = #{accflag,jdbcType=VARCHAR},
+      alertdate = #{alertdate,jdbcType=TIMESTAMP},
+      Create_Operator = #{createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP}
+    where Case_Id = #{caseId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.CaseInfoImplExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

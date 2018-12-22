@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.FinTransInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.FinTransInfo" >
+    <id column="Buss_Id" property="bussId" jdbcType="VARCHAR" />
+    <id column="Item_Id" property="itemId" jdbcType="VARCHAR" />
+    <id column="Item_Type" property="itemType" jdbcType="CHAR" />
+    <result column="Item_Name" property="itemName" jdbcType="VARCHAR" />
+    <result column="Distill_Mode" property="distillMode" jdbcType="CHAR" />
+    <result column="Distill_Class" property="distillClass" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.git.db.beans.FinTransInfo" extends="BaseResultMap" >
+    <result column="Distill_SQL" property="distillSql" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Buss_Id, Item_Id, Item_Type, Item_Name, Distill_Mode, Distill_Class
+  </sql>
+  <sql id="Blob_Column_List" >
+    Distill_SQL
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.git.db.beans.FinTransInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_fin_trans_info_def
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.FinTransInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_fin_trans_info_def
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="com.git.db.beans.FinTransInfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_fin_trans_info_def
+    where Buss_Id = #{bussId,jdbcType=VARCHAR}
+      and Item_Id = #{itemId,jdbcType=VARCHAR}
+      and Item_Type = #{itemType,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.git.db.beans.FinTransInfoKey" >
+    delete from t_fin_trans_info_def
+    where Buss_Id = #{bussId,jdbcType=VARCHAR}
+      and Item_Id = #{itemId,jdbcType=VARCHAR}
+      and Item_Type = #{itemType,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.FinTransInfoExample" >
+    delete from t_fin_trans_info_def
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.FinTransInfo" >
+    insert into t_fin_trans_info_def (Buss_Id, Item_Id, Item_Type, 
+      Item_Name, Distill_Mode, Distill_Class, 
+      Distill_SQL)
+    values (#{bussId,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, #{itemType,jdbcType=CHAR}, 
+      #{itemName,jdbcType=VARCHAR}, #{distillMode,jdbcType=CHAR}, #{distillClass,jdbcType=VARCHAR}, 
+      #{distillSql,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.FinTransInfo" >
+    insert into t_fin_trans_info_def
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bussId != null" >
+        Buss_Id,
+      </if>
+      <if test="itemId != null" >
+        Item_Id,
+      </if>
+      <if test="itemType != null" >
+        Item_Type,
+      </if>
+      <if test="itemName != null" >
+        Item_Name,
+      </if>
+      <if test="distillMode != null" >
+        Distill_Mode,
+      </if>
+      <if test="distillClass != null" >
+        Distill_Class,
+      </if>
+      <if test="distillSql != null" >
+        Distill_SQL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bussId != null" >
+        #{bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        #{itemType,jdbcType=CHAR},
+      </if>
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="distillMode != null" >
+        #{distillMode,jdbcType=CHAR},
+      </if>
+      <if test="distillClass != null" >
+        #{distillClass,jdbcType=VARCHAR},
+      </if>
+      <if test="distillSql != null" >
+        #{distillSql,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.FinTransInfoExample" resultType="java.lang.Integer" >
+    select count(*) from t_fin_trans_info_def
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_fin_trans_info_def
+    <set >
+      <if test="record.bussId != null" >
+        Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemId != null" >
+        Item_Id = #{record.itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemType != null" >
+        Item_Type = #{record.itemType,jdbcType=CHAR},
+      </if>
+      <if test="record.itemName != null" >
+        Item_Name = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distillMode != null" >
+        Distill_Mode = #{record.distillMode,jdbcType=CHAR},
+      </if>
+      <if test="record.distillClass != null" >
+        Distill_Class = #{record.distillClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distillSql != null" >
+        Distill_SQL = #{record.distillSql,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_fin_trans_info_def
+    set Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      Item_Id = #{record.itemId,jdbcType=VARCHAR},
+      Item_Type = #{record.itemType,jdbcType=CHAR},
+      Item_Name = #{record.itemName,jdbcType=VARCHAR},
+      Distill_Mode = #{record.distillMode,jdbcType=CHAR},
+      Distill_Class = #{record.distillClass,jdbcType=VARCHAR},
+      Distill_SQL = #{record.distillSql,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_fin_trans_info_def
+    set Buss_Id = #{record.bussId,jdbcType=VARCHAR},
+      Item_Id = #{record.itemId,jdbcType=VARCHAR},
+      Item_Type = #{record.itemType,jdbcType=CHAR},
+      Item_Name = #{record.itemName,jdbcType=VARCHAR},
+      Distill_Mode = #{record.distillMode,jdbcType=CHAR},
+      Distill_Class = #{record.distillClass,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.FinTransInfo" >
+    update t_fin_trans_info_def
+    <set >
+      <if test="itemName != null" >
+        Item_Name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="distillMode != null" >
+        Distill_Mode = #{distillMode,jdbcType=CHAR},
+      </if>
+      <if test="distillClass != null" >
+        Distill_Class = #{distillClass,jdbcType=VARCHAR},
+      </if>
+      <if test="distillSql != null" >
+        Distill_SQL = #{distillSql,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where Buss_Id = #{bussId,jdbcType=VARCHAR}
+      and Item_Id = #{itemId,jdbcType=VARCHAR}
+      and Item_Type = #{itemType,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.git.db.beans.FinTransInfo" >
+    update t_fin_trans_info_def
+    set Item_Name = #{itemName,jdbcType=VARCHAR},
+      Distill_Mode = #{distillMode,jdbcType=CHAR},
+      Distill_Class = #{distillClass,jdbcType=VARCHAR},
+      Distill_SQL = #{distillSql,jdbcType=LONGVARCHAR}
+    where Buss_Id = #{bussId,jdbcType=VARCHAR}
+      and Item_Id = #{itemId,jdbcType=VARCHAR}
+      and Item_Type = #{itemType,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.FinTransInfo" >
+    update t_fin_trans_info_def
+    set Item_Name = #{itemName,jdbcType=VARCHAR},
+      Distill_Mode = #{distillMode,jdbcType=CHAR},
+      Distill_Class = #{distillClass,jdbcType=VARCHAR}
+    where Buss_Id = #{bussId,jdbcType=VARCHAR}
+      and Item_Id = #{itemId,jdbcType=VARCHAR}
+      and Item_Type = #{itemType,jdbcType=CHAR}
+  </update>
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.git.db.beans.FinTransInfoExample" id="selectByExampleWithBLOBsWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_fin_trans_info_def
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.FinTransInfoExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_fin_trans_info_def
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

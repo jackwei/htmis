@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.ClaimInComeDetailImplMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.ClaimInComeDetailImpl" >
+    <id column="detail_id" property="detailId" jdbcType="BIGINT" />
+    <result column="Income_Id" property="incomeId" jdbcType="BIGINT" />
+    <result column="Claim_Id" property="claimId" jdbcType="BIGINT" />
+    <result column="casenumber" property="casenumber" jdbcType="VARCHAR" />
+    <result column="payer" property="payer" jdbcType="VARCHAR" />
+    <result column="totalamount" property="totalamount" jdbcType="REAL" />
+    <result column="clientname" property="clientname" jdbcType="VARCHAR" />
+    <result column="realamount" property="realamount" jdbcType="REAL" />
+    <result column="recordtype" property="recordtype" jdbcType="VARCHAR" />
+    <result column="checkamount" property="checkamount" jdbcType="REAL" />
+    <result column="Create_Operator" property="createOperator" jdbcType="BIGINT" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    detail_id, Income_Id, Claim_Id, casenumber, payer, totalamount, clientname, realamount, 
+    recordtype, checkamount, Create_Operator, Modify_Operator_Id, Create_Time, Modify_Time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.ClaimInComeDetailImplExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_claim_income_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_claim_income_detail
+    where detail_id = #{detailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_claim_income_detail
+    where detail_id = #{detailId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.ClaimInComeDetailImplExample" >
+    delete from tbl_claim_income_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.ClaimInComeDetailImpl" >
+    insert into tbl_claim_income_detail (detail_id, Income_Id, Claim_Id, 
+      casenumber, payer, totalamount, 
+      clientname, realamount, recordtype, 
+      checkamount, Create_Operator, Modify_Operator_Id, 
+      Create_Time, Modify_Time)
+    values (#{detailId,jdbcType=BIGINT}, #{incomeId,jdbcType=BIGINT}, #{claimId,jdbcType=BIGINT}, 
+      #{casenumber,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, #{totalamount,jdbcType=REAL}, 
+      #{clientname,jdbcType=VARCHAR}, #{realamount,jdbcType=REAL}, #{recordtype,jdbcType=VARCHAR}, 
+      #{checkamount,jdbcType=REAL}, #{createOperator,jdbcType=BIGINT}, #{modifyOperatorId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.ClaimInComeDetailImpl" >
+    insert into tbl_claim_income_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        detail_id,
+      </if>
+      <if test="incomeId != null" >
+        Income_Id,
+      </if>
+      <if test="claimId != null" >
+        Claim_Id,
+      </if>
+      <if test="casenumber != null" >
+        casenumber,
+      </if>
+      <if test="payer != null" >
+        payer,
+      </if>
+      <if test="totalamount != null" >
+        totalamount,
+      </if>
+      <if test="clientname != null" >
+        clientname,
+      </if>
+      <if test="realamount != null" >
+        realamount,
+      </if>
+      <if test="recordtype != null" >
+        recordtype,
+      </if>
+      <if test="checkamount != null" >
+        checkamount,
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="incomeId != null" >
+        #{incomeId,jdbcType=BIGINT},
+      </if>
+      <if test="claimId != null" >
+        #{claimId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="totalamount != null" >
+        #{totalamount,jdbcType=REAL},
+      </if>
+      <if test="clientname != null" >
+        #{clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="realamount != null" >
+        #{realamount,jdbcType=REAL},
+      </if>
+      <if test="recordtype != null" >
+        #{recordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="checkamount != null" >
+        #{checkamount,jdbcType=REAL},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.ClaimInComeDetailImplExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_claim_income_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_claim_income_detail
+    <set >
+      <if test="record.detailId != null" >
+        detail_id = #{record.detailId,jdbcType=BIGINT},
+      </if>
+      <if test="record.incomeId != null" >
+        Income_Id = #{record.incomeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimId != null" >
+        Claim_Id = #{record.claimId,jdbcType=BIGINT},
+      </if>
+      <if test="record.casenumber != null" >
+        casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payer != null" >
+        payer = #{record.payer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalamount != null" >
+        totalamount = #{record.totalamount,jdbcType=REAL},
+      </if>
+      <if test="record.clientname != null" >
+        clientname = #{record.clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realamount != null" >
+        realamount = #{record.realamount,jdbcType=REAL},
+      </if>
+      <if test="record.recordtype != null" >
+        recordtype = #{record.recordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkamount != null" >
+        checkamount = #{record.checkamount,jdbcType=REAL},
+      </if>
+      <if test="record.createOperator != null" >
+        Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_claim_income_detail
+    set detail_id = #{record.detailId,jdbcType=BIGINT},
+      Income_Id = #{record.incomeId,jdbcType=BIGINT},
+      Claim_Id = #{record.claimId,jdbcType=BIGINT},
+      casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      payer = #{record.payer,jdbcType=VARCHAR},
+      totalamount = #{record.totalamount,jdbcType=REAL},
+      clientname = #{record.clientname,jdbcType=VARCHAR},
+      realamount = #{record.realamount,jdbcType=REAL},
+      recordtype = #{record.recordtype,jdbcType=VARCHAR},
+      checkamount = #{record.checkamount,jdbcType=REAL},
+      Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.ClaimInComeDetailImpl" >
+    update tbl_claim_income_detail
+    <set >
+      <if test="incomeId != null" >
+        Income_Id = #{incomeId,jdbcType=BIGINT},
+      </if>
+      <if test="claimId != null" >
+        Claim_Id = #{claimId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        casenumber = #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        payer = #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="totalamount != null" >
+        totalamount = #{totalamount,jdbcType=REAL},
+      </if>
+      <if test="clientname != null" >
+        clientname = #{clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="realamount != null" >
+        realamount = #{realamount,jdbcType=REAL},
+      </if>
+      <if test="recordtype != null" >
+        recordtype = #{recordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="checkamount != null" >
+        checkamount = #{checkamount,jdbcType=REAL},
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator = #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where detail_id = #{detailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.ClaimInComeDetailImpl" >
+    update tbl_claim_income_detail
+    set Income_Id = #{incomeId,jdbcType=BIGINT},
+      Claim_Id = #{claimId,jdbcType=BIGINT},
+      casenumber = #{casenumber,jdbcType=VARCHAR},
+      payer = #{payer,jdbcType=VARCHAR},
+      totalamount = #{totalamount,jdbcType=REAL},
+      clientname = #{clientname,jdbcType=VARCHAR},
+      realamount = #{realamount,jdbcType=REAL},
+      recordtype = #{recordtype,jdbcType=VARCHAR},
+      checkamount = #{checkamount,jdbcType=REAL},
+      Create_Operator = #{createOperator,jdbcType=BIGINT},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP}
+    where detail_id = #{detailId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.ClaimInComeDetailImplExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_claim_income_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

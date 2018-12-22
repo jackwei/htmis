@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.git.db.mapper.ClaimIncomeImplMapper" >
+  <resultMap id="BaseResultMap" type="com.git.db.beans.ClaimIncomeImpl" >
+    <id column="Income_Id" property="incomeId" jdbcType="BIGINT" />
+    <result column="Case_Id" property="caseId" jdbcType="BIGINT" />
+    <result column="casenumber" property="casenumber" jdbcType="VARCHAR" />
+    <result column="shipname" property="shipname" jdbcType="VARCHAR" />
+    <result column="payer" property="payer" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="receiveamount" property="receiveamount" jdbcType="REAL" />
+    <result column="bankfee" property="bankfee" jdbcType="REAL" />
+    <result column="totalamount" property="totalamount" jdbcType="REAL" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="banknum" property="banknum" jdbcType="VARCHAR" />
+    <result column="usdrate" property="usdrate" jdbcType="DECIMAL" />
+    <result column="usdamount" property="usdamount" jdbcType="REAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="receivedate" property="receivedate" jdbcType="TIMESTAMP" />
+    <result column="differamount" property="differamount" jdbcType="REAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="lockdate" property="lockdate" jdbcType="TIMESTAMP" />
+    <result column="Modify_Operator_Id" property="modifyOperatorId" jdbcType="BIGINT" />
+    <result column="Create_Operator" property="createOperator" jdbcType="BIGINT" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Modify_Time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="clientname" property="clientname" jdbcType="VARCHAR" />
+    <result column="applybank" property="applybank" jdbcType="VARCHAR" />
+    <result column="applybanknum" property="applybanknum" jdbcType="VARCHAR" />
+    <result column="bill_id" property="billId" jdbcType="BIGINT" />
+    <result column="Islocked" property="islocked" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="remark3" property="remark3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Income_Id, Case_Id, casenumber, shipname, payer, currency, receiveamount, bankfee, 
+    totalamount, bank, banknum, usdrate, usdamount, remark, receivedate, differamount, 
+    status, lockdate, Modify_Operator_Id, Create_Operator, Create_Time, Modify_Time, 
+    clientname, applybank, applybanknum, bill_id, Islocked, remark1, remark2, remark3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.git.db.beans.ClaimIncomeImplExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_claim_income
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_claim_income
+    where Income_Id = #{incomeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_claim_income
+    where Income_Id = #{incomeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.git.db.beans.ClaimIncomeImplExample" >
+    delete from tbl_claim_income
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.git.db.beans.ClaimIncomeImpl" >
+    insert into tbl_claim_income (Income_Id, Case_Id, casenumber, 
+      shipname, payer, currency, 
+      receiveamount, bankfee, totalamount, 
+      bank, banknum, usdrate, 
+      usdamount, remark, receivedate, 
+      differamount, status, lockdate, 
+      Modify_Operator_Id, Create_Operator, Create_Time, 
+      Modify_Time, clientname, applybank, 
+      applybanknum, bill_id, Islocked, 
+      remark1, remark2, remark3
+      )
+    values (#{incomeId,jdbcType=BIGINT}, #{caseId,jdbcType=BIGINT}, #{casenumber,jdbcType=VARCHAR}, 
+      #{shipname,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, 
+      #{receiveamount,jdbcType=REAL}, #{bankfee,jdbcType=REAL}, #{totalamount,jdbcType=REAL}, 
+      #{bank,jdbcType=VARCHAR}, #{banknum,jdbcType=VARCHAR}, #{usdrate,jdbcType=DECIMAL}, 
+      #{usdamount,jdbcType=REAL}, #{remark,jdbcType=VARCHAR}, #{receivedate,jdbcType=TIMESTAMP}, 
+      #{differamount,jdbcType=REAL}, #{status,jdbcType=VARCHAR}, #{lockdate,jdbcType=TIMESTAMP}, 
+      #{modifyOperatorId,jdbcType=BIGINT}, #{createOperator,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{clientname,jdbcType=VARCHAR}, #{applybank,jdbcType=VARCHAR}, 
+      #{applybanknum,jdbcType=VARCHAR}, #{billId,jdbcType=BIGINT}, #{islocked,jdbcType=VARCHAR}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.git.db.beans.ClaimIncomeImpl" >
+    insert into tbl_claim_income
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="incomeId != null" >
+        Income_Id,
+      </if>
+      <if test="caseId != null" >
+        Case_Id,
+      </if>
+      <if test="casenumber != null" >
+        casenumber,
+      </if>
+      <if test="shipname != null" >
+        shipname,
+      </if>
+      <if test="payer != null" >
+        payer,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="receiveamount != null" >
+        receiveamount,
+      </if>
+      <if test="bankfee != null" >
+        bankfee,
+      </if>
+      <if test="totalamount != null" >
+        totalamount,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="banknum != null" >
+        banknum,
+      </if>
+      <if test="usdrate != null" >
+        usdrate,
+      </if>
+      <if test="usdamount != null" >
+        usdamount,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="receivedate != null" >
+        receivedate,
+      </if>
+      <if test="differamount != null" >
+        differamount,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lockdate != null" >
+        lockdate,
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id,
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time,
+      </if>
+      <if test="clientname != null" >
+        clientname,
+      </if>
+      <if test="applybank != null" >
+        applybank,
+      </if>
+      <if test="applybanknum != null" >
+        applybanknum,
+      </if>
+      <if test="billId != null" >
+        bill_id,
+      </if>
+      <if test="islocked != null" >
+        Islocked,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="remark3 != null" >
+        remark3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="incomeId != null" >
+        #{incomeId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="shipname != null" >
+        #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveamount != null" >
+        #{receiveamount,jdbcType=REAL},
+      </if>
+      <if test="bankfee != null" >
+        #{bankfee,jdbcType=REAL},
+      </if>
+      <if test="totalamount != null" >
+        #{totalamount,jdbcType=REAL},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="banknum != null" >
+        #{banknum,jdbcType=VARCHAR},
+      </if>
+      <if test="usdrate != null" >
+        #{usdrate,jdbcType=DECIMAL},
+      </if>
+      <if test="usdamount != null" >
+        #{usdamount,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="receivedate != null" >
+        #{receivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="differamount != null" >
+        #{differamount,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="lockdate != null" >
+        #{lockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null" >
+        #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clientname != null" >
+        #{clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="applybank != null" >
+        #{applybank,jdbcType=VARCHAR},
+      </if>
+      <if test="applybanknum != null" >
+        #{applybanknum,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null" >
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="islocked != null" >
+        #{islocked,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.git.db.beans.ClaimIncomeImplExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_claim_income
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_claim_income
+    <set >
+      <if test="record.incomeId != null" >
+        Income_Id = #{record.incomeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.caseId != null" >
+        Case_Id = #{record.caseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.casenumber != null" >
+        casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipname != null" >
+        shipname = #{record.shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payer != null" >
+        payer = #{record.payer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null" >
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiveamount != null" >
+        receiveamount = #{record.receiveamount,jdbcType=REAL},
+      </if>
+      <if test="record.bankfee != null" >
+        bankfee = #{record.bankfee,jdbcType=REAL},
+      </if>
+      <if test="record.totalamount != null" >
+        totalamount = #{record.totalamount,jdbcType=REAL},
+      </if>
+      <if test="record.bank != null" >
+        bank = #{record.bank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.banknum != null" >
+        banknum = #{record.banknum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usdrate != null" >
+        usdrate = #{record.usdrate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.usdamount != null" >
+        usdamount = #{record.usdamount,jdbcType=REAL},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivedate != null" >
+        receivedate = #{record.receivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.differamount != null" >
+        differamount = #{record.differamount,jdbcType=REAL},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lockdate != null" >
+        lockdate = #{record.lockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyOperatorId != null" >
+        Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createOperator != null" >
+        Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null" >
+        Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.clientname != null" >
+        clientname = #{record.clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applybank != null" >
+        applybank = #{record.applybank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applybanknum != null" >
+        applybanknum = #{record.applybanknum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null" >
+        bill_id = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.islocked != null" >
+        Islocked = #{record.islocked,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark1 != null" >
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark2 != null" >
+        remark2 = #{record.remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark3 != null" >
+        remark3 = #{record.remark3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_claim_income
+    set Income_Id = #{record.incomeId,jdbcType=BIGINT},
+      Case_Id = #{record.caseId,jdbcType=BIGINT},
+      casenumber = #{record.casenumber,jdbcType=VARCHAR},
+      shipname = #{record.shipname,jdbcType=VARCHAR},
+      payer = #{record.payer,jdbcType=VARCHAR},
+      currency = #{record.currency,jdbcType=VARCHAR},
+      receiveamount = #{record.receiveamount,jdbcType=REAL},
+      bankfee = #{record.bankfee,jdbcType=REAL},
+      totalamount = #{record.totalamount,jdbcType=REAL},
+      bank = #{record.bank,jdbcType=VARCHAR},
+      banknum = #{record.banknum,jdbcType=VARCHAR},
+      usdrate = #{record.usdrate,jdbcType=DECIMAL},
+      usdamount = #{record.usdamount,jdbcType=REAL},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      receivedate = #{record.receivedate,jdbcType=TIMESTAMP},
+      differamount = #{record.differamount,jdbcType=REAL},
+      status = #{record.status,jdbcType=VARCHAR},
+      lockdate = #{record.lockdate,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{record.modifyOperatorId,jdbcType=BIGINT},
+      Create_Operator = #{record.createOperator,jdbcType=BIGINT},
+      Create_Time = #{record.createTime,jdbcType=TIMESTAMP},
+      Modify_Time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      clientname = #{record.clientname,jdbcType=VARCHAR},
+      applybank = #{record.applybank,jdbcType=VARCHAR},
+      applybanknum = #{record.applybanknum,jdbcType=VARCHAR},
+      bill_id = #{record.billId,jdbcType=BIGINT},
+      Islocked = #{record.islocked,jdbcType=VARCHAR},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      remark2 = #{record.remark2,jdbcType=VARCHAR},
+      remark3 = #{record.remark3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.git.db.beans.ClaimIncomeImpl" >
+    update tbl_claim_income
+    <set >
+      <if test="caseId != null" >
+        Case_Id = #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="casenumber != null" >
+        casenumber = #{casenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="shipname != null" >
+        shipname = #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        payer = #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveamount != null" >
+        receiveamount = #{receiveamount,jdbcType=REAL},
+      </if>
+      <if test="bankfee != null" >
+        bankfee = #{bankfee,jdbcType=REAL},
+      </if>
+      <if test="totalamount != null" >
+        totalamount = #{totalamount,jdbcType=REAL},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="banknum != null" >
+        banknum = #{banknum,jdbcType=VARCHAR},
+      </if>
+      <if test="usdrate != null" >
+        usdrate = #{usdrate,jdbcType=DECIMAL},
+      </if>
+      <if test="usdamount != null" >
+        usdamount = #{usdamount,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="receivedate != null" >
+        receivedate = #{receivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="differamount != null" >
+        differamount = #{differamount,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="lockdate != null" >
+        lockdate = #{lockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyOperatorId != null" >
+        Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createOperator != null" >
+        Create_Operator = #{createOperator,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clientname != null" >
+        clientname = #{clientname,jdbcType=VARCHAR},
+      </if>
+      <if test="applybank != null" >
+        applybank = #{applybank,jdbcType=VARCHAR},
+      </if>
+      <if test="applybanknum != null" >
+        applybanknum = #{applybanknum,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null" >
+        bill_id = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="islocked != null" >
+        Islocked = #{islocked,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        remark3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Income_Id = #{incomeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.git.db.beans.ClaimIncomeImpl" >
+    update tbl_claim_income
+    set Case_Id = #{caseId,jdbcType=BIGINT},
+      casenumber = #{casenumber,jdbcType=VARCHAR},
+      shipname = #{shipname,jdbcType=VARCHAR},
+      payer = #{payer,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      receiveamount = #{receiveamount,jdbcType=REAL},
+      bankfee = #{bankfee,jdbcType=REAL},
+      totalamount = #{totalamount,jdbcType=REAL},
+      bank = #{bank,jdbcType=VARCHAR},
+      banknum = #{banknum,jdbcType=VARCHAR},
+      usdrate = #{usdrate,jdbcType=DECIMAL},
+      usdamount = #{usdamount,jdbcType=REAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      receivedate = #{receivedate,jdbcType=TIMESTAMP},
+      differamount = #{differamount,jdbcType=REAL},
+      status = #{status,jdbcType=VARCHAR},
+      lockdate = #{lockdate,jdbcType=TIMESTAMP},
+      Modify_Operator_Id = #{modifyOperatorId,jdbcType=BIGINT},
+      Create_Operator = #{createOperator,jdbcType=BIGINT},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Modify_Time = #{modifyTime,jdbcType=TIMESTAMP},
+      clientname = #{clientname,jdbcType=VARCHAR},
+      applybank = #{applybank,jdbcType=VARCHAR},
+      applybanknum = #{applybanknum,jdbcType=VARCHAR},
+      bill_id = #{billId,jdbcType=BIGINT},
+      Islocked = #{islocked,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      remark3 = #{remark3,jdbcType=VARCHAR}
+    where Income_Id = #{incomeId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.git.db.beans.ClaimIncomeImplExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_claim_income
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
