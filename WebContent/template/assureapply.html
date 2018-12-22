@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>呈批件</title>
+<style type="text/css">
+<!--
+.STYLE1 {
+	font-size: xx-large;
+	font-family: "黑体";
+}
+.STYLE2 {
+	font-size: 18px
+}
+.PageNext{page-break-after: always;
+} 
+.STYLE3 {
+	font-size: 24px;
+}
+-->
+</style>
+</head>
+
+<body  style="text-align:center" >
+<div style="width:700px; position:relative; height:900px; text-align:center;">
+  <div style="position:relative;width:700px; height:100px; border-bottom:thin; border-bottom-style:solid;">
+   	  <div class="STYLE1" style="position:relative;width:700px; height:40px;">呈&nbsp;&nbsp;&nbsp;批&nbsp;&nbsp;&nbsp;件</div>
+    	<div style="position:relative;width:700px; text-align:left;margin-top:20px; height:40px;"></div>
+  </div>
+  <div style="position:absolute; left:0px;width:400px; height:700px;">
+    <div class="STYLE3" style="position:relative; width:300px; margin-top:40px">关于【{YEAR}】年【{MONTH}】月中再担保手续费到帐及划付事</div>
+    <div class="STYLE2"  style="position:relative; text-align:left; width:390px; margin-right:10px; margin-top:20px">
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;公司领导：</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;【{YEAR}】年【{MONTH}】月，中再担保手续费到帐,【{TOTAL}】份，累计金额为【{FEEMOUNT}】美元。</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;根据集团公司海事担保手续费划拨流程的新规定，我司应将【{YEAR}】年【{MONTH}】月担保手续费【{FEEMOUNT}】美元划给集团公司下述指定美元账户：        </p>
+       <p>户名：中国再保险（集团）股份有限公司</p>
+       <p>开户行：中行北京丰盛支行</p>
+       <p>账号：344161244188</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;妥否，请批示。</p>
+       <p>&nbsp;</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申  请  人：{USERNAME}</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请部门：{ORGNAME}</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请日期：{APPLYDATE}</p>
+      <p>附件：
+       <!--BeginATTACHNAMELIST-->
+       <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ATTACHNAME}
+        <!--EndATTACHNAMELIST-->
+      </p>
+    </div>
+  </div>
+  <div class="STYLE2" style="position:absolute; right:0px;width:300px;height:700px;border-left:thin; border-left-style:solid;">
+    <div class="STYLE3" style="position:relative; width:250px; margin-top:40px">批示栏</div>
+    <!--BeginCHECKLIST-->
+   <div  style="position:relative; width:280px;  margin-top:20px">
+      <div style="position:relative;width:280px; text-align:left; margin-top:10px;">{CHECKDES}</div><br />
+      <div style="position:relative;width:280px; text-align:right;">{CHECKNUSERNAME}<br />{CHECKDATE}</div>
+        </div>
+     <!--EndCHECKLIST-->
+  </div>
+</div>
+ <!--BeginATTACHLIST-->
+<div class="PageNext"></div>
+<div style="width:700px; position:relative; text-align:center;">
+<img src="../FileDown/download?filename={FILENAME}&cxtPath={FILELOCATION}" width="700" height="996" />
+</div>
+<!--EndATTACHLIST-->
+</body>
+</html>

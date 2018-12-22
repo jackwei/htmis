@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>FEENOTE</title>
+<style type="text/css">
+<!--
+.table1 {
+	border-top: 1px;
+	border-right: 1px;
+	border-bottom: 1px solid;
+	border-left: 1px solid;
+}
+body {
+	margin-top: 50px;
+}
+-->
+</style>
+</head>
+
+<body style="text-align:center;">
+<div align="left" style="position:relative">{CHECKPRIVDES}</div>
+<div align="center" style="position:relative; height:800px; width:700px;">
+  <table width="600" border="0" cellspacing="0" cellpadding="2">
+    <tr> 
+      <td align="center"><strong><em><font size="+2" face="Times New Roman, Times, serif" style=" line-height:12px ">FEE 
+          NOTE</font></em></strong><hr size="1" width="130" color="#000000"></hr><br>
+          {CHANGDES}<br>
+          <br></td>
+    </tr>
+  </table>
+  <table width="600" border="0" cellspacing="0" cellpadding="2">
+    <tr> 
+      <td width="91" height="35" align="right" nowrap><strong><font face="Times New Roman, Times, serif">付款人:</font></strong></td>
+      <td width="501" height="35"><font face="Times New Roman, Times, serif">{PAYER}</font></td>
+    </tr>
+    <tr> 
+      <td height="35" align="right" nowrap><strong><font face="Times New Roman, Times, serif">账单编号:</font></strong></td>
+      <td width="501" height="35"><font face="Times New Roman, Times, serif">{FEENUMBER}</font></td>
+    </tr>
+    <tr> 
+      <td height="35" align="right" nowrap><strong><font face="Times New Roman, Times, serif">制单时间:</font></strong></td>
+      <td width="501" height="35"><font face="Times New Roman, Times, serif">{CREATEDATE}</font></td>
+    </tr>
+  </table>
+  <table width="600" border="0" cellspacing="0" cellpadding="2">
+    <tr> 
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+  <table width="540" border="1" cellpadding="2" cellspacing="0" bordercolor="#000000">
+    <tr> 
+      <td width="385" height="23" class="table1"> 
+        <div align="center"><font face="Times New Roman, Times, serif" style="font-size:18px;"><strong>描述</strong></font></div>      </td>
+      <td width="385" height="23" class="table1"> 
+        <div align="center"><font face="Times New Roman, Times, serif" style="font-size:18px;"><strong>币种金额</strong></font></div>      </td>
+    </tr>
+    <tr> 
+      <td width="385" height="30" class="table1"> 
+        <div align="center"><font face="Times New Roman, Times, serif" style="font-size:14px;"><strong>代收代垫</strong></font></div>      </td>
+      <td width="385" height="30" class="table1"> 
+        <div align="center"><font face="Times New Roman, Times, serif">{CLAIMAMOUNT}</font></div>      </td>
+    </tr>
+    <tr> 
+      <td width="385" height="30" class="table1"> 
+        <div align="center"><font face="Times New Roman, Times, serif" style="font-size:14px;"><strong>收入</strong></font></div>      </td>
+      <td width="385" height="30" class="table1"> 
+        <div align="center"><font face="Times New Roman, Times, serif">{INCOME}</font></div>      </td>
+    </tr>
+    <tr> 
+      <td width="385" height="30" class="table1"> 
+        <div align="center"><font face="Times New Roman, Times, serif" style="font-size:14px;"><strong>费用</strong></font></div>      </td>
+      <td width="385" height="30" class="table1"> 
+        <div align="center"><font face="Times New Roman, Times, serif" style="font-size:14px;">{EXPENDS}</font></div>      </td>
+    </tr>
+    <tr> 
+      <td width="385" height="30" class="table1"> 
+        <div align="center"><font face="Times New Roman, Times, serif"><strong><font color="#000000" style="font-size:14px;">总额</font></strong></font></div>      </td>
+      <td width="385" height="30" class="table1"> 
+        <div align="center"><strong><font color="#000000" face="Times New Roman, Times, serif">{FEEAMOUNT}</font></strong></div>      </td>
+    </tr>
+  </table>
+  <table width="540" border="1" cellpadding="0" cellspacing="0">
+  	<!--BeginTHIRDPARTFORM-->
+    <tr>
+      <td align="right"><div align="center">第三方<br>
+        （{INSPECTIONNAME}）
+      </div></td>
+      <td>{THIRDPART}</td>
+    </tr>
+    <!--EndTHIRDPARTFORM-->
+    
+   <!--BeginASSUREFEEFORM-->
+    <tr>
+      <td align="right"><div align="center">担保<br>
+        （{ASSURENUM}）
+      </div></td>
+      <td>{ASSUREFEE}</td>
+    </tr>
+    <!--EndASSUREFEEFORM-->
+    <!--BeginCOPENSATIONSUBFORM-->
+    <tr>
+      <td align="right"><div align="center">赔款追收
+      </div></td>
+      <td>{COPENSATIONSUB}</td>
+    </tr>
+    <!--EndCOPENSATIONSUBFORM-->
+    <!--BeginOTHERFEEFORM-->
+    <tr>
+      <td align="right"><div align="center">其它<br>
+        （{OTHERDES}）
+      </div></td>
+      <td>{OTHERFEE}</td>
+    </tr>
+    
+    <!--EndOTHERFEEFORM-->
+  </table>
+   <div style="position:relative; width:500px;  ">
+   		{REMARK}
+   </div>
+  <div style="position:relative; width:700px; margin-top:50px; ">
+<table width="331">
+       	  <tr>
+       	  <td width="134">上次打印时间：</td>
+       	  <td width="181">{PREPRINTDATE}</td>
+       	  </tr>
+       	  <tr>
+       	    <td>最后修改时间：</td>
+       	    <td>{CHANGEDATE}</td>
+     	    </tr>
+       	  <tr>
+       	    <td>本次打印时间：</td>
+       	    <td>{PRINTDATE}</td>
+     	    </tr>
+       	  <tr>
+       	    <td>发账机构名称：</td>
+       	    <td>{OFFICENAME}</td>
+     	    </tr>
+       	  <tr>
+       	    <td>账单处理人：</td>
+       	    <td>{USERNAME}</td>
+     	    </tr>
+       	  </table>
+  </div>
+</div>
+</body>
+</html>

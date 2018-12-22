@@ -1,0 +1,16 @@
+/**
+ *前端效果修改
+ */
+body{
+	font-family:"微软雅黑",Arial;
+}
+.ht_menu_img{
+	margin: 0px 15px 0px -10px;	
+}
+.ht_menu_second_img{
+	margin-left: -20px;
+}
+.ht_menu_href{
+	border: solid 1px #CCCCCC;	
+	border-style: none none dashed none;
+}

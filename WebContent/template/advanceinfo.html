@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>呈批件</title>
+<style type="text/css">
+<!--
+.STYLE1 {
+	font-size: xx-large;
+	font-family: "黑体";
+}
+.STYLE2 {
+	font-size: 18px
+}
+.PageNext{page-break-after: always;
+} 
+.STYLE3 {
+	font-size: 24px;
+}
+-->
+</style>
+</head>
+
+<body  style="text-align:center" >
+<div style="width:700px; position:relative; height:900px; text-align:center;">
+  <div style="position:relative;width:700px; height:100px; border-bottom:thin; border-bottom-style:solid;">
+   	  <div class="STYLE1" style="position:relative;width:700px; height:40px;">呈&nbsp;&nbsp;&nbsp;批&nbsp;&nbsp;&nbsp;件</div>
+    	<div style="position:relative;width:700px; text-align:left;margin-top:20px; height:40px;"></div>
+  </div>
+  <div style="position:absolute; left:0px;width:400px; height:700px;">
+    <div class="STYLE3" style="position:relative; width:300px; margin-top:40px">海事<span class="STYLE3" style="position:relative; width:300px; margin-top:40px">业</span>务垫付费用申请</div>
+   <div class="STYLE2"  style="position:relative; text-align:left; width:390px; margin-right:10px; margin-top:20px">
+       <p>&nbsp;关于【<span><font color="red"  style="TEXT-DECORATION: underline">{SHIPNAME}</font></span>】轮于【<span><font color="red"  style="TEXT-DECORATION: underline">{ACCIDENTDATE}</font></span>】在【<span><font color="red" style="TEXT-DECORATION: underline">{ACCIDENTPORT}{CASEDES}</font></span>】的请示 :
+       <br></br>
+		&nbsp;华泰案号：{CASENUMBER}
+	    </p>
+       <p>总公司领导：</p> 
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;就题述事宜，为 【<span><font color="red"  style="TEXT-DECORATION: underline">{THINGCAUSE}</font></span>】, 我司受【<span><font color="red"  style="TEXT-DECORATION: underline">{CONSIGNORNAME}</font></span>】委托向【<span><font color="red"  style="TEXT-DECORATION: underline">{PAYEE}</font></span>】垫付【<span><font color="red"  style="TEXT-DECORATION: underline">{RECORDCURRENCY}：{RECORDMOUNT}</font></span>】。
+                     委托人确认该垫付款将于近期汇入我司账户或由业务人员在账单中收回。
+       </p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;有鉴于此，为妥善处理此事，特申请将此笔垫付款划付至指定的如下银行账户：</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;收款人:{CLIENTNAME}</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;开户行:{APPLYBANK}</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;账号:{APPLYBANKNUM}</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;划付币种:{CURRENCY}</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;划付金额:{REALAMOUNT}</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;妥否，请批示。</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请部门：{ORGNAME}</p>
+       	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请人：{USERNAME}</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请日期：{APPLYDATE}</p>
+       <p>附件：
+       <!--BeginATTACHNAMELIST-->
+      <!-- <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ATTACHNAME}-->
+       <br/>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{FILETYPE}
+        <!--EndATTACHNAMELIST-->
+      </p>
+    </div>
+  </div>
+  <div class="STYLE2" style="position:absolute; right:0px;width:300px;height:700px;border-left:thin; border-left-style:solid;">
+    <div class="STYLE3" style="position:relative; width:250px; margin-top:40px">批示栏</div>
+    <!--BeginCHECKLIST-->
+    <div  style="position:relative; width:280px;  margin-top:20px">
+      <div style="position:relative;width:280px; text-align:left; margin-top:10px;">{CHECKDES}</div><br />
+      <div style="position:relative;width:280px; text-align:right;">{CHECKNUSERNAME}<br />{CHECKDATE}</div>
+        </div>
+     <!--EndCHECKLIST-->
+  </div>
+</div>
+ <!--BeginATTACHLIST-->
+<div class="PageNext"></div> 
+<div style="width:700px; position:relative; text-align:center;">
+	<!--<img src="../FileDown/download?filename={FILENAME}&cxtPath={FILELOCATION}" width="700" height="996" />-->
+</div>
+<!--EndATTACHLIST-->
+</body>
+</html>
